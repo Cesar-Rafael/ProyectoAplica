@@ -16,6 +16,7 @@ continue { printf("BUCLE_CONTINUACION "); }
 double { printf("TIPO_DOUBLE "); }
 
 else { printf("CONDICION_SINO "); }
+
 end { printf("FIN "); }
 
 false { printf("FALSO "); }
@@ -67,6 +68,11 @@ while { printf("BUCLE_WHILE "); }
 "~" { printf("NEGACION_BINARIA "); }
 
 "&" { printf("CONJUNCION_BINARIA "); }
+
+"<<" { printf("LEFT_SHIFT"); }
+
+">>" { printf("RIGHT_SHIFT"); }
+
 "^" { printf("DISYUNCION_EXCLUSIVA_BINARIA "); }
 
 ";" { printf("FIN_DE_INSTRUCCION "); }
@@ -90,7 +96,7 @@ while { printf("BUCLE_WHILE "); }
 "<" { printf("MENOR_QUE "); }
 
 ">" { printf("MAYOR_QUE "); }
-"=" { printf("ASIGNACION "); }
+
 "<=" { printf("MENOR_O_IGUAL_QUE "); }
 
 ">=" { printf("MAYOR_O_IGUAL_QUE "); }
