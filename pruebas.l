@@ -53,3 +53,5 @@ break ;
 (+) { printf("OPERACION_MAS "); }
 (-) { printf("OPERACION_MENOS "); }
 (*) { printf("OPERACION_MAS "); }
+
+  /* [0-9]+ { printf("NUMERO_ENTERO "); } */

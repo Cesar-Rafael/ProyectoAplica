@@ -1,0 +1,19 @@
+function fibonacci(int n) -> int:
+  whether (n <= 1) :
+    return 1;
+  end
+  return fibonacci(n - 2) + fibonacci(n - 1);
+end
+
+var n int = input();
+output(fibonacci(n));
+
+var int condicion = 300;
+var double iq = 0.0;
+while (true) :
+    whether (not condicion) :
+        break;
+    end
+    condicion--;
+    iq += 1;
+end
