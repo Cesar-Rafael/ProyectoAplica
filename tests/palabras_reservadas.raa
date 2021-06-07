@@ -1,0 +1,155 @@
+% Palabra reservada "and"
+
+var ejemplo_variable bool = false and true; %El valor de ejemplo_variable tomará el valor de false
+
+
+% Palabra reservada "bool"
+
+var es_positivo bool;
+
+if (numero > 0) :
+  es_positivo = true;
+
+
+% Palabra reservada "break"
+
+while (true) :
+  break;
+end
+
+
+% Palabra reservada "char"
+
+var letra char = 'A';
+
+
+% Palabra reservada "continue"
+
+while (true) :
+  continue;
+end
+
+
+% Palabra reservada "double"
+
+var numero_decimal double = 3.1415;
+
+
+% Palabra reservada "else"
+
+var a int = 0;
+
+if (condicion):
+  a = 5;
+else:
+  a = 4;
+end
+
+
+% Palabra reservada "end"
+
+if (5 > 0) :
+  output("Condicion verdadera");
+end
+
+
+% Palabra reservada "false"
+
+while (false):
+  break;
+end
+
+
+% Palabra reservada "for"
+
+for (var i int = 0; false ; i++):
+  break;
+end
+
+
+% Palabra reservada "function"
+
+function suma(int a, int b) -> int:
+  return a+b;
+end
+
+
+% Palabra reservada "if"
+
+if (true) :
+  output("Hola munda!");
+
+
+% Palabra reservada "input"
+
+var a int = input();
+
+
+% Palabra reservada "int"
+
+var numero int = 322;
+
+
+% Palabra reservada "mod"
+
+var a int = 10;
+
+while ((a mod 2) == 0) :
+  if (a < 2) :
+    break;
+  end
+  a /= 2;
+
+
+% Palabra reservada "not"
+
+var ejemplo_not bool = not true;  % ejemplo_not toma el valor de false
+
+
+% Palabra reservada "or"
+
+var ejemplo_or bool = true or false; % ejemplo_or toma el valor de true
+
+
+% Palabra reservada "output"
+
+var numero_entero int = 5;
+output(numero_entero);
+
+
+% Palabra reservada "return"
+
+function suma(int a, int b) -> int:
+  return a+b;
+end
+
+
+% Palabra reservada "string"
+
+var s string = "3141592653589";
+
+
+% Palabra reservada "true"
+
+var current int = 42;
+var count int = 0;
+while (true) :
+  if (current > 69):
+    break;
+  end
+  count++;
+  current++;
+end
+output(count);
+
+
+% Palabra reservada "var"
+
+var numero_entero int = 5;
+
+
+% Palabra reservada "while"
+
+while (true):
+  break;
+end

@@ -24,6 +24,8 @@ for { printf("BUCLE_FOR "); }
 
 function { printf("FUNCION_INICIO "); }
 
+if { printf("CONDICION_INICIO "); }
+
 input { printf("ENTRADA "); }
 
 int { printf("TIPO_ENTERO "); }
@@ -43,8 +45,6 @@ string { printf("TIPO_CADENA "); }
 true { printf("VERDADERO ");}
 
 var { printf("VARIABLE "); }
-
-whether { printf("CONDICION_INICIO "); }
 
 while { printf("BUCLE_WHILE "); }
 
@@ -101,7 +101,7 @@ while { printf("BUCLE_WHILE "); }
 
 "=" { printf("ASIGNACION "); }
 
-":=" { printf("ASIGNACION PROFUNDA "); }
+":=" { printf("ASIGNACION_PROFUNDA "); }
 
 "==" { printf("IGUALDAD "); }
 

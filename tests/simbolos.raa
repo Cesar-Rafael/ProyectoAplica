@@ -1,0 +1,220 @@
+% Simbolo "+"
+
+var a int = 5;
+var b int = 4;
+var nueve int;
+nueve = a + b;
+
+
+% Simbolo "-"
+
+var a int = 5;
+var b int = 4;
+var uno int;
+uno = a - b;
+
+
+% Simbolo "*"
+
+var a int = 5;
+var b int = 4;
+var veinte int;
+veinte = a * b;
+
+
+% Simbolo "/"
+
+var a int = 12;
+var b int = 4;
+var tres int;
+tres = a / b;
+
+
+% Simbolo "**"
+
+var a int = 2;
+var b int = 5;
+var treinta_y_dos = a ** b;
+
+
+% Simbolo "|"
+
+var a int = 5;
+var b int = 4;
+var c int;
+c = a | b;
+
+
+% Simbolo "~"
+
+var a int = 1;
+var b int;
+b = ~a;
+
+
+% Simbolo "&"
+
+var uno int = 7 | 1;
+
+
+% Simbolo "<<"
+
+var veinte int = 5 << 2;
+
+
+% Simbolo ">>"
+
+var cuatro = 35 >> 3;
+
+
+% Simbolo "^"
+
+var dos int = 5 ^ 7;
+
+var a int = 4;
+a = a ^ 1;
+
+
+% Simbolo ";"
+
+output("Este es un ejemplo de punto y coma");
+end
+
+
+% Simbolo ","
+
+var a int = 4, b int = 5;
+a, b = b, a;
+
+
+% Simbolo ":"
+
+if (true) :
+  output("Este es un ejemplo de ':'");
+
+
+% Simbolo """
+
+var nombre string = "Karboncito";
+
+
+% Simbolo "'"
+
+var letra char = 'a';
+
+
+% Simbolo "("
+
+if (true):
+end
+
+
+% Simbolo ")"
+
+if (true):
+end
+
+
+% Simbolo "["
+
+var arreglo[] int = [1, 2, 3, 4];
+
+
+% Simbolo "]"
+
+var arreglo[] int = [1, 2, 3, 4];
+
+
+% Simbolo "<"
+
+var booleano bool = 5 < 3;
+
+
+% Simbolo ">"
+
+var booleano bool = 5 > 3;
+
+
+% Simbolo ">="
+
+var booleano bool = 5 >= 3;
+
+
+% Simbolo "<="
+
+var booleano bool = 5 <= 3;
+
+
+% Simbolo "%"
+
+% Este es un comentario
+
+
+% Simbolo "%%"
+
+%% Este es un
+   comentario %%
+
+
+% Simbolo ":="
+
+var a int = 5;
+var b int = 6;
+a := b;
+
+
+% Simbolo "=="
+
+var a int = 5;
+var b int = 5;
+var verdadero bool = 5 == 4
+
+
+% Simbolo "!="
+
+var a int = 5;
+var b int = 4;
+var verdadero bool = 5 != 4
+
+
+% Simbolo "++"
+
+var a int = 5;
+a++;
+
+
+% Simbolo "--"
+
+var a = 5;
+a--;
+
+
+% Simbolo "&&"
+
+var a int = 5;
+(a > 0) && output("a es un numero positivo");
+
+
+% Simbolo "+="
+
+var a int = 5;
+a += 5; % a toma el valor de 10
+
+
+% Simbolo "-="
+
+var a int = 5;
+a -= 5; % a toma el valor de 0
+
+
+% Simbolo "*="
+
+var a int = 5;
+a *= 5; % a toma el valor de 25
+
+
+% Simbolo "/="
+
+var a int = 5;
+a /= 5; % a toma el valor de 1
+

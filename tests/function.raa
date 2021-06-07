@@ -7,3 +7,5 @@ end
 
 var n int = input();
 output(fibonacci(n));
+
+
