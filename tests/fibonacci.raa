@@ -7,13 +7,3 @@ end
 
 var n int = input();
 output(fibonacci(n));
-
-var int condicion = 300;
-var double iq = 0.0;
-while (true) :
-    whether (not condicion) :
-        break;
-    end
-    condicion--;
-    iq += 1;
-end
