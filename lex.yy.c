@@ -1646,7 +1646,9 @@ static int yy_init_globals (void)
     (yy_init) = 0;
     (yy_start) = 0;
 
-/* Defined in main.c */
+/* Defined in
+ *
+ * .c */
 #ifdef YY_STDINIT
     yyin = stdin;
     yyout = stdout;
