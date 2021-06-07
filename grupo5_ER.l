@@ -28,9 +28,22 @@ mod { printf("OPERACION_MODULAR "); }
 "^" { printf("DISYUNCION_EXCLUSIVA_BINARIA "); }
 ";" { printf("FIN_DE_INSTRUCCION "); }
 "," { printf("SEPARACION_VARIABLES "); }
-
-"\"" {printf("INICIO_FIN_CADENA ")}
-"'" {printf("INICIO_FIN_CARACTER ")}
-"(" {printf("")}
+":" { printf("INICIO "); }
+"\"" { printf("INICIO_FIN_CADENA "); }
+"'" { printf("INICIO_FIN_CARACTER "); }
+"(" { printf("PARENTESIS_IZQUIERDA "); }
+")" { printf("PARENTESIS_DERECHA "); }
+"[" { printf("CORCHETE_IZQUIERDA "); }
+"]" { printf("CORCHETE_DERECHA "); }
+"<" { printf("MENOR_QUE "); }
+">" { printf("MAYOR_QUE "); }
+"=" { printf("ASIGNACION "); }
+"<=" { printf("MENOR_O_IGUAL_QUE "); }
+">=" { printf("MAYOR_O_IGUAL_QUE "); }
+"\%" { printf("COMENTARIO_EN_LINEA "); }
+"\%\%" { printf("INICIO_FIN_COMENTARIO_EN_BLOQUE "); }
+  /* ALFANUMERICOS */
+[0-9]+ { printf("NUMERO_ENTERO "); }
+[A-Za-z*&#_]* { printf("IDENTIFICADOR "); }
 
 %%
