@@ -121,7 +121,6 @@ while { printf("BUCLE_WHILE "); }
 
 "/=" { printf("DIVISION_DIRECTA "); }
 
-
   /*****************/
   /* ALFANUMERICOS */
   /*****************/
