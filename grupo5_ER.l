@@ -132,6 +132,9 @@ while { printf("BUCLE_WHILE "); }
   /*****************/
 
 [0-9]+ { printf("NUMERO_ENTERO "); }
-[A-Za-z*&#_]* { printf("IDENTIFICADOR "); }
+
+[0-9]+[.][0-9]+ { printf("NUMERO_REAL "); }
+
+[A-Za-z_][A-Za-z_0-9]* { printf("IDENTIFICADOR "); }
 
 %%
