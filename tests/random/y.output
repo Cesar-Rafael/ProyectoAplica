@@ -1,0 +1,205 @@
+Terminals unused in grammar
+
+    ID
+    SI
+
+
+Grammar
+
+    0 $accept: command $end
+
+    1 command: expr
+
+    2 expr: expr '+' term
+    3     | expr '-' term
+    4     | term
+
+    5 term: term '*' fact
+    6     | fact
+
+    7 fact: NUM
+    8     | '(' expr ')'
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    '(' (40) 8
+    ')' (41) 8
+    '*' (42) 5
+    '+' (43) 2
+    '-' (45) 3
+    error (256)
+    NUM (258) 7
+    ID (259)
+    SI (260)
+
+
+Nonterminals, with rules where they appear
+
+    $accept (11)
+        on left: 0
+    command (12)
+        on left: 1
+        on right: 0
+    expr (13)
+        on left: 2 3 4
+        on right: 1 2 3 8
+    term (14)
+        on left: 5 6
+        on right: 2 3 4 5
+    fact (15)
+        on left: 7 8
+        on right: 5 6
+
+
+State 0
+
+    0 $accept: . command $end
+
+    NUM  shift, and go to state 1
+    '('  shift, and go to state 2
+
+    command  go to state 3
+    expr     go to state 4
+    term     go to state 5
+    fact     go to state 6
+
+
+State 1
+
+    7 fact: NUM .
+
+    $default  reduce using rule 7 (fact)
+
+
+State 2
+
+    8 fact: '(' . expr ')'
+
+    NUM  shift, and go to state 1
+    '('  shift, and go to state 2
+
+    expr  go to state 7
+    term  go to state 5
+    fact  go to state 6
+
+
+State 3
+
+    0 $accept: command . $end
+
+    $end  shift, and go to state 8
+
+
+State 4
+
+    1 command: expr .
+    2 expr: expr . '+' term
+    3     | expr . '-' term
+
+    '+'  shift, and go to state 9
+    '-'  shift, and go to state 10
+
+    $default  reduce using rule 1 (command)
+
+
+State 5
+
+    4 expr: term .
+    5 term: term . '*' fact
+
+    '*'  shift, and go to state 11
+
+    $default  reduce using rule 4 (expr)
+
+
+State 6
+
+    6 term: fact .
+
+    $default  reduce using rule 6 (term)
+
+
+State 7
+
+    2 expr: expr . '+' term
+    3     | expr . '-' term
+    8 fact: '(' expr . ')'
+
+    '+'  shift, and go to state 9
+    '-'  shift, and go to state 10
+    ')'  shift, and go to state 12
+
+
+State 8
+
+    0 $accept: command $end .
+
+    $default  accept
+
+
+State 9
+
+    2 expr: expr '+' . term
+
+    NUM  shift, and go to state 1
+    '('  shift, and go to state 2
+
+    term  go to state 13
+    fact  go to state 6
+
+
+State 10
+
+    3 expr: expr '-' . term
+
+    NUM  shift, and go to state 1
+    '('  shift, and go to state 2
+
+    term  go to state 14
+    fact  go to state 6
+
+
+State 11
+
+    5 term: term '*' . fact
+
+    NUM  shift, and go to state 1
+    '('  shift, and go to state 2
+
+    fact  go to state 15
+
+
+State 12
+
+    8 fact: '(' expr ')' .
+
+    $default  reduce using rule 8 (fact)
+
+
+State 13
+
+    2 expr: expr '+' term .
+    5 term: term . '*' fact
+
+    '*'  shift, and go to state 11
+
+    $default  reduce using rule 2 (expr)
+
+
+State 14
+
+    3 expr: expr '-' term .
+    5 term: term . '*' fact
+
+    '*'  shift, and go to state 11
+
+    $default  reduce using rule 3 (expr)
+
+
+State 15
+
+    5 term: term '*' fact .
+
+    $default  reduce using rule 5 (term)
