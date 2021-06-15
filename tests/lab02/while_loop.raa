@@ -1,5 +1,5 @@
-var int condicion = 300;
-var double iq = 0.0;
+var condicion int = 300;
+var iq double = 0.0;
 while (true) :
     whether (not condicion) :
         break;

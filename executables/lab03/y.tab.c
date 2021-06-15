@@ -66,7 +66,7 @@
 
 
 /* First part of user prologue.  */
-#line 1 "grupo5_ER.y"
+#line 1 "../../source/lab03/base.y"
 
 #include<stdlib.h>
 #include<stdio.h>
@@ -74,19 +74,18 @@
 #include<string.h>
 #include<ctype.h>
 #include<assert.h>
-/* prototipos de funcion */
+
+// Prototipos de funcion
 int yylex();
 void yyerror(char *s);
 
-// Se hizo la corrección de errores, ahora compila y corre 
+// Se hizo la corrección de errores, ahora compila y corre
 // Comando: yacc grupo5_ER.y && gcc y.tab.c -lm -lfl && ./a.out
 
-/*estructuras*/
 char lexema[100];
-FILE * arch;
+FILE* arch;
 
-
-#line 90 "y.tab.c"
+#line 89 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -162,38 +161,39 @@ extern int yydebug;
     DISYUNCION_BINARIA = 286,
     NEGACION_BINARIA = 287,
     CONJUNCION_BINARIA = 288,
-    LEFT_SHIFT = 289,
-    RIGHT_SHIFT = 290,
-    DISYUNCION_EXCLUSIVA_BINARIA = 291,
-    FIN_DE_INSTRUCCION = 292,
-    SEPARACION_VARIABLES = 293,
-    INICIO = 294,
-    INICIO_FIN_CADENA = 295,
-    INICIO_FIN_CARACTER = 296,
-    PARENTESIS_IZQUIERDA = 297,
-    PARENTESIS_DERECHA = 298,
-    CORCHETE_IZQUIERDA = 299,
-    CORCHETE_DERECHA = 300,
-    MENOR_QUE = 301,
-    MAYOR_QUE = 302,
-    MENOR_O_IGUAL_QUE = 303,
-    MAYOR_O_IGUAL_QUE = 304,
-    COMENTARIO_EN_LINEA = 305,
-    INICIO_FIN_COMENTARIO_EN_BLOQUE = 306,
-    ASIGNACION = 307,
-    ASIGNACION_PROFUNDA = 308,
-    IGUALDAD = 309,
-    DESIGUALDAD = 310,
-    INCREMENTO_EN_UNIDAD = 311,
-    DECREMENTO_EN_UNIDAD = 312,
-    CONDICION_UNICA = 313,
-    INCREMENTO_DIRECTO = 314,
-    DECREMENTO_DIRECTO = 315,
-    MULTIPLICACION_DIRECTA = 316,
-    DIVISION_DIRECTA = 317,
-    NUMERO_ENTERO = 318,
-    NUMERO_REAL = 319,
-    IDENTIFICADOR = 320
+    NEGACION_LOGICA_2 = 289,
+    LEFT_SHIFT = 290,
+    RIGHT_SHIFT = 291,
+    DISYUNCION_EXCLUSIVA_BINARIA = 292,
+    FIN_DE_INSTRUCCION = 293,
+    SEPARACION_VARIABLES = 294,
+    INICIO = 295,
+    INICIO_FIN_CADENA = 296,
+    INICIO_FIN_CARACTER = 297,
+    PARENTESIS_IZQUIERDA = 298,
+    PARENTESIS_DERECHA = 299,
+    CORCHETE_IZQUIERDA = 300,
+    CORCHETE_DERECHA = 301,
+    MENOR_QUE = 302,
+    MAYOR_QUE = 303,
+    MENOR_O_IGUAL_QUE = 304,
+    MAYOR_O_IGUAL_QUE = 305,
+    COMENTARIO_EN_LINEA = 306,
+    INICIO_FIN_COMENTARIO_EN_BLOQUE = 307,
+    ASIGNACION = 308,
+    ASIGNACION_PROFUNDA = 309,
+    IGUALDAD = 310,
+    DESIGUALDAD = 311,
+    INCREMENTO_EN_UNIDAD = 312,
+    DECREMENTO_EN_UNIDAD = 313,
+    CONDICION_UNICA = 314,
+    INCREMENTO_DIRECTO = 315,
+    DECREMENTO_DIRECTO = 316,
+    MULTIPLICACION_DIRECTA = 317,
+    DIVISION_DIRECTA = 318,
+    NUMERO_ENTERO = 319,
+    NUMERO_REAL = 320,
+    IDENTIFICADOR = 321
   };
 #endif
 /* Tokens.  */
@@ -228,38 +228,39 @@ extern int yydebug;
 #define DISYUNCION_BINARIA 286
 #define NEGACION_BINARIA 287
 #define CONJUNCION_BINARIA 288
-#define LEFT_SHIFT 289
-#define RIGHT_SHIFT 290
-#define DISYUNCION_EXCLUSIVA_BINARIA 291
-#define FIN_DE_INSTRUCCION 292
-#define SEPARACION_VARIABLES 293
-#define INICIO 294
-#define INICIO_FIN_CADENA 295
-#define INICIO_FIN_CARACTER 296
-#define PARENTESIS_IZQUIERDA 297
-#define PARENTESIS_DERECHA 298
-#define CORCHETE_IZQUIERDA 299
-#define CORCHETE_DERECHA 300
-#define MENOR_QUE 301
-#define MAYOR_QUE 302
-#define MENOR_O_IGUAL_QUE 303
-#define MAYOR_O_IGUAL_QUE 304
-#define COMENTARIO_EN_LINEA 305
-#define INICIO_FIN_COMENTARIO_EN_BLOQUE 306
-#define ASIGNACION 307
-#define ASIGNACION_PROFUNDA 308
-#define IGUALDAD 309
-#define DESIGUALDAD 310
-#define INCREMENTO_EN_UNIDAD 311
-#define DECREMENTO_EN_UNIDAD 312
-#define CONDICION_UNICA 313
-#define INCREMENTO_DIRECTO 314
-#define DECREMENTO_DIRECTO 315
-#define MULTIPLICACION_DIRECTA 316
-#define DIVISION_DIRECTA 317
-#define NUMERO_ENTERO 318
-#define NUMERO_REAL 319
-#define IDENTIFICADOR 320
+#define NEGACION_LOGICA_2 289
+#define LEFT_SHIFT 290
+#define RIGHT_SHIFT 291
+#define DISYUNCION_EXCLUSIVA_BINARIA 292
+#define FIN_DE_INSTRUCCION 293
+#define SEPARACION_VARIABLES 294
+#define INICIO 295
+#define INICIO_FIN_CADENA 296
+#define INICIO_FIN_CARACTER 297
+#define PARENTESIS_IZQUIERDA 298
+#define PARENTESIS_DERECHA 299
+#define CORCHETE_IZQUIERDA 300
+#define CORCHETE_DERECHA 301
+#define MENOR_QUE 302
+#define MAYOR_QUE 303
+#define MENOR_O_IGUAL_QUE 304
+#define MAYOR_O_IGUAL_QUE 305
+#define COMENTARIO_EN_LINEA 306
+#define INICIO_FIN_COMENTARIO_EN_BLOQUE 307
+#define ASIGNACION 308
+#define ASIGNACION_PROFUNDA 309
+#define IGUALDAD 310
+#define DESIGUALDAD 311
+#define INCREMENTO_EN_UNIDAD 312
+#define DECREMENTO_EN_UNIDAD 313
+#define CONDICION_UNICA 314
+#define INCREMENTO_DIRECTO 315
+#define DECREMENTO_DIRECTO 316
+#define MULTIPLICACION_DIRECTA 317
+#define DIVISION_DIRECTA 318
+#define NUMERO_ENTERO 319
+#define NUMERO_REAL 320
+#define IDENTIFICADOR 321
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -577,21 +578,21 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  6
+#define YYFINAL  22
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   65
+#define YYLAST   213
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  78
+#define YYNTOKENS  83
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  7
+#define YYNNTS  4
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  21
+#define YYNRULES  32
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  40
+#define YYNSTATES  63
 
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   320
+#define YYMAXUTOK   321
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -604,18 +605,18 @@ union yyalloc
 static const yytype_int8 yytranslate[] =
 {
        0,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+      82,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,    79,     2,     2,     2,    81,    78,     2,
+      70,    71,    74,    72,     2,    73,     2,    75,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,    69,    67,
+       2,    68,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,    72,     2,
-      76,    77,    70,    68,     2,    69,     2,    71,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,    66,
-       2,    67,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,    80,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,    73,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,    74,     2,    75,     2,     2,     2,
+       2,     2,     2,     2,    76,     2,    77,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -635,16 +636,17 @@ static const yytype_int8 yytranslate[] =
       35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
       45,    46,    47,    48,    49,    50,    51,    52,    53,    54,
       55,    56,    57,    58,    59,    60,    61,    62,    63,    64,
-      65
+      65,    66
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_int8 yyrline[] =
+static const yytype_int16 yyrline[] =
 {
-       0,    34,    34,    34,    35,    36,    37,    39,    40,    41,
-      43,    44,    45,    46,    47,    48,    49,    51,    52,    53,
-      54,    55
+       0,   223,   223,   223,   224,   229,   236,   242,   249,   252,
+     255,   261,   274,   277,   280,   286,   307,   310,   313,   316,
+     319,   322,   325,   328,   331,   334,   337,   340,   346,   349,
+     352,   355,   382
 };
 #endif
 
@@ -661,7 +663,7 @@ static const char *const yytname[] =
   "TIPO_CADENA", "VERDADERO", "VARIABLE", "BUCLE_WHILE", "OPERACION_SUMA",
   "OPERACION_RESTA", "OPERACION_MULTIPLICACION", "OPERACION_DIVISION",
   "OPERACION_POTENCIA", "DISYUNCION_BINARIA", "NEGACION_BINARIA",
-  "CONJUNCION_BINARIA", "LEFT_SHIFT", "RIGHT_SHIFT",
+  "CONJUNCION_BINARIA", "NEGACION_LOGICA_2", "LEFT_SHIFT", "RIGHT_SHIFT",
   "DISYUNCION_EXCLUSIVA_BINARIA", "FIN_DE_INSTRUCCION",
   "SEPARACION_VARIABLES", "INICIO", "INICIO_FIN_CADENA",
   "INICIO_FIN_CARACTER", "PARENTESIS_IZQUIERDA", "PARENTESIS_DERECHA",
@@ -671,9 +673,10 @@ static const char *const yytname[] =
   "IGUALDAD", "DESIGUALDAD", "INCREMENTO_EN_UNIDAD",
   "DECREMENTO_EN_UNIDAD", "CONDICION_UNICA", "INCREMENTO_DIRECTO",
   "DECREMENTO_DIRECTO", "MULTIPLICACION_DIRECTA", "DIVISION_DIRECTA",
-  "NUMERO_ENTERO", "NUMERO_REAL", "IDENTIFICADOR", "';'", "'='", "'+'",
-  "'-'", "'*'", "'/'", "'&'", "'^'", "'|'", "'~'", "'('", "')'", "$accept",
-  "listainst", "instr", "asignacion", "expression", "term", "fact", YY_NULLPTR
+  "NUMERO_ENTERO", "NUMERO_REAL", "IDENTIFICADOR", "';'", "'='", "':'",
+  "'('", "')'", "'+'", "'-'", "'*'", "'/'", "'|'", "'~'", "'&'", "'!'",
+  "'^'", "'%'", "'\\n'", "$accept", "lista_instrucciones", "instruccion",
+  "expresion", YY_NULLPTR
 };
 #endif
 
@@ -688,12 +691,13 @@ static const yytype_int16 yytoknum[] =
      285,   286,   287,   288,   289,   290,   291,   292,   293,   294,
      295,   296,   297,   298,   299,   300,   301,   302,   303,   304,
      305,   306,   307,   308,   309,   310,   311,   312,   313,   314,
-     315,   316,   317,   318,   319,   320,    59,    61,    43,    45,
-      42,    47,    38,    94,   124,   126,    40,    41
+     315,   316,   317,   318,   319,   320,   321,    59,    61,    58,
+      40,    41,    43,    45,    42,    47,   124,   126,    38,    33,
+      94,    37,    10
 };
 # endif
 
-#define YYPACT_NINF (-66)
+#define YYPACT_NINF (-68)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -707,10 +711,13 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-     -58,   -57,     0,   -66,   -39,   -55,   -66,   -66,   -66,   -66,
-     -54,   -55,   -65,   -29,   -66,   -66,   -45,   -55,   -55,   -54,
-     -54,   -54,   -54,   -54,   -54,   -54,   -54,   -54,   -66,   -29,
-     -29,   -66,   -66,   -66,   -66,   -66,   -66,   -66,   -66,   -66
+     115,   -68,   -68,   -67,   -68,   -68,   -67,   115,   115,   -13,
+     115,   115,     0,   -68,    -2,   -68,   115,    82,    82,   -60,
+      82,    82,   -68,   -68,   115,   115,   115,   115,   115,   115,
+     115,   115,   115,   115,   -68,   115,   115,   115,   115,   115,
+     115,   115,    33,   -68,    82,    82,    82,    82,    82,    82,
+      82,    82,    82,    82,    82,    82,    82,    82,    82,    82,
+      82,   -61,   -68
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -718,22 +725,25 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     0,     0,     3,     0,     0,     1,     2,     4,    20,
-       0,     0,     5,    16,    17,    18,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,    21,     6,
-       7,    10,    11,    12,    19,     8,     9,    13,    14,    15
+       0,     6,     7,     0,     9,    10,     0,     0,     0,     0,
+       0,     0,     0,     3,     0,     8,     0,    13,    15,     0,
+      22,    24,     1,     2,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     4,     0,     0,     0,     0,     0,
+       0,     0,     0,    12,     5,    14,    20,    25,    26,    28,
+      29,    30,    31,    32,    16,    17,    18,    19,    21,    23,
+      27,     0,    11
 };
 
   /* YYPGOTO[NTERM-NUM].  */
-static const yytype_int8 yypgoto[] =
+static const yytype_int16 yypgoto[] =
 {
-     -66,   -66,    26,   -66,    18,     8,    -8
+     -68,   -68,     2,   172
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     2,     3,     4,    12,    13,    14
+      -1,    12,    13,    14
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -741,50 +751,85 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       6,    19,    15,    17,    18,    20,    21,     1,     9,     9,
-       5,    31,    32,    33,    34,    35,    36,    37,    38,    39,
-      10,    11,    11,    17,    18,    29,    30,     8,     7,    16,
-       0,     0,    28,     0,     0,     0,     0,     0,    22,     0,
-       0,    23,    24,    25,    26,    27,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     1
+      22,    24,    15,    16,    19,     1,    43,     2,    62,     3,
+       4,     5,     0,     6,    23,     0,     0,    25,     7,     0,
+       0,     8,     0,     0,     0,     0,     0,     0,    26,     0,
+       0,     0,     0,    27,    28,     0,    24,     0,     0,     0,
+       0,     0,     0,     0,     0,    29,    30,    31,    32,     0,
+       0,     0,    25,     0,     0,     0,     0,    33,     0,     0,
+       0,     0,     0,    26,     0,    34,     9,     0,    27,    28,
+      35,    36,    37,    38,    39,     0,    40,    10,    41,    11,
+      29,    30,    31,    32,     0,    24,     0,     0,     0,     0,
+       0,     0,    33,     0,     0,     0,     0,     0,     0,     0,
+       0,    25,     0,     0,    61,    35,    36,    37,    38,    39,
+       0,    40,    26,    41,     0,     0,     0,    27,    28,     0,
+       1,     0,     2,     0,     3,     4,     5,     0,     6,    29,
+      30,    31,    32,     7,     0,     0,     8,     0,     0,     0,
+       0,    33,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,    35,    36,    37,    38,    39,     0,
+      40,     0,    41,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,    17,
+      18,     9,    20,    21,     0,     0,     0,     0,    42,     0,
+       0,     0,    10,     0,    11,     0,    44,    45,    46,    47,
+      48,    49,    50,    51,    52,    53,     0,    54,    55,    56,
+      57,    58,    59,    60
 };
 
 static const yytype_int8 yycheck[] =
 {
-       0,    30,    10,    68,    69,    34,    35,    65,    63,    63,
-      67,    19,    20,    21,    22,    23,    24,    25,    26,    27,
-      75,    76,    76,    68,    69,    17,    18,    66,     2,    11,
-      -1,    -1,    77,    -1,    -1,    -1,    -1,    -1,    67,    -1,
-      -1,    70,    71,    72,    73,    74,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    65
+       0,     3,    69,    70,    17,     5,    66,     7,    69,     9,
+      10,    11,    -1,    13,    12,    -1,    -1,    19,    18,    -1,
+      -1,    21,    -1,    -1,    -1,    -1,    -1,    -1,    30,    -1,
+      -1,    -1,    -1,    35,    36,    -1,     3,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    47,    48,    49,    50,    -1,
+      -1,    -1,    19,    -1,    -1,    -1,    -1,    59,    -1,    -1,
+      -1,    -1,    -1,    30,    -1,    67,    66,    -1,    35,    36,
+      72,    73,    74,    75,    76,    -1,    78,    77,    80,    79,
+      47,    48,    49,    50,    -1,     3,    -1,    -1,    -1,    -1,
+      -1,    -1,    59,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    19,    -1,    -1,    71,    72,    73,    74,    75,    76,
+      -1,    78,    30,    80,    -1,    -1,    -1,    35,    36,    -1,
+       5,    -1,     7,    -1,     9,    10,    11,    -1,    13,    47,
+      48,    49,    50,    18,    -1,    -1,    21,    -1,    -1,    -1,
+      -1,    59,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    72,    73,    74,    75,    76,    -1,
+      78,    -1,    80,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,     7,
+       8,    66,    10,    11,    -1,    -1,    -1,    -1,    16,    -1,
+      -1,    -1,    77,    -1,    79,    -1,    24,    25,    26,    27,
+      28,    29,    30,    31,    32,    33,    -1,    35,    36,    37,
+      38,    39,    40,    41
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,    65,    79,    80,    81,    67,     0,    80,    66,    63,
-      75,    76,    82,    83,    84,    84,    82,    68,    69,    30,
-      34,    35,    67,    70,    71,    72,    73,    74,    77,    83,
-      83,    84,    84,    84,    84,    84,    84,    84,    84,    84
+       0,     5,     7,     9,    10,    11,    13,    18,    21,    66,
+      77,    79,    84,    85,    86,    69,    70,    86,    86,    17,
+      86,    86,     0,    85,     3,    19,    30,    35,    36,    47,
+      48,    49,    50,    59,    67,    72,    73,    74,    75,    76,
+      78,    80,    86,    66,    86,    86,    86,    86,    86,    86,
+      86,    86,    86,    86,    86,    86,    86,    86,    86,    86,
+      86,    71,    69
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    78,    79,    79,    80,    81,    82,    82,    83,    83,
-      83,    83,    83,    83,    83,    83,    82,    83,    83,    83,
-      84,    84
+       0,    83,    84,    84,    85,    86,    86,    86,    86,    86,
+      86,    86,    86,    86,    86,    86,    86,    86,    86,    86,
+      86,    86,    86,    86,    86,    86,    86,    86,    86,    86,
+      86,    86,    86
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     2,     1,     2,     3,     3,     3,     3,     3,
-       3,     3,     3,     3,     3,     3,     1,     1,     2,     3,
-       1,     3
+       0,     2,     2,     1,     2,     3,     1,     1,     2,     1,
+       1,     5,     3,     2,     3,     2,     3,     3,     3,     3,
+       3,     3,     2,     3,     2,     3,     3,     3,     3,     3,
+       3,     3,     3
 };
 
 
@@ -1479,104 +1524,8 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 6:
-#line 37 "grupo5_ER.y"
-                                { yyval = yyvsp[-2] + yyvsp[0]; }
-#line 1486 "y.tab.c"
-    break;
 
-  case 7:
-#line 39 "grupo5_ER.y"
-                                { yyval = yyvsp[-2] - yyvsp[0]; }
-#line 1492 "y.tab.c"
-    break;
-
-  case 8:
-#line 40 "grupo5_ER.y"
-                    { yyval = yyvsp[-2] * yyvsp[0]; }
-#line 1498 "y.tab.c"
-    break;
-
-  case 9:
-#line 41 "grupo5_ER.y"
-                    { yyval = yyvsp[-2] / yyvsp[0]; }
-#line 1504 "y.tab.c"
-    break;
-
-  case 10:
-#line 43 "grupo5_ER.y"
-                                   { yyval=pow(yyvsp[-2],yyvsp[0]); }
-#line 1510 "y.tab.c"
-    break;
-
-  case 11:
-#line 44 "grupo5_ER.y"
-                           { yyval=yyvsp[-2]<<yyvsp[0]; }
-#line 1516 "y.tab.c"
-    break;
-
-  case 12:
-#line 45 "grupo5_ER.y"
-                            { yyval=yyvsp[-2]>>yyvsp[0]; }
-#line 1522 "y.tab.c"
-    break;
-
-  case 13:
-#line 46 "grupo5_ER.y"
-                    { yyval = yyvsp[-2] & yyvsp[0]; }
-#line 1528 "y.tab.c"
-    break;
-
-  case 14:
-#line 47 "grupo5_ER.y"
-                    { yyval = yyvsp[-2] ^ yyvsp[0]; }
-#line 1534 "y.tab.c"
-    break;
-
-  case 15:
-#line 48 "grupo5_ER.y"
-                    { yyval = yyvsp[-2] | yyvsp[0]; }
-#line 1540 "y.tab.c"
-    break;
-
-  case 16:
-#line 49 "grupo5_ER.y"
-                  { yyval = yyvsp[0];}
-#line 1546 "y.tab.c"
-    break;
-
-  case 17:
-#line 51 "grupo5_ER.y"
-           { yyval = yyvsp[0]; }
-#line 1552 "y.tab.c"
-    break;
-
-  case 18:
-#line 52 "grupo5_ER.y"
-              { yyval = ~yyvsp[0]; }
-#line 1558 "y.tab.c"
-    break;
-
-  case 19:
-#line 53 "grupo5_ER.y"
-                    { yyvsp[-2] = yyvsp[0]; }
-#line 1564 "y.tab.c"
-    break;
-
-  case 20:
-#line 54 "grupo5_ER.y"
-                    { yyval = yyvsp[0]; }
-#line 1570 "y.tab.c"
-    break;
-
-  case 21:
-#line 55 "grupo5_ER.y"
-                         { yyval = yyvsp[-1]; }
-#line 1576 "y.tab.c"
-    break;
-
-
-#line 1580 "y.tab.c"
+#line 1529 "y.tab.c"
 
       default: break;
     }
@@ -1808,13 +1757,13 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 57 "grupo5_ER.y"
+#line 401 "../../source/lab03/base.y"
 
 
 int main(void) {
-    arch = fopen("Ejemplo.txt", "r");
+    arch = fopen("../../tests/lab03/test01.raa", "r");
     if (arch == NULL) {
-        printf("ERROR: No se ha abierto el archivo Ejemplo.txt correctamente.\n");
+        printf("ERROR: No se ha abierto el archivo test01.raa correctamente.\n");
         exit(1);
     }
     if (!yyparse()) {
@@ -1850,13 +1799,13 @@ int yylex() {
         if (isspace(c)) continue;
 
         /*
-         * En este primer gran caso, queremos quitarnos el peso de analizar lo siguiente:
-         * - Palabras reservadas
-         * - Numeros (enteros y reales)
-         * - Identificadores
+         * Caso 1:
+         * Si el token comienza con una letra del alfabeto o guion bajo tenemos las siguientes posibilidades:
+         * Todas son letras del alfabeto. Verifico si es que es palabra reservada para retornarla.
+         * En otro caso, necesariamente es un identificador
          */
 
-        if (EsBuenCaracter(c)) {
+        if (isalpha(c) || c == '_') {
             pos = 0;
             do {
                 lexema[pos++] = c;
@@ -1864,11 +1813,6 @@ int yylex() {
             } while (EsBuenCaracter(c));
             ungetc(c, arch);
             lexema[pos++] = '\0';
-            /*
-             * Primero, analizamos si todos los caracteres son del alfabeto. En caso todos sus caracteres sean palabras
-             * del alfabeto, retornaremos si es una palabra reservada. En caso no lo sea, devolveremos que es un
-             * identificador;
-             */
             int solo_alfabeto = 1;
             for (int i = 0; i < pos - 1; i++) {
                 if (!isalpha(lexema[i])) {
@@ -1876,7 +1820,6 @@ int yylex() {
                     break;
                 }
             }
-
             if (solo_alfabeto) {
                 if (strcmp(lexema, "and")) return Y_LOGICO;
                 if (strcmp(lexema, "bool")) return TIPO_BOOLEAN;
@@ -1900,66 +1843,53 @@ int yylex() {
                 if (strcmp(lexema, "true")) return VERDADERO;
                 if (strcmp(lexema, "var")) return VARIABLE;
                 if (strcmp(lexema, "while")) return BUCLE_WHILE;
-                return IDENTIFICADOR;
             }
-
-            /*
-             * Segundo, verificaremos si el sujeto es unicamente un numero.
-             * El caso problematico es cuando es posiblemente un double. Por lo que analizaremos que el que sigue es un
-             * punto. En caso esto sea cierto, analizaremos si lo que sigues es de nuevo unicamente un entero y que luego
-             * no haya un punto. Sino, el numero es un numero
-             */
-
-            int solo_numero = 1;
-            for (int i = 0; i < pos - 1; i++) {
-                if (!isdigit(lexema[i])) {
-                    solo_numero = 0;
-                    break;
-                }
-            }
-
-            if (solo_numero) {
-                // Caso 1: Estamos frente a un double
-                c = fgetc(arch);
-                if (c == '.') {
-                    // Reemplazo el fin de cadena por el punto flotante
-                    lexema[pos - 1] = '.';
-                    int inicio_parte_decimal = pos;
-                    // Leo el siguiente token
-                    do {
-                        lexema[pos++] = c;
-                        c = fgetc(arch);
-                    } while (EsBuenCaracter(c));
-                    ungetc(c, arch);
-                    lexema[pos++] = '\0';
-                    if (inicio_parte_decimal < pos - 1) {
-                        solo_numero = 1;
-                        for (int i = inicio_parte_decimal; i < pos - 1; i++) {
-                            if (!isdigit(lexema[i])) {
-                                solo_numero = 0;
-                                break;
-                            }
-                        }
-                        if (solo_numero) return NUMERO_REAL;
-                        // TODO: Preguntar a Layla que debo retornar ene ste caso
-                    } else {
-                        // TODO: Preguntar a Layla que hacer en este caso
-                    }
-                } else {
-                    // Caso 2: Estamos frente a un numero entero
-                    // Primero devolvemos el caracter extraido que no coincidio con el punto flotante
-                    unget(c, arch);
-                    return NUMERO_ENTERO;
-                }
-            }
-
-            /*
-             * Cuando hemos llegado hasta este lugar, todos los caracteres que tenemos son validos para un identificador.
-             * Simplemente nos queda verificar que no comience con un numero.
-             */
-            // TODO: Consultar  a Layla sobre que retornar cuando algo no es valido
-            assert(!isdigit(lexema[0]));
             return IDENTIFICADOR;
+        }
+
+        /*
+         * Caso 2:
+         * Si el token comienza con un numero analizo lo siguiente:
+         * Obtengo todos los digitos consecutivos posibles.
+         * Si es que el caracter siguiente es un punto y lo que le sigue un numero, entonces obtengo el siguiente
+         * numero entero posible y a esto lo convierto en mi numero real.
+         * Sino retorno un numero entero.
+         */
+
+        if (isdigit(c)) {
+            // Obtengo la parte entera
+            pos = 0;
+            do {
+                lexema[pos++] = c;
+                c = fgetc(arch);
+            } while (isdigit(c));
+
+            // Si es que tenemos un punto flotante analizamos dos casos
+            if (c == '.') {
+                int longitud_parte_entera = pos;
+                do {
+                    lexema[pos++] = c;
+                    c = fgetc(arch);
+                } while (isdigit(c));
+                ungetc(c, arch);
+
+                // Si es que no hemos encontrado ningun digito valido luego del punto, solo retornamos la parte entera
+                if (pos == longitud_parte_entera + 1) {
+                    ungetc('.', arch);
+                    lexema[longitud_parte_entera] = '\0';
+                    return TIPO_ENTERO;
+                } else {
+                    // En otro caso, retorno el numero real que ha sido escaneado
+                    lexema[pos] = '\0';
+                    return TIPO_DOUBLE;
+                }
+            } else {
+                // Si lo que sigue al punto no es lo suficiente como para formar la parte decimal
+                // devuelvo el punto al buffer y retorno el numero entero
+                ungetc(c, arch);
+                lexema[pos] = '\0';
+                return TIPO_ENTERO;
+            }
         }
 
         //En esta ultima parte, solo nos falta analizar simbolos.
@@ -1967,122 +1897,95 @@ int yylex() {
 
         // Multiplicacion, potencia e multiplicacion directa
         if (c == '*') {
-            lexema[pos++] = '*';
             c = fgetc(arch);
-            if (c == '*') {
-                lexema[pos++] = '*';
-                lexema[pos] = '\0';
-                return OPERACION_POTENCIA;
-            }
-            if (c == '=') {
-                lexema[pos++] = '=';
-                lexema[pos] = '\0';
-                return MULTIPLICACION_DIRECTA;
-            }
+            if (c == '*') return OPERACION_POTENCIA;
+            if (c == '=') return MULTIPLICACION_DIRECTA;
             /*
              * En caso no coincida con ninguna de las anteriores, unicamente estamos multiplicando y devolvemos
              * el ultimo caracter analizado al buffer del archivo.
              */
-
             ungetc(c, arch);
-            //return OPERACION_MULTIPLICACION; no sé si sea así
+            return '*';
         }
 
         // Menor que, menor o igual que y left shift
         if (c == '<') {
-            lexema[pos++] = '<';
             c = fgetc(arch);
-            if (c == '<') {
-                lexema[pos++] = '<';
-                lexema[pos] = '\0';
-                return LEFT_SHIFT;
-            }
-            if (c == '=') {
-                lexema[pos++] = '=';
-                lexema[pos] = '\0';
-                return MENOR_O_IGUAL_QUE;
-            }
+            if (c == '<') return LEFT_SHIFT;
+            if (c == '=') return MENOR_O_IGUAL_QUE;
             ungetc(c, arch);
+            return '<';
         }
 
         // Mayor que, mayor o igual que y right shift
         if (c == '>') {
-            lexema[pos++] = '>';
             c = fgetc(arch);
-            if (c == '>') {
-                lexema[pos++] = '>';
-                lexema[pos] = '\0';
-                return RIGHT_SHIFT;
-            }
-            if (c == '=') {
-                lexema[pos++] = '=';
-                lexema[pos] = '\0';
-                return MAYOR_O_IGUAL_QUE;
-            }
+            if (c == '>') return RIGHT_SHIFT;
+            if (c == '=') return MAYOR_O_IGUAL_QUE;
             ungetc(c, arch);
+            return '>';
         }
 
         // Asignación, comparación de igualdad
         if (c == '=') {
-            lexema[pos++] = '=';
             c = fgetc(arch);
-            if (c == '=') {
-                lexema[pos++] = '=';
-                lexema[pos] = '\0';
-                return IGUALDAD;
-            }
+            if (c == '=') return IGUALDAD;
             ungetc(c, arch);
-            //return ASIGNACION;
+            return '=';
         }
 
-        if (strcmp(lexema, "%%")) return INICIO_FIN_COMENTARIO_EN_BLOQUE; // Corregir
-        if (strcmp(lexema, "==")) return IGUALDAD;
-        if (strcmp(lexema, "!=")) return DESIGUALDAD;
-        if (strcmp(lexema, "++")) return INCREMENTO_EN_UNIDAD;
-        if (strcmp(lexema, "--")) return DECREMENTO_EN_UNIDAD;
-        if (strcmp(lexema, "&&")) return CONDICION_UNICA;
-        if (strcmp(lexema, "+=")) return INCREMENTO_DIRECTO;
-        if (strcmp(lexema, "-=")) return DECREMENTO_DIRECTO;
-        if (strcmp(lexema, "/=")) return DIVISION_DIRECTA;
+        if (c == '+') {
+            c = fgetc(arch);
+            if (c == '=') return INCREMENTO_DIRECTO;
+            if (c == '+') return INCREMENTO_EN_UNIDAD;
+            ungetc(c, arch);
+            return '+';
+        }
 
-		/*
-		 * Estos ya están listos
-		if (c == '+') return OPERACION_SUMA;
-		if (c == '-') return OPERACION_RESTA;
-		if (c == '/') return OPERACION_DIVISION;
-		if (c == '|') return DISYUNCION_BINARIA;
-		if (c == '~') return NEGACION_BINARIA;
-		if (c == '&') return CONJUNCION_BINARIA;
-		if (c == '^') return DISYUNCION_EXCLUSIVA_BINARIA;
-		 *
-		 */
+        if (c == '-') {
+            c = fgetc(arch);
+            if (c == '=') return DECREMENTO_DIRECTO;
+            if (c == '-') return DECREMENTO_EN_UNIDAD;
+            ungetc(c, arch);
+            return '-';
+        }
 
-		if (c == ';') return FIN_DE_INSTRUCCION;
-		if (c == ',') return SEPARACION_VARIABLES;
-		if (c == ':') return INICIO;
-		if (c == '"') return INICIO_FIN_CADENA;
-		if (c == 39) return INICIO_FIN_CARACTER; // Comilla simple
-		if (c == '(') return PARENTESIS_IZQUIERDA;
-		if (c == ')') return PARENTESIS_DERECHA;
-		if (c == '[') return CORCHETE_IZQUIERDA;
-		if (c == ']') return CORCHETE_DERECHA;
-		if (c == '=') return ASIGNACION;
-		if (c == '%') return COMENTARIO_EN_LINEA;
+        if (c == '/') {
+            c = fgetc(arch);
+            if (c == '=') return DIVISION_DIRECTA;
+            ungetc(c, arch);
+            return '/';
+        }
 
-		ENTERO IDENTIFICARDOR ASIGNACION NUMERO COMA
-		COMENTARIO IDENTIFICADOR ASIGNIACION NUMERO
-        // Comentario en linea
-        if(c == '%') {
-            lexema[pos++] = '%';
-            /*
-            while (1) {
-                c = fgetc(arch);
-                if (c == '\n') {
-                    lexema[pos]='\0';
-                    break;
-                }
-            }
-             */
+        if (c == '!') {
+            c = fgetc(arch);
+            if (c == '=') return DESIGUALDAD;
+            ungetc(c, arch);
+            return '!';
+        }
+
+        if (c == '&') {
+            c = fgetc(arch);
+            if (c == '&') return CONDICION_UNICA;
+            ungetc(c, arch);
+            return '&';
+        }
+
+        if (c == ';') return FIN_DE_INSTRUCCION;
+        if (c == ',') return SEPARACION_VARIABLES;
+        if (c == ':') return INICIO;
+        if (c == '"') return INICIO_FIN_CADENA;
+        if (c == '\'') return INICIO_FIN_CARACTER;
+        if (c == '(') return PARENTESIS_IZQUIERDA;
+        if (c == ')') return PARENTESIS_DERECHA;
+        if (c == '[') return CORCHETE_IZQUIERDA;
+        if (c == ']') return CORCHETE_DERECHA;
+        if (c == '=') return ASIGNACION;
+
+        if (c == '%') {
+            c = fgetc(arch);
+            if (c == '%') return INICIO_FIN_COMENTARIO_EN_BLOQUE;
+            ungetc(c, arch);
             return COMENTARIO_EN_LINEA;
         }
         return c;
