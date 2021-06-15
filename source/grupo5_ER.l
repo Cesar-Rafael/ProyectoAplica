@@ -69,6 +69,8 @@ while { printf("BUCLE_WHILE "); }
 
 "&" { printf("CONJUNCION_BINARIA "); }
 
+"!" { printf("NEGACION_LOGICA_2 "); }
+
 "<<" { printf("LEFT_SHIFT"); }
 
 ">>" { printf("RIGHT_SHIFT"); }

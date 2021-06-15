@@ -141,12 +141,17 @@ FILE * arch;
 %token INICIO_FIN_CADENA
 
 
-INICIO_FIN_CARACTER
-%token PARENTESIS_IZQUIERDA PARENTESIS_DERECHA CORCHETE_IZQUIERDA CORCHETE_DERECHA MENOR_QUE
-%token MAYOR_QUE MENOR
+// Contenedor "("
+%token PARENTESIS_IZQUIERDA
+
+// Contenedor ")"
+%token PARENTESIS_DERECHA
+
+// Contenedor "["
+%token CORCHETE_IZQUIERDA
 
 // Contenedor "]"
-
+%token CORCHETE_DERECHA
 
 // Comparacion ">"
 %token MENOR_QUE
@@ -209,6 +214,9 @@ INICIO_FIN_CARACTER
 // Identificador
 %token IDENTIFICADOR
 
+//Punto
+//%token PUNTO TODO: Manuel confirmas
+
 %%
 
 listainst: listainst instr  | instr  ;
@@ -216,7 +224,7 @@ instr :  asignacion ';'
 asignacion: IDENTIFICADOR '=' expression;
 expression: expression '+' term { $$ = $1 + $3; };
 
-expression: expression '-' term { $$ = $1 - $3; };
+expresion: expresion '-' term { $$ = $1 - $3; };
 term: term '*' fact { $$ = $1 * $3; };
 term: term '/' fact { $$ = $1 / $3; };
 
@@ -226,12 +234,12 @@ term: term RIGHT_SHIFT fact { $$=$1>>$3; };
 term: term '&' fact { $$ = $1 & $3; };
 term: term '^' fact { $$ = $1 ^ $3; };
 term: term '|' fact { $$ = $1 | $3; };
-expression: term  { $$ = $1;};
+expresion: term  { $$ = $1;};
 
 term: fact { $$ = $1; };
 term: '~'fact { $$ = ~$2; };
 term: term '=' fact { $1 = $3; };
 fact: NUMERO_ENTERO { $$ = $1; };
-fact: '(' expression ')' { $$ = $2; };
+fact: '(' expresion ')' { $$ = $2; };
 
 %%

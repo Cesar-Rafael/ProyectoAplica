@@ -198,18 +198,45 @@ int yylex() {
             ungetc(c, arch);
             return '=';
         }
+        if(c == '-') {
+            c = fgetc(arch);
+            if (c == '=') return DECREMENTO_DIRECTO;
+            if (c == '-') return DECREMETO_EN_UNIDAD;
+            ungetc(c, arch);
+            return '-';
+        }
 
-        if
+        if (c == '/') {
+            c = fgetc(arch);
+            if (c == '=') return DIVISION_DIRECTA;
+            ungetc(c, arch);
+            return '/';
+        }
+
+        if (c == '!') {
+            c = fgetc(arch);
+            if (c == '=') return DESIGUALDAD;
+            ungetc(c, arch);
+            return '!';
+        }
+
+        if (c == '&') {
+            c = fgetc(arch);
+            if (c == '&') return CONDICION_UNICA;
+            ungetc(c, arch);
+            return '&';
+        }
+
 
         //if (strcmp(lexema, "%%")) return INICIO_FIN_COMENTARIO_EN_BLOQUE; // Corregir
         //if (strcmp(lexema, "==")) return IGUALDAD;
-        if (strcmp(lexema, "!=")) return DESIGUALDAD; // PILI
-        if (strcmp(lexema, "++")) return INCREMENTO_EN_UNIDAD; // F
-        if (strcmp(lexema, "--")) return DECREMENTO_EN_UNIDAD;// F
-        if (strcmp(lexema, "&&")) return CONDICION_UNICA; // P
-        if (strcmp(lexema, "+=")) return INCREMENTO_DIRECTO;
-        if (strcmp(lexema, "-=")) return DECREMENTO_DIRECTO;
-        if (strcmp(lexema, "/=")) return DIVISION_DIRECTA; // P
+        //if (strcmp(lexema, "!=")) return DESIGUALDAD; // PILI
+        //if (strcmp(lexema, "++")) return INCREMENTO_EN_UNIDAD; // F
+        //if (strcmp(lexema, "--")) return DECREMENTO_EN_UNIDAD;// F
+        //if (strcmp(lexema, "&&")) return CONDICION_UNICA; // P
+        //if (strcmp(lexema, "+=")) return INCREMENTO_DIRECTO;
+        //if (strcmp(lexema, "-=")) return DECREMENTO_DIRECTO;
+        //if (strcmp(lexema, "/=")) return DIVISION_DIRECTA; // P
 
         /*
          * Estos ya están listos
