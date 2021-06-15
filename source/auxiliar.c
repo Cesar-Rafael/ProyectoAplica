@@ -1,51 +1,3 @@
-%{
-#include<stdlib.h>
-#include<stdio.h>
-#include<math.h>
-#include<string.h>
-#include<ctype.h>
-#include<assert.h>
-/* prototipos de funcion */
-int yylex();
-void yyerror(char *s);
-
-// Se hizo la corrección de errores, ahora compila y corre 
-// Comando: yacc grupo5_ER.y && gcc y.tab.c -lm -lfl && ./a.out
-
-/*estructuras*/
-char lexema[100];
-FILE * arch;
-
-%}
-%token Y_LOGICO TIPO_BOOLEAN BUCLE_SALIDA TIPO_CARACTER BUCLE_CONTINUACION TIPO_DOUBLE CONDICION_SINO FIN FALSO BUCLE_FOR FUNCION_INICIO CONDICION_INICIO ENTRADA TIPO_ENTERO OPERACION_MODULAR NEGACION_LOGICA O_LOGICO SALIDA FUNCION_RETORNO TIPO_CADENA VERDADERO VARIABLE BUCLE_WHILE OPERACION_SUMA OPERACION_RESTA OPERACION_MULTIPLICACION OPERACION_DIVISION OPERACION_POTENCIA DISYUNCION_BINARIA NEGACION_BINARIA CONJUNCION_BINARIA LEFT_SHIFT RIGHT_SHIFT DISYUNCION_EXCLUSIVA_BINARIA FIN_DE_INSTRUCCION SEPARACION_VARIABLES INICIO INICIO_FIN_CADENA INICIO_FIN_CARACTER PARENTESIS_IZQUIERDA PARENTESIS_DERECHA CORCHETE_IZQUIERDA CORCHETE_DERECHA MENOR_QUE MAYOR_QUE MENOR_O_IGUAL_QUE MAYOR_O_IGUAL_QUE COMENTARIO_EN_LINEA INICIO_FIN_COMENTARIO_EN_BLOQUE ASIGNACION ASIGNACION_PROFUNDA IGUALDAD DESIGUALDAD INCREMENTO_EN_UNIDAD DECREMENTO_EN_UNIDAD CONDICION_UNICA INCREMENTO_DIRECTO DECREMENTO_DIRECTO MULTIPLICACION_DIRECTA DIVISION_DIRECTA NUMERO_ENTERO NUMERO_REAL IDENTIFICADOR
-
-%%
-
-listainst: listainst instr  | instr  ;
-instr :  asignacion ';'
-asignacion: IDENTIFICADOR '=' expression;
-expression: expression '+' term { $$ = $1 + $3; };
-
-expression: expression '-' term { $$ = $1 - $3; };
-term: term '*' fact { $$ = $1 * $3; };
-term: term '/' fact { $$ = $1 / $3; };
-
-term: term OPERACION_POTENCIA fact { $$=pow($1,$3); };
-term: term LEFT_SHIFT fact { $$=$1<<$3; };
-term: term RIGHT_SHIFT fact { $$=$1>>$3; };
-term: term '&' fact { $$ = $1 & $3; };
-term: term '^' fact { $$ = $1 ^ $3; };
-term: term '|' fact { $$ = $1 | $3; };
-expression: term  { $$ = $1;};
-
-term: fact { $$ = $1; };
-term: '~'fact { $$ = ~$2; };
-term: term '=' fact { $1 = $3; };
-fact: NUMERO_ENTERO { $$ = $1; };
-fact: '(' expression ')' { $$ = $2; };
-
-%%
-
 int main(void) {
     arch = fopen("Ejemplo.txt", "r");
     if (arch == NULL) {
@@ -83,14 +35,15 @@ int yylex() {
         if (c == '\n') continue;
         if (c == EOF) return c;
         if (isspace(c)) continue;
-
         /*
-         * En este primer gran caso, queremos quitarnos el peso de analizar lo siguiente:
-         * - Palabras reservadas
-         * - Numeros (enteros y reales)
-         * - Identificadores
+         * Caso 1:
+         * Si el token comienza con una letra del alfabeto tenemos las siguientes posibilidades:
+         * - Todas son letras del alfabeto. Verifico si es que es palabra reservada para retornarla.
+         * - En otro caso, necesariamente es un identificador
+         *
          */
-
+        if (isalpha(c)) {
+        }
         if (EsBuenCaracter(c)) {
             pos = 0;
             do {
@@ -202,123 +155,118 @@ int yylex() {
 
         // Multiplicacion, potencia e multiplicacion directa
         if (c == '*') {
-            lexema[pos++] = '*';
             c = fgetc(arch);
-            if (c == '*') {
-                lexema[pos++] = '*';
-                lexema[pos] = '\0';
-                return OPERACION_POTENCIA;
-            }
-            if (c == '=') {
-                lexema[pos++] = '=';
-                lexema[pos] = '\0';
-                return MULTIPLICACION_DIRECTA;
-            }
+            if (c == '*') return OPERACION_POTENCIA;
+            if (c == '=') return MULTIPLICACION_DIRECTA;
             /*
              * En caso no coincida con ninguna de las anteriores, unicamente estamos multiplicando y devolvemos
              * el ultimo caracter analizado al buffer del archivo.
              */
-
             ungetc(c, arch);
-            //return OPERACION_MULTIPLICACION; no sé si sea así
+            return '*';
         }
 
         // Menor que, menor o igual que y left shift
-        if (c == '<') {
-            lexema[pos++] = '<';
+        if(c == '<')
             c = fgetc(arch);
-            if (c == '<') {
-                lexema[pos++] = '<';
-                lexema[pos] = '\0';
-                return LEFT_SHIFT;
-            }
-            if (c == '=') {
-                lexema[pos++] = '=';
-                lexema[pos] = '\0';
-                return MENOR_O_IGUAL_QUE;
-            }
+            if(c == '<') return LEFT_SHIFT;
+            if(c == '=') return MENOR_O_IGUAL_QUE;
             ungetc(c, arch);
+            return '<';
         }
 
         // Mayor que, mayor o igual que y right shift
         if (c == '>') {
-            lexema[pos++] = '>';
             c = fgetc(arch);
-            if (c == '>') {
-                lexema[pos++] = '>';
-                lexema[pos] = '\0';
-                return RIGHT_SHIFT;
-            }
-            if (c == '=') {
-                lexema[pos++] = '=';
-                lexema[pos] = '\0';
-                return MAYOR_O_IGUAL_QUE;
-            }
+            if (c == '>') return RIGHT_SHIFT;
+            if (c == '=') return MAYOR_O_IGUAL_QUE;
             ungetc(c, arch);
+            return '>';
         }
 
         // Asignación, comparación de igualdad
         if (c == '=') {
-            lexema[pos++] = '=';
             c = fgetc(arch);
-            if (c == '=') {
-                lexema[pos++] = '=';
-                lexema[pos] = '\0';
-                return IGUALDAD;
-            }
+            if (c == '=') return IGUALDAD;
             ungetc(c, arch);
-            //return ASIGNACION;
+            return '=';
         }
 
-        if (strcmp(lexema, "%%")) return INICIO_FIN_COMENTARIO_EN_BLOQUE; // Corregir
-        if (strcmp(lexema, "==")) return IGUALDAD;
-        if (strcmp(lexema, "!=")) return DESIGUALDAD;
-        if (strcmp(lexema, "++")) return INCREMENTO_EN_UNIDAD;
-        if (strcmp(lexema, "--")) return DECREMENTO_EN_UNIDAD;
-        if (strcmp(lexema, "&&")) return CONDICION_UNICA;
+        if (c == '+') {
+            c = fgetc(arch);
+            if (c == '=') return SUMA;
+            ungetc(c, arch);
+            return '=';
+        }
+
+        if
+
+        //if (strcmp(lexema, "%%")) return INICIO_FIN_COMENTARIO_EN_BLOQUE; // Corregir
+        //if (strcmp(lexema, "==")) return IGUALDAD;
+        if (strcmp(lexema, "!=")) return DESIGUALDAD; // PILI
+        if (strcmp(lexema, "++")) return INCREMENTO_EN_UNIDAD; // F
+        if (strcmp(lexema, "--")) return DECREMENTO_EN_UNIDAD;// F
+        if (strcmp(lexema, "&&")) return CONDICION_UNICA; // P
         if (strcmp(lexema, "+=")) return INCREMENTO_DIRECTO;
         if (strcmp(lexema, "-=")) return DECREMENTO_DIRECTO;
-        if (strcmp(lexema, "/=")) return DIVISION_DIRECTA;
+        if (strcmp(lexema, "/=")) return DIVISION_DIRECTA; // P
 
-		/*
-		 * Estos ya están listos
-		if (c == '+') return OPERACION_SUMA;
-		if (c == '-') return OPERACION_RESTA;
-		if (c == '/') return OPERACION_DIVISION;
-		if (c == '|') return DISYUNCION_BINARIA;
-		if (c == '~') return NEGACION_BINARIA;
-		if (c == '&') return CONJUNCION_BINARIA;
-		if (c == '^') return DISYUNCION_EXCLUSIVA_BINARIA;
-		 *
-		 */
+        /*
+         * Estos ya están listos
+        if (c == '+') return OPERACION_SUMA;
+        if (c == '-') return OPERACION_RESTA;
+        if (c == '/') return OPERACION_DIVISION;
+        if (c == '|') return DISYUNCION_BINARIA;
+        if (c == '~') return NEGACION_BINARIA;
+        if (c == '&') return CONJUNCION_BINARIA;
+        if (c == '^') return DISYUNCION_EXCLUSIVA_BINARIA;
+         *
+         */
 
-		if (c == ';') return FIN_DE_INSTRUCCION;
-		if (c == ',') return SEPARACION_VARIABLES;
-		if (c == ':') return INICIO;
-		if (c == '"') return INICIO_FIN_CADENA;
-		if (c == 39) return INICIO_FIN_CARACTER; // Comilla simple
-		if (c == '(') return PARENTESIS_IZQUIERDA;
-		if (c == ')') return PARENTESIS_DERECHA;
-		if (c == '[') return CORCHETE_IZQUIERDA;
-		if (c == ']') return CORCHETE_DERECHA;
-		if (c == '=') return ASIGNACION;
-		if (c == '%') return COMENTARIO_EN_LINEA;
+        if (c == ';') return FIN_DE_INSTRUCCION;
+        if (c == ',') return SEPARACION_VARIABLES;
+        if (c == ':') return INICIO;
+        if (c == '"') return INICIO_FIN_CADENA;
+        if (c == 39) return INICIO_FIN_CARACTER; // Comilla simple
+        if (c == '(') return PARENTESIS_IZQUIERDA;
+        if (c == ')') return PARENTESIS_DERECHA;
+        if (c == '[') return CORCHETE_IZQUIERDA;
+        if (c == ']') return CORCHETE_DERECHA;
+        if (c == '=') return ASIGNACION;
+        if (c == '%') return COMENTARIO_EN_LINEA;
 
-		ENTERO IDENTIFICARDOR ASIGNACION NUMERO COMA
-		COMENTARIO IDENTIFICADOR ASIGNIACION NUMERO
+        // ENTERO IDENTIFICARDOR ASIGNACION NUMERO COMA
+        // COMENTARIO IDENTIFICADOR ASIGNIACION NUMERO
         // Comentario en linea
-        if(c == '%') {
-            lexema[pos++] = '%';
-            /*
-            while (1) {
-                c = fgetc(arch);
-                if (c == '\n') {
-                    lexema[pos]='\0';
-                    break;
+        pos = 0;
+        if (c == '%') {
+            c = fgetc(arch);
+            if (c == '%'){ //inicio del bloque de comentario
+                while (1) {
+                    c = fgetc(arch);
+                    if (c == '%') {
+                        c = fgetc(arch);
+                        if (c == '%') //deben haber %% para que sea el fin del comentario
+                            break;
+                        lexema[pos++] = '%'; //puede que un % sea parte del comentario
+                        lexema[pos++] = c;
+                    }
+                    else {
+                        lexema[pos++] = c;
+                    }
                 }
+                lexema[pos] = '\0';
+                return COMENTARIO_EN_BLOQUE;
             }
-             */
-            return COMENTARIO_EN_LINEA;
+            else {
+                while (1) {
+                    c = fgetc(arch);
+                    if (c == '\n') break;
+                    lexema[pos++] = c;
+                }
+                lexema[pos]='\0';
+                return COMENTARIO_EN_LINEA;
+            }
         }
         return c;
     }

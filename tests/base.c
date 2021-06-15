@@ -11,12 +11,21 @@ void yyerror(char *s);
 
 /*estructuras*/
 char lexema[100];
+FILE * arch;
 
-int main(void) {
-    if (!yyparse()) {
-        printf("Cadena valida\n");
-    } else {
-        printf("Cadena invalida\n");
+int main (int argc ,char *argv[] ){
+    arch = fopen("Ejemplo.txt", "r");
+    if (arch == NULL) {
+        printf("ERROR: No se ha abierto el archivo Ejemplo.txt correctamente.\n");
+        exit(1);
+    }
+    if(argc!=2) {
+        printf("Ha olvidado su nombre.\n");
+        exit(1);
+    }
+    else{
+        arch=fopen(argv[1],"r");
+        if(!yyparse()){
     }
 }
 
