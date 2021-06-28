@@ -1,0 +1,5 @@
+output(x);
+output(pi);
+output(gaaa);
+output(69);
+a=input();

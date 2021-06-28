@@ -24,8 +24,30 @@ FILE * arch;
 declaracion: VARIABLE IDENTIFICADOR FIN_DE_INSTRUCCION
 | VARIABLE IDENTIFICADOR ASIGNACION expresion FIN_DE_INSTRUCCION;
 
-expresion: NUMERO_ENTERO
-| NUMERO_REAL;
+asignacion: IDENTIFICADOR ASIGNACION expresion FIN_DE_INSTRUCCION;
+
+expresion: expresion OPERACION_SUMA termino { $$ = $1 + $3; };
+expresion: expresion OPERACION_RESTA termino { $$ = $1 - $3; };
+expresion: termino { $$ = $1;};
+
+termino: termino OPERACION_MULTIPLICACION factor { $$ = $1 * $3; };
+termino: termino OPERACION_DIVISION factor;
+termino: termino OPERACION_POTENCIA factor { $$ = pow($1, $3); };
+termino: termino LEFT_SHIFT factor { $$ = $1 << $3; };
+termino: termino RIGHT_SHIFT factor { $$ = $1 >> $3; };
+termino: termino CONJUNCION_BINARIA factor { $$ = $1 & $3; };
+termino: termino DISYUNCION_EXCLUSIVA_BINARIA factor { $$ = $1 ^ $3; };
+termino: termino DISYUNCION_BINARIA factor { $$ = $1 | $3; };
+termino: factor { $$ = $1; };
+termino: NEGACION_BINARIA factor { $$ = ~$2; };
+termino: termino ASIGNACION factor { $1 = $3; };
+
+factor: terminal { $$ = $1; };
+factor: PARENTESIS_IZQUIERDA expresion PARENTESIS_DERECHA { $$ = $2; };
+
+terminal: NUMERO_ENTERO
+| NUMERO_REAL
+| IDENTIFICADOR;
 
 %%
 
@@ -171,7 +193,7 @@ int yylex() {
          * el ultimo caracter analizado al buffer del archivo.
          */
         ungetc(c, arch);
-        return '*';
+        return OPERACION_MULTIPLICACION;
     }
 
     // Menor que, menor o igual que y left shift
@@ -234,7 +256,7 @@ int yylex() {
         c = fgetc(arch);
         if (c == '&') return CONDICION_UNICA;
         ungetc(c, arch);
-        return '&';
+        return CONJUNCION_BINARIA;
     }
 
     if (c == ';') return FIN_DE_INSTRUCCION;
@@ -246,6 +268,10 @@ int yylex() {
     if (c == ')') return PARENTESIS_DERECHA;
     if (c == '[') return CORCHETE_IZQUIERDA;
     if (c == ']') return CORCHETE_DERECHA;
+    if (c == '~') return NEGACION_BINARIA;
+    if (c == '|') return DISYUNCION_BINARIA;
+    if (c == '^') return DISYUNCION_EXCLUSIVA_BINARIA;
+
 
     if (c == '%') {
         c = fgetc(arch);

@@ -1,0 +1,12 @@
+while (true) :
+  var x;
+  input(x);
+  var y = 69;
+  output(x);
+  output(y);
+end
+
+while (false) :
+  var z = 42;
+  output(x);
+end
