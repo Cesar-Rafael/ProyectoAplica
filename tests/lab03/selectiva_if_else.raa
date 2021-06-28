@@ -1,0 +1,19 @@
+if (true) output(42);
+
+if (false) :
+  var x = 47;
+  var z = 48 + 13;
+  output(123);
+end
+
+
+if (true) :
+  var y = 1 * (4 - 2) + 3;
+  var z;
+  input(z);
+  output(y);
+else :
+  var y = 1 & 2;
+  var z = 1 + 2 - 3 * 4 / 5 & 6 | 7 ^ 8;
+  output(z);
+end
