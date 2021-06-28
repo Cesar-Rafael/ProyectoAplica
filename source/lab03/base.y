@@ -9,8 +9,9 @@
 int yylex();
 void yyerror(char *s);
 
-// Se hizo la corrección de errores, ahora compila y corre 
-// Comando: yacc grupo5_ER.y && gcc y.tab.c -lm -lfl && ./a.out
+//Funciones de Hirsh
+const int MAX_SIZE = 100;
+
 
 /*estructuras*/
 char lexema[100];
