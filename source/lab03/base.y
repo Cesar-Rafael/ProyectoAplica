@@ -21,28 +21,11 @@ FILE * arch;
 
 %%
 
-listainst: listainst instr  | instr  ;
-instr :  asignacion ';'
-asignacion: IDENTIFICADOR '=' expression;
-expression: expression '+' term { $$ = $1 + $3; };
+declaracion: VARIABLE IDENTIFICADOR FIN_DE_INSTRUCCION
+| VARIABLE IDENTIFICADOR ASIGNACION expresion FIN_DE_INSTRUCCION;
 
-expression: expression '-' term { $$ = $1 - $3; };
-term: term '*' fact { $$ = $1 * $3; };
-term: term '/' fact { $$ = $1 / $3; };
-
-term: term OPERACION_POTENCIA fact { $$=pow($1,$3); };
-term: term LEFT_SHIFT fact { $$=$1<<$3; };
-term: term RIGHT_SHIFT fact { $$=$1>>$3; };
-term: term '&' fact { $$ = $1 & $3; };
-term: term '^' fact { $$ = $1 ^ $3; };
-term: term '|' fact { $$ = $1 | $3; };
-expression: term  { $$ = $1;};
-
-term: fact { $$ = $1; };
-term: '~'fact { $$ = ~$2; };
-term: term '=' fact { $1 = $3; };
-fact: NUMERO_ENTERO { $$ = $1; };
-fact: '(' expression ')' { $$ = $2; };
+expresion: NUMERO_ENTERO
+| NUMERO_REAL;
 
 %%
 
@@ -95,6 +78,7 @@ int yylex() {
         } while (EsBuenCaracter(c));
         ungetc(c, arch);
         lexema[pos++] = '\0';
+        //printf("%s\n", lexema);
         int solo_alfabeto = 1;
         for (int i = 0; i < pos - 1; i++) {
             if (!isalpha(lexema[i])) {
@@ -103,28 +87,28 @@ int yylex() {
             }
         }
         if (solo_alfabeto) {
-            if (strcmp(lexema, "and")) return Y_LOGICO;
-            if (strcmp(lexema, "bool")) return TIPO_BOOLEAN;
-            if (strcmp(lexema, "break")) return BUCLE_SALIDA;
-            if (strcmp(lexema, "char")) return TIPO_CARACTER;
-            if (strcmp(lexema, "continue")) return BUCLE_CONTINUACION;
-            if (strcmp(lexema, "double")) return TIPO_DOUBLE;
-            if (strcmp(lexema, "else")) return CONDICION_SINO;
-            if (strcmp(lexema, "end")) return FIN;
-            if (strcmp(lexema, "false")) return FALSO;
-            if (strcmp(lexema, "for")) return BUCLE_FOR;
-            if (strcmp(lexema, "function")) return FUNCION_INICIO;
-            if (strcmp(lexema, "if")) return CONDICION_INICIO;
-            if (strcmp(lexema, "input")) return ENTRADA;
-            if (strcmp(lexema, "int")) return TIPO_ENTERO;
-            if (strcmp(lexema, "mod")) return OPERACION_MODULAR;
-            if (strcmp(lexema, "not")) return NEGACION_LOGICA;
-            if (strcmp(lexema, "or")) return O_LOGICO;
-            if (strcmp(lexema, "return")) return FUNCION_RETORNO;
-            if (strcmp(lexema, "string")) return TIPO_CADENA;
-            if (strcmp(lexema, "true")) return VERDADERO;
-            if (strcmp(lexema, "var")) return VARIABLE;
-            if (strcmp(lexema, "while")) return BUCLE_WHILE;
+            if (strcmp(lexema, "and") == 0) return Y_LOGICO;
+            if (strcmp(lexema, "bool") == 0) return TIPO_BOOLEAN;
+            if (strcmp(lexema, "break") == 0) return BUCLE_SALIDA;
+            if (strcmp(lexema, "char") == 0) return TIPO_CARACTER;
+            if (strcmp(lexema, "continue") == 0) return BUCLE_CONTINUACION;
+            if (strcmp(lexema, "double") == 0) return TIPO_DOUBLE;
+            if (strcmp(lexema, "else") == 0) return CONDICION_SINO;
+            if (strcmp(lexema, "end") == 0) return FIN;
+            if (strcmp(lexema, "false") == 0) return FALSO;
+            if (strcmp(lexema, "for") == 0) return BUCLE_FOR;
+            if (strcmp(lexema, "function") == 0) return FUNCION_INICIO;
+            if (strcmp(lexema, "if") == 0) return CONDICION_INICIO;
+            if (strcmp(lexema, "input") == 0) return ENTRADA;
+            if (strcmp(lexema, "int") == 0) return TIPO_ENTERO;
+            if (strcmp(lexema, "mod") == 0) return OPERACION_MODULAR;
+            if (strcmp(lexema, "not") == 0) return NEGACION_LOGICA;
+            if (strcmp(lexema, "or") == 0) return O_LOGICO;
+            if (strcmp(lexema, "return") == 0) return FUNCION_RETORNO;
+            if (strcmp(lexema, "string") == 0) return TIPO_CADENA;
+            if (strcmp(lexema, "true") == 0) return VERDADERO;
+            if (strcmp(lexema, "var") == 0) return VARIABLE;
+            if (strcmp(lexema, "while") == 0) return BUCLE_WHILE;
         }
         return IDENTIFICADOR;
     }
@@ -262,7 +246,6 @@ int yylex() {
     if (c == ')') return PARENTESIS_DERECHA;
     if (c == '[') return CORCHETE_IZQUIERDA;
     if (c == ']') return CORCHETE_DERECHA;
-    if (c == '=') return ASIGNACION;
 
     if (c == '%') {
         c = fgetc(arch);
