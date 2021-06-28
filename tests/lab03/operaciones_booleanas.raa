@@ -1,0 +1,5 @@
+var a = b or c;
+
+var c = (a >= c) < 13;
+
+var d = true;

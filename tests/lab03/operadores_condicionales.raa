@@ -1,0 +1,10 @@
+if (true) output(42);
+
+if (a > 5 + 3) :
+  var b = a < 3 + (4 * 13 >= 12);
+end
+
+
+if ((5 + 8) > (7 + 9 * 3)) :
+  output(123);
+end

@@ -1,0 +1,9 @@
+var x = 10 mod 4;
+var y = 20 mod 21;
+var z = y mod x;
+
+var a = 2 ** z;
+var b = 3 ** 4;
+
+output(a);
+output(b);

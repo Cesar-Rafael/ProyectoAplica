@@ -28,7 +28,12 @@ asignacion: IDENTIFICADOR ASIGNACION expresion FIN_DE_INSTRUCCION;
 
 expresion: expresion OPERACION_SUMA termino { $$ = $1 + $3; };
 expresion: expresion OPERACION_RESTA termino { $$ = $1 - $3; };
+expresion: expresion TERNARIO_SI expresion TERNARIO_SINO expresion;
 expresion: termino { $$ = $1;};
+
+sentencia_condicional: PARENTESIS_IZQUIERDA expresion PARENTESIS_DERECHA CONDICION_UNICA sentencia;
+
+comentario: COMENTARIO lista_generica COMENTARIO;
 
 termino: termino OPERACION_MULTIPLICACION factor { $$ = $1 * $3; };
 termino: termino OPERACION_DIVISION factor;
@@ -47,7 +52,9 @@ factor: PARENTESIS_IZQUIERDA expresion PARENTESIS_DERECHA { $$ = $2; };
 
 terminal: NUMERO_ENTERO
 | NUMERO_REAL
-| IDENTIFICADOR;
+| IDENTIFICADOR
+| VERDADERO
+| FALSO;
 
 %%
 
@@ -234,6 +241,7 @@ int yylex() {
         c = fgetc(arch);
         if (c == '=') return DECREMENTO_DIRECTO;
         if (c == '-') return DECREMENTO_EN_UNIDAD;
+        if (c == '>') return TERNARIO_SI;
         ungetc(c, arch);
         return '-';
     }
@@ -253,7 +261,7 @@ int yylex() {
     }
 
     if (c == '&') {
-        c = fgetc(arch);
+		c = fgetc(arch);
         if (c == '&') return CONDICION_UNICA;
         ungetc(c, arch);
         return CONJUNCION_BINARIA;
@@ -271,13 +279,7 @@ int yylex() {
     if (c == '~') return NEGACION_BINARIA;
     if (c == '|') return DISYUNCION_BINARIA;
     if (c == '^') return DISYUNCION_EXCLUSIVA_BINARIA;
+    if (c == '?') return TERNARIO_SINO;
 
-
-    if (c == '%') {
-        c = fgetc(arch);
-        if (c == '%') return INICIO_FIN_COMENTARIO_EN_BLOQUE;
-        ungetc(c, arch);
-        return COMENTARIO_EN_LINEA;
-    }
-    return c;
+    return CARACTER_RARO;
 }
