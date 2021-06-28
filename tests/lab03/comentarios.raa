@@ -19,4 +19,15 @@ if (false) :
   var z = 48 + 13;
   gaa++;
   output(123);
+  %% Ya no quiero vivir banda %%
+  var y = (true) -> 323 ? 123.3;
+  if (y > 10 and true) :
+    %% RAA @ $ | ¬ ° ☺ %%
+    output(232 + 321);
+  end
+  var x = 0;
+  while (true) :
+    if (x == 1) break;
+    x++;
+  end
 end
