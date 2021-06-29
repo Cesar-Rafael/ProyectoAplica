@@ -16,7 +16,7 @@ void ImprimirTablaCodigo();
 void InterpretarCodigo();
 int GenerarTemporal();
 int cantidad_simbolos = 0;
-int cx = -1;
+int posicion_ultimo_codigo = -1;
 int cantidad_variables_temporales = 1;
 char lexema[MAX_SIZE];
 FILE* arch;
@@ -31,7 +31,7 @@ typedef struct{
 typedef struct{
 	char nombre[MAX_SIZE];
 	int token;
-	double valor;
+	int valor;
 } Simbolo;
 
 Codigo tabla_codigos[MAX_SIZE];
@@ -251,6 +251,8 @@ Simbolo tabla_simbolos[MAX_SIZE];
 // Caracter '?'
 %token TERNARIO_SINO
 
+%token NEUTRO
+
 %%
 
 programa: lista_sentencias;
@@ -359,6 +361,8 @@ declaracion: VARIABLE IDENTIFICADOR declaracion_auxiliar;
 declaracion_auxiliar: FIN_DE_INSTRUCCION
 | ASIGNACION expresion_1 FIN_DE_INSTRUCCION;
 
+
+
 asignacion: IDENTIFICADOR ASIGNACION expresion_1 FIN_DE_INSTRUCCION;
 
 operacion_unaria: IDENTIFICADOR operacion_unaria_auxiliar;
@@ -371,54 +375,301 @@ asignacion_operativa_auxiliar: INCREMENTO_DIRECTO expresion_1 FIN_DE_INSTRUCCION
 | MULTIPLICACION_DIRECTA expresion_1 FIN_DE_INSTRUCCION
 | DIVISION_DIRECTA expresion_1 FIN_DE_INSTRUCCION;
 
-expresion_1: expresion_2 lista_expresion_1;
-lista_expresion_1: IGUALDAD expresion_2 lista_expresion_1
-| MAYOR_QUE expresion_2 lista_expresion_1
-| MENOR_QUE expresion_2 lista_expresion_1
-| MAYOR_O_IGUAL_QUE expresion_2 lista_expresion_1
-| MENOR_O_IGUAL_QUE expresion_2 lista_expresion_1
-| ;
+expresion_1: expresion_1 MAYOR_QUE expresion_2
+{
+	int posicion_temporal = GenerarTemporal();
+	GenerarCodigo(MAYOR_QUE, posicion_temporal, $1, $3);
+	$$ = posicion_temporal;
+}
+| expresion_1 MENOR_QUE expresion_2
+{
+	int posicion_temporal = GenerarTemporal();
+	GenerarCodigo(MENOR_QUE, posicion_temporal, $1, $3);
+	$$ = posicion_temporal;
+}
+| expresion_1 MAYOR_O_IGUAL_QUE expresion_2
+{
+	int posicion_temporal = GenerarTemporal();
+	GenerarCodigo(MAYOR_O_IGUAL_QUE, posicion_temporal, $1, $3);
+	$$ = posicion_temporal;
+}
+| expresion_1 MENOR_O_IGUAL_QUE expresion_2
+{
+	int posicion_temporal = GenerarTemporal();
+	GenerarCodigo(MENOR_O_IGUAL_QUE, posicion_temporal, $1, $3);
+	$$ = posicion_temporal;
+}
+| expresion_2
+{
+	$$ = $1;
+};
 
-expresion_2: expresion_3 lista_expresion_2;
-lista_expresion_2: OPERACION_SUMA expresion_3 lista_expresion_2
-| OPERACION_RESTA expresion_3 lista_expresion_2
-| DISYUNCION_BINARIA expresion_3 lista_expresion_2
-| DISYUNCION_EXCLUSIVA_BINARIA expresion_3 lista_expresion_2
-| O_LOGICO expresion_3 lista_expresion_2
-| ;
 
-expresion_3: expresion_4 lista_expresion_3;
-lista_expresion_3: OPERACION_MULTIPLICACION expresion_4 lista_expresion_3
-| OPERACION_DIVISION expresion_4 lista_expresion_3
-| OPERACION_MODULAR expresion_4 lista_expresion_3
-| LEFT_SHIFT expresion_4 lista_expresion_3
-| RIGHT_SHIFT expresion_4 lista_expresion_3
-| CONJUNCION_BINARIA expresion_4 lista_expresion_3
-| Y_LOGICO expresion_4 lista_expresion_3
-| ;
 
-expresion_4: factor lista_expresion_4
-| NEGACION_BINARIA factor;
-lista_expresion_4: OPERACION_POTENCIA factor lista_expresion_4
-| ;
+expresion_2: expresion_2 OPERACION_SUMA expresion_3
+{
+	int posicion_temporal = GenerarTemporal();
+	GenerarCodigo(OPERACION_SUMA, posicion_temporal, $1, $3);
+	$$ = posicion_temporal;
+}
+| expresion_2 OPERACION_RESTA expresion_3
+{
+	int posicion_temporal = GenerarTemporal();
+	GenerarCodigo(OPERACION_RESTA, posicion_temporal, $1, $3);
+	$$ = posicion_temporal;
+}
+| expresion_2 DISYUNCION_BINARIA expresion_3
+{
+	int posicion_temporal = GenerarTemporal();
+	GenerarCodigo(DISYUNCION_BINARIA, posicion_temporal, $1, $3);
+	$$ = posicion_temporal;
+}
+| expresion_2 DISYUNCION_EXCLUSIVA_BINARIA expresion_3
+{
+	int posicion_temporal = GenerarTemporal();
+	GenerarCodigo(DISYUNCION_EXCLUSIVA_BINARIA, posicion_temporal, $1, $3);
+	$$ = posicion_temporal;
+}
+| expresion_2 O_LOGICO expresion_3
+{
+	int posicion_temporal = GenerarTemporal();
+	GenerarCodigo(O_LOGICO, posicion_temporal, $1, $3);
+	$$ = posicion_temporal;
+}
+| expresion_3
+{
+	$$ = $1;
+};
 
-factor: terminal;
-factor: PARENTESIS_IZQUIERDA expresion_1 PARENTESIS_DERECHA;
+expresion_3: expresion_3 OPERACION_MULTIPLICACION expresion_4
+{
+	int posicion_temporal = GenerarTemporal();
+ 	GenerarCodigo(OPERACION_MULTIPLICACION, posicion_temporal, $1, $3);
+ 	$$ = posicion_temporal;
+}
+| expresion_3 OPERACION_DIVISION expresion_4
+{
+	int posicion_temporal = GenerarTemporal();
+	GenerarCodigo(OPERACION_DIVISION, posicion_temporal, $1, $3);
+	$$ = posicion_temporal;
+}
+| expresion_3 OPERACION_MODULAR expresion_4
+{
+	int posicion_temporal = GenerarTemporal();
+	GenerarCodigo(OPERACION_MODULAR, posicion_temporal, $1, $3);
+	$$ = posicion_temporal;
+}
+| expresion_3 LEFT_SHIFT expresion_4
+{
+	int posicion_temporal = GenerarTemporal();
+	GenerarCodigo(LEFT_SHIFT, posicion_temporal, $1, $3);
+	$$ = posicion_temporal;
+}
+| expresion_3 RIGHT_SHIFT expresion_4
+{
+	int posicion_temporal = GenerarTemporal();
+	GenerarCodigo(RIGHT_SHIFT, posicion_temporal, $1, $3);
+	$$ = posicion_temporal;
+}
+| expresion_3 CONJUNCION_BINARIA expresion_4
+{
+	int posicion_temporal = GenerarTemporal();
+	GenerarCodigo(CONJUNCION_BINARIA, posicion_temporal, $1, $3);
+	$$ = posicion_temporal;
+}
+| expresion_3 Y_LOGICO expresion_4
+{
+	int posicion_temporal = GenerarTemporal();
+	GenerarCodigo(Y_LOGICO, posicion_temporal, $1, $3);
+	$$ = posicion_temporal;
+}
+| expresion_4
+{
+	$$=$1;
+};
+
+expresion_4: expresion_4 OPERACION_POTENCIA factor
+{
+	int posicion_temporal = GenerarTemporal();
+	GenerarCodigo(OPERACION_POTENCIA, posicion_temporal, $1, $3);
+	$$ = posicion_temporal;
+}
+| NEGACION_BINARIA factor
+{
+	int posicion_temporal = GenerarTemporal();
+  	GenerarCodigo(NEGACION_BINARIA, posicion_temporal, $2, NEUTRO);
+  	$$ = posicion_temporal;
+}
+| factor
+{
+	$$ = $1;
+};
+
+factor: terminal
+{
+	$$ = $1;
+};
+factor: PARENTESIS_IZQUIERDA expresion_1 PARENTESIS_DERECHA
+{
+	$$ = $2;
+};
 
 terminal: NUMERO_ENTERO
+{
+	$$ = LocalizarSimbolo(lexema, NUMERO_ENTERO);
+}
 | NUMERO_REAL
+{
+	$$ = LocalizarSimbolo(lexema, NUMERO_REAL);
+}
 | IDENTIFICADOR
+{
+	$$ = LocalizarSimbolo(lexema, IDENTIFICADOR);
+}
 | VERDADERO
+{
+	$$ = LocalizarSimbolo(lexema, VERDADERO);
+}
 | FALSO
+{
+	$$ = LocalizarSimbolo(lexema, FALSO);
+}
 | BUCLE_SALIDA;
 
 sentencia_condicional: PARENTESIS_IZQUIERDA expresion_1 PARENTESIS_DERECHA CONDICION_UNICA sentencia;
 
 %%
-/*
+
+void InterpretarCodigo(void) {
+	int op, a1, a2, a3;
+	for (int i = 0; i <= posicion_ultimo_codigo; i++) {
+		a1 = tabla_codigos[i].a1;
+		a2 = tabla_codigos[i].a2;
+		a3 = tabla_codigos[i].a3;
+		op = tabla_codigos[i].op;
+		if (op == OPERACION_SUMA) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor + tabla_simbolos[a3].valor;
+		}
+		if (op == ASIGNACION) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor;
+		}
+		if (op == IGUALDAD) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor == tabla_simbolos[a3].valor;
+		}
+		if (op == DESIGUALDAD) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor != tabla_simbolos[a3].valor;
+		}
+		if (op == SALIDA) {
+			printf("%d\n",tabla_simbolos[a1].valor);
+		}
+		if (op == Y_LOGICO) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor && tabla_simbolos[a3].valor;
+		}
+		if (op == BUCLE_SALIDA) {
+			//tabla_simbolos[a1].valor = tabla_simbolos[a2].valor && tabla_simbolos[a3].valor;
+		}
+		if (op == OPERACION_MODULAR) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor % tabla_simbolos[a3].valor;
+		}
+		if (op == NEGACION_LOGICA) {
+			//tabla_simbolos[a1].valor = tabla_simbolos[a2].valor % tabla_simbolos[a3].valor;
+		}
+		if (op == O_LOGICO) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor || tabla_simbolos[a3].valor;
+		}
+		if (op == OPERACION_SUMA) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor + tabla_simbolos[a3].valor;
+		}
+		if (op == OPERACION_RESTA) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor - tabla_simbolos[a3].valor;
+		}
+		if (op == OPERACION_MULTIPLICACION) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor * tabla_simbolos[a3].valor;
+		}
+		if (op == OPERACION_DIVISION) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor / tabla_simbolos[a3].valor;
+		}
+		if (op == OPERACION_POTENCIA) {
+			// Cuando utilicemos doubles, cambiamos el siguiente algoritmo por la funcion pow de math.h
+			int base = tabla_simbolos[a2].valor;
+			int exponente = tabla_simbolos[a3];
+			int resultado = 1;
+			while (exponente > 0) {
+				if (exponente & 1) resultado *= base;
+				exponente >>= 1;
+				base *= base;
+			}
+			tabla_simbolos[a1].valor = resultado;
+		}
+		if (op == DISYUNCION_BINARIA) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor | tabla_simbolos[a3].valor;
+		}
+		if (op == NEGACION_BINARIA) {
+
+		}
+		if (op == CONJUNCION_BINARIA) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor & tabla_simbolos[a3].valor;
+		}
+		if (op == LEFT_SHIFT) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor << tabla_simbolos[a3].valor;
+		}
+		if (op == RIGHT_SHIFT) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor >> tabla_simbolos[a3].valor;
+		}
+		if (op == DISYUNCION_EXCLUSIVA_BINARIA) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor ^ tabla_simbolos[a3].valor;
+		}
+		if (op == MENOR_QUE) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor < tabla_simbolos[a3].valor;
+		}
+		if (op == MAYOR_QUE) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor > tabla_simbolos[a3].valor;
+		}
+		if (op == MENOR_O_IGUAL_QUE) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor <= tabla_simbolos[a3].valor;
+		}
+		if (op == MAYOR_O_IGUAL_QUE) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor >= tabla_simbolos[a3].valor;
+		}
+		if (op == INCREMENTO_EN_UNIDAD) {
+
+		}
+		if (op == DECREMENTO_EN_UNIDAD) {
+
+		}
+		if (op == INCREMENTO_DIRECTO) {
+
+		}
+		if (op == DECREMENTO_DIRECTO) {
+
+		}
+		if (op == MULTIPLICACION_DIRECTA) {
+
+		}
+		if (op == DIVISION_DIRECTA) {
+
+		}
+	}
+}
+
+int GenerarTemporal(void) {
+	char t[10];
+	sprintf(t, "tmp_%d", cantidad_variables_temporales++);
+	return LocalizarSimbolo(t, IDENTIFICADOR);
+}
+
+int GenerarCodigo(int op, int a1, int a2, int a3) {
+	posicion_ultimo_codigo++;
+	tabla_codigos[posicion_ultimo_codigo].op = op;
+	tabla_codigos[posicion_ultimo_codigo].a1 = a1;
+	tabla_codigos[posicion_ultimo_codigo].a2 = a2;
+	tabla_codigos[posicion_ultimo_codigo].a3 = a3;
+}
+
 void ImprimirTablaCodigo(void) {
 	printf("Tabla Codigo:\n");
-	for (int pos = 0; pos <= cx; pos++) {
+	printf("cod_op\tpos_sim\tpos_x\tpos_y\n");
+	for (int pos = 0; pos <= posicion_ultimo_codigo; pos++) {
 		printf("%d\t%d\t%d\t%d\n",
 		tabla_codigos[pos].op,
 		tabla_codigos[pos].a1,
@@ -427,78 +678,47 @@ void ImprimirTablaCodigo(void) {
 	}
 }
 
-void InterpretarCodigo(void) {
-	int op, a1, a2, a3;
-	printf("Tabla Codigo:\n");
-	for (int i = 0; i <= cx; i++) {
-    	a1 = tabla_codigos[i].a1;
-			a2 = tabla_codigos[i].a2;
-			a3 = tabla_codigos[i].a3;
-			op = tabla_codigos[i].op;
-			if (op == SUMA) {
-				tabla_simbolos[a1].valor = tabla_simbolos[a2].valor + tabla_simbolos[a3].valor;
-			}
-			if (op == ASIGNACION) {
-				tabla_simbolos[a1].valor = tabla_simbolos[a2].valor ;
-			}
-			if (op == IGUALDAD) {
-				tabla_simbolos[a1].valor = (tabla_simbolos[a2].valor == tabla_simbolos[a3].valor);
-			}
-			if (op == SALIDA) {
-				printf("%lf\n",tabla_simbolos[a1].valor);
-			}
-	}
-}
-
-int GenerarTemporal(void) {
-	char t[10];
-	sprintf(t, "_T%d", cantidad_variables_temporales++);
-	return LocalizarSimbolo(t, IDENTIFICADOR);
-}
-
-int GenerarCodigo(int op, int a1, int a2, int a3){
-	cx++;
-	tabla_codigos[cx].op = op;
-	tabla_codigos[cx].a1 = a1;
-	tabla_codigos[cx].a2 = a2;
-	tabla_codigos[cx].a3 = a3;
-}
-
-void ImprimirTablaSimbolos(){
+void ImprimirTablaSimbolos(void) {
 	printf("Tabla Simbolos:\n");
-	for (int pos = 0; pos <= cx; pos++) {
-		printf("%d\t%s\t%d\t%lf\n",
-		tabla_simbolos[i].nombre,
-		tabla_simbolos[i].token,
-		tabla_simbolos[i].valor);
+	printf("pos \tnombre \ttoken \tvalor\n");
+	for (int pos = 0; pos < cantidad_simbolos; pos++) {
+		printf("%d\t%s\t%d\t%d\n",
+		pos,
+		tabla_simbolos[pos].nombre,
+		tabla_simbolos[pos].token,
+		tabla_simbolos[pos].valor);
 	}
 }
 
-int LocalizarSimbolo(char *lexema, int token) {
-	for (int i = 0; i < cantidad_simbolos; i++) {
-		if (strcmp(tabla_simbolos[i].nombre, lexema) == 0){
-			return i;
-		}
-	}
+// Retorna la posicion del codigo buscado en caso exista, o del ultimo elemento en la tabla de simbolos pues este sera
+// anadido en dicha posicion.
 
+int LocalizarSimbolo(char* lexema, int token) {
+	// Si el simbolo ya existe, retornamos su posicion en la tabla
+  	for (int i = 0; i < cantidad_simbolos; i++) {
+  		if (strcmp(tabla_simbolos[i].nombre, lexema) == 0) {
+  			return i;
+  		}
+  	}
+
+	// Asignamos un espacio en la tabla de simbolos al nuevo simbolo
 	strcpy(tabla_simbolos[cantidad_simbolos].nombre, lexema);
 	tabla_simbolos[cantidad_simbolos].token = token;
-	if (token == NUMERO_ENTERO){
+	if (token == NUMERO_ENTERO) {
 		tabla_simbolos[cantidad_simbolos].valor = atoi(lexema);
 	} else if (token == NUMERO_REAL) {
 		tabla_simbolos[cantidad_simbolos].valor = atof(lexema);
 	} else {
-		tabla_simbolos[cantidad_simbolos].valor=0.0;
+		tabla_simbolos[cantidad_simbolos].valor = 0.0;
 	}
-	cantidad_simbolos++;
-	return cantidad_simbolos - 1;
+	return cantidad_simbolos++;
+	//return cantidad_simbolos - 1;
 }
-*/
 
 int main(void) {
     // arch = fopen("../../tests/lab03/asignacion.raa", "r");
     // arch = fopen("../../tests/lab03/bucle_while.raa", "r");
-    arch = fopen("../../tests/lab03/comentarios.raa", "r");
+    // arch = fopen("../../tests/lab03/comentarios.raa", "r");
     // arch = fopen("../../tests/lab03/entrada.raa", "r");
     // arch = fopen("../../tests/lab03/operaciones_aritmeticas.raa", "r");
     // arch = fopen("../../tests/lab03/operaciones_aritmeticas_no_triviales.raa", "r");
@@ -511,15 +731,20 @@ int main(void) {
     // arch = fopen("../../tests/lab03/operaciones_booleanas.raa", "r");
     // arch = fopen("../../tests/lab03/sentencia_condicional.raa", "r");
     // arch = fopen("../../tests/lab03/operacion_ternaria.raa", "r");
+    arch = fopen("../../tests/lab03/pruebas.raa", "r");
 
     if (arch == NULL) {
     	printf("ERROR: No se ha abierto el archivo test01.raa correctamente.\n");
         exit(1);
     }
     if (!yyparse()) {
-        printf("Es buen programa\n");
+        printf("Programa correcto.\n");
+        ImprimirTablaSimbolos();
+        ImprimirTablaCodigo();
+        InterpretarCodigo();
+        ImprimirTablaSimbolos();
     } else {
-        printf("Es mal programa\n");
+        printf("Error de sintaxis.\n");
     }
 }
 
