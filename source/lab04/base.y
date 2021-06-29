@@ -391,25 +391,25 @@ declaracion
   $$ = posicion_ultimo_codigo + 1;
 }
 expresion_1
+FIN_DE_INSTRUCCION
 {
   // Si la expresion en $6 es verdadera, nos dirigimos hacia el bloque interno.
   // En otro caso, nos dirigimos al exterior del bucle
   GenerarCodigo(SALTAR_CONDICIONADO, $5, NEUTRO, NEUTRO); 
   $$ = posicion_ultimo_codigo;
 }
-FIN_DE_INSTRUCCION
 {
   // Dejamos un punto de control para la actualizacion
   $$ = posicion_ultimo_codigo + 1;
 }
 expresion_1
+PARENTESIS_DERECHA
 {
   // Tras la actualizacion, nos dirigimos de nuevo hacia la condicion
   // que controla si continuamos o no en el bucle
   GenerarCodigo(SALTAR_VERDADERO, $4, NEUTRO, NEUTRO);
   $$ = posicion_ultimo_codigo;
 }
-PARENTESIS_DERECHA
 {
   // Dejamos un punto de control para el bloque interno
   $$ = posicion_ultimo_codigo + 1;
@@ -425,9 +425,9 @@ bloque
   // cada caso
 
   // Cuando la condicion es falsa, salimos del bucle
-  tabla_codigos[$6].a2 = posicion_ultimo_codigo + 1;
+  tabla_codigos[$7].a2 = posicion_ultimo_codigo + 1;
   // Cuando la condicion es verdadera, nos dirigimos hacia el bloque interno
-  tabla_codigos[$6].a3 = $8;
+  tabla_codigos[$7].a3 = $12;
 }
 ;
 
