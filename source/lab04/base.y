@@ -5,16 +5,20 @@
 #include<string.h>
 #include<ctype.h>
 #include<assert.h>
+
 #define MAX_SIZE 100
 
 // Prototipos de funcion
-int yylex();
-void yyerror(char *s);
-int LocalizarSimbolo(char* lexema, int toke);
+int yylex(void);
+void yyerror(char* s);
+
 int GenerarCodigo(int op, int a1, int a2, int a3);
-void ImprimirTablaCodigo();
-void InterpretarCodigo();
-int GenerarTemporal();
+int GenerarTemporal(void);
+void ImprimirTablaCodigos(void);
+void ImprimirTablaSimbolos(void);
+void InterpretarCodigo(void);
+int LocalizarSimbolo(char* lexema, int token);
+
 int cantidad_simbolos = 0;
 int posicion_ultimo_codigo = -1;
 int cantidad_variables_temporales = 1;
@@ -51,9 +55,6 @@ Simbolo tabla_simbolos[MAX_SIZE];
 
 // Instruccion "bool"
 %token TIPO_BOOLEAN
-
-// Instruccion "break"
-%token BUCLE_SALIDA
 
 // Caracteres que no son utilizados para los identificadores, literales u otros tokens
 %token CARACTER_RARO
@@ -254,10 +255,10 @@ Simbolo tabla_simbolos[MAX_SIZE];
 // Token que sera enviado para rellenar los parametros que no seran utilizados
 %token NEUTRO
 
-//Token saltar falso
+// Token para movernos a un determinado registro al obterner una condicion falsa
 %token SALTAR_FALSO
 
-//Token saltar verdadero
+// Token al cual siempre tendremos que saltar cuando es alcanzado
 %token SALTAR_VERDADERO
 
 %%
@@ -275,7 +276,6 @@ lista_generica: elemento_generico lista_generica
 elemento_generico:
 Y_LOGICO
 | TIPO_BOOLEAN
-| BUCLE_SALIDA
 | TIPO_CARACTER
 | BUCLE_CONTINUACION
 | TIPO_DOUBLE
@@ -376,23 +376,33 @@ iteracion: BUCLE_WHILE PARENTESIS_IZQUIERDA
 	tabla_codigos[$6].a2 = posicion_ultimo_codigo + 1;
 };
 
-seleccion: CONDICION_INICIO PARENTESIS_IZQUIERDA expresion_1 PARENTESIS_DERECHA
-{
-	GenerarCodigo(SALTAR_FALSO, $3, '?', NEUTRO);
-	$$ = posicion_ultimo_codigo;
-} INICIO lista_sentencias CONDICION_SINO INICIO lista_sentencias FIN;
+seleccion:
 
-/* TODO: Arreglar el uso de if, o if else :'v
-seleccion: CONDICION_INICIO PARENTESIS_IZQUIERDA expresion_1 PARENTESIS_DERECHA
+CONDICION_INICIO
+PARENTESIS_IZQUIERDA
+expresion_1
+PARENTESIS_DERECHA
+INICIO
 {
-	GenerarCodigo(SALTAR_FALSO, $3, '?', NEUTRO);
-	$$ = posicion_ultimo_codigo;
+  GenerarCodigo(SALTAR_FALSO, $3, NEUTRO, NEUTRO);
+  $$ = posicion_ultimo_codigo;
 }
-bloque
+lista_sentencias
 {
-	tabla_codigos[$5].a2 = posicion_ultimo_codigo + 1;
-};
-*/
+  GenerarCodigo(SALTAR_VERDADERO, NEUTRO, NEUTRO, NEUTRO);
+  $$ = posicion_ultimo_codigo;
+}
+CONDICION_SINO
+INICIO
+{
+  tabla_codigos[$6].a2 = posicion_ultimo_codigo + 1;
+}
+lista_sentencias
+FIN
+{
+  tabla_codigos[$8].a1 = posicion_ultimo_codigo + 1;
+}
+;
 
 bloque: INICIO lista_sentencias FIN
 | sentencia ;
@@ -624,8 +634,8 @@ expresion_4: expresion_4 OPERACION_POTENCIA factor
 factor: terminal
 {
 	$$ = $1;
-};
-factor: PARENTESIS_IZQUIERDA expresion_1 PARENTESIS_DERECHA
+}
+| PARENTESIS_IZQUIERDA expresion_1 PARENTESIS_DERECHA
 {
 	$$ = $2;
 };
@@ -649,8 +659,7 @@ terminal: NUMERO_ENTERO
 | FALSO
 {
 	$$ = LocalizarSimbolo(lexema, FALSO);
-}
-| BUCLE_SALIDA;
+};
 
 sentencia_condicional: PARENTESIS_IZQUIERDA expresion_1 PARENTESIS_DERECHA CONDICION_UNICA
 {
@@ -666,63 +675,85 @@ sentencia_condicional: PARENTESIS_IZQUIERDA expresion_1 PARENTESIS_DERECHA CONDI
 void InterpretarCodigo(void) {
 	int op, a1, a2, a3;
 	for (int i = 0; i <= posicion_ultimo_codigo; i++) {
+		op = tabla_codigos[i].op;
 		a1 = tabla_codigos[i].a1;
 		a2 = tabla_codigos[i].a2;
 		a3 = tabla_codigos[i].a3;
-		op = tabla_codigos[i].op;
-		if (op == OPERACION_SUMA) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor + tabla_simbolos[a3].valor;
-		}
+
 		if (op == ASIGNACION) {
 			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor;
 		}
-		if (op == IGUALDAD) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor == tabla_simbolos[a3].valor;
+		if (op == CONJUNCION_BINARIA) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor & tabla_simbolos[a3].valor;
+		}
+		if (op == DECREMENTO_DIRECTO) {
+			tabla_simbolos[a1].valor -= tabla_simbolos[a2].valor;
+		}
+		if (op == DECREMENTO_EN_UNIDAD) {
+			tabla_simbolos[a1].valor--;
 		}
 		if (op == DESIGUALDAD) {
 			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor != tabla_simbolos[a3].valor;
 		}
-		if (op == SALIDA) {
-			printf("%d\n",tabla_simbolos[a1].valor);
+		if (op == DISYUNCION_BINARIA) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor | tabla_simbolos[a3].valor;
+		}
+		if (op == DISYUNCION_EXCLUSIVA_BINARIA) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor ^ tabla_simbolos[a3].valor;
+		}
+		if (op == DIVISION_DIRECTA) {
+			tabla_simbolos[a1].valor /= tabla_simbolos[a2].valor;
 		}
 		if (op == ENTRADA) {
 			scanf("%d", &tabla_simbolos[a1].valor);
 		}
-		if (op == SALTAR_FALSO) {
-			if (!tabla_simbolos[a1].valor) i = a2 - 1;
+		if (op == IGUALDAD) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor == tabla_simbolos[a3].valor;
 		}
-		if (op == SALTAR_VERDADERO) {
-			i = a1 - 1;
+		if (op == INCREMENTO_DIRECTO) {
+			tabla_simbolos[a1].valor += tabla_simbolos[a2].valor;
 		}
-		if (op == Y_LOGICO) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor && tabla_simbolos[a3].valor;
+		if (op == INCREMENTO_EN_UNIDAD) {
+			tabla_simbolos[a1].valor++;
 		}
-		if (op == BUCLE_SALIDA) {
-			//tabla_simbolos[a1].valor = tabla_simbolos[a2].valor && tabla_simbolos[a3].valor;
+		if (op == LEFT_SHIFT) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor << tabla_simbolos[a3].valor;
 		}
-		if (op == OPERACION_MODULAR) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor % tabla_simbolos[a3].valor;
+		if (op == MAYOR_O_IGUAL_QUE) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor >= tabla_simbolos[a3].valor;
+		}
+		if (op == MAYOR_QUE) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor > tabla_simbolos[a3].valor;
+		}
+		if (op == MENOR_O_IGUAL_QUE) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor <= tabla_simbolos[a3].valor;
+		}
+		if (op == MENOR_QUE) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor < tabla_simbolos[a3].valor;
+		}
+		if (op == MULTIPLICACION_DIRECTA) {
+			tabla_simbolos[a1].valor *= tabla_simbolos[a2].valor;
+		}
+		if (op == NEGACION_BINARIA) {
+			tabla_simbolos[a1].valor = ~tabla_simbolos[a2].valor;
 		}
 		if (op == NEGACION_LOGICA) {
-			//tabla_simbolos[a1].valor = tabla_simbolos[a2].valor % tabla_simbolos[a3].valor;
+			// TODO: Darle precedencia adecuada
 		}
 		if (op == O_LOGICO) {
 			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor || tabla_simbolos[a3].valor;
 		}
-		if (op == OPERACION_SUMA) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor + tabla_simbolos[a3].valor;
+		if (op == OPERACION_DIVISION) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor / tabla_simbolos[a3].valor;
 		}
-		if (op == OPERACION_RESTA) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor - tabla_simbolos[a3].valor;
+		if (op == OPERACION_MODULAR) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor % tabla_simbolos[a3].valor;
 		}
 		if (op == OPERACION_MULTIPLICACION) {
 			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor * tabla_simbolos[a3].valor;
 		}
-		if (op == OPERACION_DIVISION) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor / tabla_simbolos[a3].valor;
-		}
 		if (op == OPERACION_POTENCIA) {
-			// Cuando utilicemos doubles, cambiamos el siguiente algoritmo por la funcion pow de math.h
+			// En caso utilizar double, cambiamos el siguiente algoritmo por la funcion pow de math.h
 			int base = tabla_simbolos[a2].valor;
 			int exponente = tabla_simbolos[a3].valor;
 			int resultado = 1;
@@ -733,53 +764,27 @@ void InterpretarCodigo(void) {
 			}
 			tabla_simbolos[a1].valor = resultado;
 		}
-		if (op == DISYUNCION_BINARIA) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor | tabla_simbolos[a3].valor;
+		if (op == OPERACION_RESTA) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor - tabla_simbolos[a3].valor;
 		}
-		if (op == NEGACION_BINARIA) {
-			tabla_simbolos[a1].valor = ~tabla_simbolos[a2].valor;
-		}
-		if (op == CONJUNCION_BINARIA) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor & tabla_simbolos[a3].valor;
-		}
-		if (op == LEFT_SHIFT) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor << tabla_simbolos[a3].valor;
+		if (op == OPERACION_SUMA) {
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor + tabla_simbolos[a3].valor;
 		}
 		if (op == RIGHT_SHIFT) {
 			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor >> tabla_simbolos[a3].valor;
 		}
-		if (op == DISYUNCION_EXCLUSIVA_BINARIA) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor ^ tabla_simbolos[a3].valor;
+		if (op == SALIDA) {
+			printf("%d\n",tabla_simbolos[a1].valor);
 		}
-		if (op == MENOR_QUE) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor < tabla_simbolos[a3].valor;
+		if (op == SALTAR_FALSO) {
+			if (!tabla_simbolos[a1].valor) i = a2 - 1;
 		}
-		if (op == MAYOR_QUE) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor > tabla_simbolos[a3].valor;
+		if (op == SALTAR_VERDADERO) {
+			i = a1 - 1;
 		}
-		if (op == MENOR_O_IGUAL_QUE) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor <= tabla_simbolos[a3].valor;
-		}
-		if (op == MAYOR_O_IGUAL_QUE) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor >= tabla_simbolos[a3].valor;
-		}
-		if (op == INCREMENTO_EN_UNIDAD) {
-			tabla_simbolos[a1].valor++;
-		}
-		if (op == DECREMENTO_EN_UNIDAD) {
-			tabla_simbolos[a1].valor--;
-		}
-		if (op == INCREMENTO_DIRECTO) {
-			tabla_simbolos[a1].valor += tabla_simbolos[a2].valor;
-		}
-		if (op == DECREMENTO_DIRECTO) {
-			tabla_simbolos[a1].valor -= tabla_simbolos[a2].valor;
-		}
-		if (op == MULTIPLICACION_DIRECTA) {
-			tabla_simbolos[a1].valor *= tabla_simbolos[a2].valor;
-		}
-		if (op == DIVISION_DIRECTA) {
-			tabla_simbolos[a1].valor /= tabla_simbolos[a2].valor;
+		if (op == Y_LOGICO) {
+			// TODO: Darle precedencia adecuada
+			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor && tabla_simbolos[a3].valor;
 		}
 	}
 }
@@ -798,7 +803,7 @@ int GenerarCodigo(int op, int a1, int a2, int a3) {
 	tabla_codigos[posicion_ultimo_codigo].a3 = a3;
 }
 
-void ImprimirTablaCodigo(void) {
+void ImprimirTablaCodigos(void) {
 	printf("Tabla Codigo:\n");
 	printf("cod_op\tpos_sim\tpos_x\tpos_y\n");
 	for (int pos = 0; pos <= posicion_ultimo_codigo; pos++) {
@@ -874,7 +879,7 @@ int main(void) {
     if (!yyparse()) {
         printf("Programa correcto.\n");
         ImprimirTablaSimbolos();
-        ImprimirTablaCodigo();
+        ImprimirTablaCodigos();
         InterpretarCodigo();
         ImprimirTablaSimbolos();
     } else {
@@ -919,7 +924,6 @@ int yylex() {
         if (solo_alfabeto) {
             if (strcmp(lexema, "and") == 0) return Y_LOGICO;
             if (strcmp(lexema, "bool") == 0) return TIPO_BOOLEAN;
-            if (strcmp(lexema, "break") == 0) return BUCLE_SALIDA;
             if (strcmp(lexema, "char") == 0) return TIPO_CARACTER;
             if (strcmp(lexema, "continue") == 0) return BUCLE_CONTINUACION;
             if (strcmp(lexema, "double") == 0) return TIPO_DOUBLE;
