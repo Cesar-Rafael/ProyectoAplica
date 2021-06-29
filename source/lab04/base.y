@@ -402,7 +402,7 @@ FIN_DE_INSTRUCCION
   // Dejamos un punto de control para la actualizacion
   $$ = posicion_ultimo_codigo + 1;
 }
-expresion_1
+operacion_unaria
 PARENTESIS_DERECHA
 {
   // Tras la actualizacion, nos dirigimos de nuevo hacia la condicion
@@ -492,7 +492,7 @@ operacion_unaria: IDENTIFICADOR
 	$$ = LocalizarSimbolo(lexema, IDENTIFICADOR);
 } INCREMENTO_EN_UNIDAD FIN_DE_INSTRUCCION
 {
-	GenerarCodigo(INCREMENTO_EN_UNIDAD, $1, NEUTRO, NEUTRO);
+	GenerarCodigo(INCREMENTO_EN_UNIDAD, $2, NEUTRO, NEUTRO);
 } ;
 
 operacion_unaria: IDENTIFICADOR
@@ -500,38 +500,45 @@ operacion_unaria: IDENTIFICADOR
 	$$ = LocalizarSimbolo(lexema, IDENTIFICADOR);
 } DECREMENTO_EN_UNIDAD FIN_DE_INSTRUCCION
 {
-	GenerarCodigo(DECREMENTO_EN_UNIDAD, $1, NEUTRO, NEUTRO);
+	GenerarCodigo(DECREMENTO_EN_UNIDAD, $2, NEUTRO, NEUTRO);
 } ;
 
 asignacion_operativa:
 IDENTIFICADOR
 {
 	$$ = LocalizarSimbolo(lexema, IDENTIFICADOR);
-} INCREMENTO_DIRECTO expresion_1 FIN_DE_INSTRUCCION
+}
+INCREMENTO_DIRECTO expresion_1 FIN_DE_INSTRUCCION
 {
 	GenerarCodigo(INCREMENTO_DIRECTO, $2, $4, NEUTRO);
 	$$ = $2;
 }
-| IDENTIFICADOR
+|
+IDENTIFICADOR
 {
 	$$ = LocalizarSimbolo(lexema, IDENTIFICADOR);
-} DECREMENTO_DIRECTO expresion_1 FIN_DE_INSTRUCCION
+}
+DECREMENTO_DIRECTO expresion_1 FIN_DE_INSTRUCCION
 {
 	GenerarCodigo(DECREMENTO_DIRECTO, $2, $4, NEUTRO);
 	$$ = $2;
 }
-| IDENTIFICADOR
+|
+IDENTIFICADOR
 {
 	$$ = LocalizarSimbolo(lexema, IDENTIFICADOR);
-} MULTIPLICACION_DIRECTA expresion_1 FIN_DE_INSTRUCCION
+}
+MULTIPLICACION_DIRECTA expresion_1 FIN_DE_INSTRUCCION
 {
 	GenerarCodigo(MULTIPLICACION_DIRECTA, $2, $4, NEUTRO);
 	$$ = $2;
 }
-| IDENTIFICADOR
+|
+IDENTIFICADOR
 {
 	$$ = LocalizarSimbolo(lexema, IDENTIFICADOR);
-} DIVISION_DIRECTA expresion_1 FIN_DE_INSTRUCCION
+}
+DIVISION_DIRECTA expresion_1 FIN_DE_INSTRUCCION
 {
 	GenerarCodigo(DIVISION_DIRECTA, $2, $4, NEUTRO);
 	$$ = $2;
@@ -657,7 +664,7 @@ expresion_3: expresion_3 OPERACION_MULTIPLICACION expresion_4
 }
 | expresion_4
 {
-	$$=$1;
+	$$ = $1;
 };
 
 expresion_4: expresion_4 OPERACION_POTENCIA factor
