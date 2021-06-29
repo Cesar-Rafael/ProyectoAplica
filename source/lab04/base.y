@@ -62,9 +62,6 @@ Simbolo tabla_simbolos[MAX_SIZE];
 // Intruccion "char"
 %token TIPO_CARACTER
 
-// Instruccion "continue"
-%token BUCLE_CONTINUACION
-
 // Instruccion "double"
 %token TIPO_DOUBLE
 
@@ -258,8 +255,11 @@ Simbolo tabla_simbolos[MAX_SIZE];
 // Token para movernos a un determinado registro al obterner una condicion falsa
 %token SALTAR_FALSO
 
-// Token al cual siempre tendremos que saltar cuando es alcanzado
+// Token con el cual siempre tendremos que saltar cuando es alcanzado
 %token SALTAR_VERDADERO
+
+// Token al cual al ser verdadero a1 saltaremos hacia a2, sino hacia a3
+%token SALTAR_CONDICIONADO
 
 %%
 
@@ -277,7 +277,6 @@ elemento_generico:
 Y_LOGICO
 | TIPO_BOOLEAN
 | TIPO_CARACTER
-| BUCLE_CONTINUACION
 | TIPO_DOUBLE
 | CONDICION_SINO
 | FIN
@@ -361,23 +360,78 @@ lectura: ENTRADA PARENTESIS_IZQUIERDA IDENTIFICADOR PARENTESIS_DERECHA FIN_DE_IN
 	GenerarCodigo(ENTRADA, $3, NEUTRO, NEUTRO);
 };
 
-iteracion: BUCLE_WHILE PARENTESIS_IZQUIERDA
+iteracion:
+
+BUCLE_WHILE
+PARENTESIS_IZQUIERDA
 {
 	$$ = posicion_ultimo_codigo + 1;
-} expresion_1 PARENTESIS_DERECHA
+}
+expresion_1
+PARENTESIS_DERECHA
 {
-	GenerarCodigo(SALTAR_FALSO, $4, '?', NEUTRO);
+	GenerarCodigo(SALTAR_FALSO, $4, NEUTRO, NEUTRO);
 	$$ = posicion_ultimo_codigo;
-} bloque
+}
+bloque
 {
 	GenerarCodigo(SALTAR_VERDADERO, $3, NEUTRO, NEUTRO);
 }
 {
 	tabla_codigos[$6].a2 = posicion_ultimo_codigo + 1;
-};
+}
+
+|
+
+BUCLE_FOR
+PARENTESIS_IZQUIERDA
+declaracion
+{
+  // Dejamos un primer punto de control para la condicion de detencion
+  $$ = posicion_ultimo_codigo + 1;
+}
+expresion_1
+{
+  // Si la expresion en $6 es verdadera, nos dirigimos hacia el bloque interno.
+  // En otro caso, nos dirigimos al exterior del bucle
+  GenerarCodigo(SALTAR_CONDICIONADO, $5, NEUTRO, NEUTRO); 
+  $$ = posicion_ultimo_codigo;
+}
+FIN_DE_INSTRUCCION
+{
+  // Dejamos un punto de control para la actualizacion
+  $$ = posicion_ultimo_codigo + 1;
+}
+expresion_1
+{
+  // Tras la actualizacion, nos dirigimos de nuevo hacia la condicion
+  // que controla si continuamos o no en el bucle
+  GenerarCodigo(SALTAR_VERDADERO, $4, NEUTRO, NEUTRO);
+  $$ = posicion_ultimo_codigo;
+}
+PARENTESIS_DERECHA
+{
+  // Dejamos un punto de control para el bloque interno
+  $$ = posicion_ultimo_codigo + 1;
+}
+bloque
+{
+  // Al concluir el bloque, nos dirigimos a la expresion de actualizacion
+  GenerarCodigo(SALTAR_VERDADERO, $8, NEUTRO, NEUTRO);
+}
+{
+  // En este punto ya conocemos los codigos intermedios, por lo que podemos
+  // especificar a donde se tiene que dirigir la condicion de detencion en
+  // cada caso
+
+  // Cuando la condicion es falsa, salimos del bucle
+  tabla_codigos[$6].a2 = posicion_ultimo_codigo + 1;
+  // Cuando la condicion es verdadera, nos dirigimos hacia el bloque interno
+  tabla_codigos[$6].a3 = $8;
+}
+;
 
 seleccion:
-
 CONDICION_INICIO
 PARENTESIS_IZQUIERDA
 expresion_1
@@ -411,9 +465,9 @@ declaracion: VARIABLE IDENTIFICADOR
 {
 	$$ = LocalizarSimbolo(lexema, IDENTIFICADOR);
 }
-FIN_DE_INSTRUCCION;
-
-declaracion: VARIABLE IDENTIFICADOR
+FIN_DE_INSTRUCCION
+|
+VARIABLE IDENTIFICADOR
 {
 	$$ = LocalizarSimbolo(lexema, IDENTIFICADOR);
 }
@@ -448,14 +502,6 @@ operacion_unaria: IDENTIFICADOR
 {
 	GenerarCodigo(DECREMENTO_EN_UNIDAD, $1, NEUTRO, NEUTRO);
 } ;
-
-/*
-asignacion_operativa: IDENTIFICADOR asignacion_operativa_auxiliar;
-asignacion_operativa_auxiliar: INCREMENTO_DIRECTO expresion_1 FIN_DE_INSTRUCCION
-| DECREMENTO_DIRECTO expresion_1 FIN_DE_INSTRUCCION
-| MULTIPLICACION_DIRECTA expresion_1 FIN_DE_INSTRUCCION
-| DIVISION_DIRECTA expresion_1 FIN_DE_INSTRUCCION;
-*/
 
 asignacion_operativa:
 IDENTIFICADOR
@@ -776,8 +822,17 @@ void InterpretarCodigo(void) {
 		if (op == SALIDA) {
 			printf("%d\n",tabla_simbolos[a1].valor);
 		}
+    if (op == SALTAR_CONDICIONADO) {
+      if (tabla_simbolos[a1].valor == 0) {
+        i = a2 - 1;
+      } else {
+        i = a3 - 1;
+      }
+    }
 		if (op == SALTAR_FALSO) {
-			if (!tabla_simbolos[a1].valor) i = a2 - 1;
+			if (tabla_simbolos[a1].valor == 0) {
+        i = a2 - 1;
+      }
 		}
 		if (op == SALTAR_VERDADERO) {
 			i = a1 - 1;
@@ -925,7 +980,6 @@ int yylex() {
             if (strcmp(lexema, "and") == 0) return Y_LOGICO;
             if (strcmp(lexema, "bool") == 0) return TIPO_BOOLEAN;
             if (strcmp(lexema, "char") == 0) return TIPO_CARACTER;
-            if (strcmp(lexema, "continue") == 0) return BUCLE_CONTINUACION;
             if (strcmp(lexema, "double") == 0) return TIPO_DOUBLE;
             if (strcmp(lexema, "else") == 0) return CONDICION_SINO;
             if (strcmp(lexema, "end") == 0) return FIN;
