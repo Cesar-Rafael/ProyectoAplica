@@ -1,0 +1,41 @@
+if (2 < 3) :
+  output(1);
+  output(2);
+  output(3);
+else :
+  output(4);
+  output(5);
+  output(6);
+end
+
+if (3 < 2) :
+  output(7);
+  output(8);
+  output(9);
+else :
+  output(10);
+  output(11);
+  output(12);
+end
+%%
+laskjdflj qwiojfq 0j2 re0jinfqd kfalm
+asdfjalj iwhli efaijnd %7 932 72898920 6 ^ & *
+ja jlk mwhil e for for whil whi le if if if while
+int var output input
+%%
+
+var manuel = 69;
+
+if (manuel mod 23 == 0) :
+  output(manuel ** 2);
+else:
+  output(manuel / 23);
+end
+
+output(manuel);
+manuel++;
+output(manuel);
+
+for (var i = 0; i < 5; i++;) :
+  output(i);
+end
