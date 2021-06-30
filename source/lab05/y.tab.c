@@ -69,44 +69,52 @@
 #line 1 "base.y"
 
 #include <assert.h>
+
 #include <ctype.h>
+
 #include <math.h>
+
 #include <stdio.h>
+
 #include <stdlib.h>
+
 #include <string.h>
+
 #include <time.h>
 
 #define MAX_SIZE 100
 
 // Prototipos de funcion
 int yylex(void);
-void yyerror(char* s);
+void yyerror(char * s);
 
 int GenerarCodigo(int op, int a1, int a2, int a3);
 int GenerarTemporal(void);
 void ImprimirTablaCodigos(void);
 void ImprimirTablaSimbolos(void);
 void InterpretarCodigo(void);
-int LocalizarSimbolo(char* lexema, int token);
+int LocalizarSimbolo(char * lexema, int token);
 
 int cantidad_simbolos = 0;
 int posicion_ultimo_codigo = -1;
 int cantidad_variables_temporales = 1;
 char lexema[MAX_SIZE];
-FILE* arch;
+FILE * arch;
 
-typedef struct{
-	int op;
-	int a1;
-	int a2;
-	int a3;
-} Codigo;
+typedef struct {
+  int op;
+  int a1;
+  int a2;
+  int a3;
+}
+Codigo;
 
-typedef struct{
-	char nombre[MAX_SIZE];
-	int token;
-	int valor;
-} Simbolo;
+typedef struct {
+  char nombre[MAX_SIZE];
+  int token;
+  int valor;
+}
+Simbolo;
 
 Codigo tabla_codigos[MAX_SIZE];
 Simbolo tabla_simbolos[MAX_SIZE];
@@ -115,8 +123,7 @@ Simbolo tabla_simbolos[MAX_SIZE];
 // Comando: yacc grupo5_ER.y && gcc y.tab.c -lm -lfl && ./a.out testxy.raa
 // Donde xy es un numero de dos digitos, con 01 <= xy <= 15.
 
-
-#line 120 "y.tab.c"
+#line 127 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -690,24 +697,24 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,   273,   273,   275,   276,   278,   280,   281,   283,   284,
-     285,   286,   287,   288,   289,   290,   291,   292,   293,   294,
-     295,   296,   297,   298,   299,   300,   301,   302,   303,   304,
-     305,   306,   307,   308,   309,   310,   311,   312,   313,   314,
-     315,   316,   317,   318,   319,   320,   321,   322,   323,   324,
-     325,   326,   327,   328,   329,   330,   331,   332,   333,   334,
-     335,   336,   337,   338,   339,   340,   341,   342,   343,   344,
-     345,   346,   347,   348,   349,   350,   351,   352,   354,   355,
-     356,   357,   358,   359,   360,   361,   362,   364,   369,   377,
-     382,   387,   375,   397,   403,   409,   415,   421,   426,   394,
-     447,   452,   458,   442,   468,   469,   472,   471,   478,   482,
-     477,   488,   492,   487,   498,   497,   505,   504,   514,   513,
-     523,   522,   532,   531,   541,   540,   550,   554,   558,   562,
-     567,   573,   580,   585,   592,   597,   604,   609,   615,   621,
-     627,   633,   639,   645,   650,   656,   662,   668,   674,   679,
-     685,   691,   697,   703,   709,   715,   720,   726,   732,   738,
-     744,   750,   755,   759,   764,   768,   772,   776,   780,   786,
-     785
+       0,   280,   280,   282,   283,   285,   287,   288,   290,   291,
+     292,   293,   294,   295,   296,   297,   298,   299,   300,   301,
+     302,   303,   304,   305,   306,   307,   308,   309,   310,   311,
+     312,   313,   314,   315,   316,   317,   318,   319,   320,   321,
+     322,   323,   324,   325,   326,   327,   328,   329,   330,   331,
+     332,   333,   334,   335,   336,   337,   338,   339,   340,   341,
+     342,   343,   344,   345,   346,   347,   348,   349,   350,   351,
+     352,   353,   354,   355,   356,   357,   358,   359,   361,   362,
+     363,   364,   365,   366,   367,   368,   369,   371,   376,   384,
+     389,   394,   382,   404,   410,   416,   422,   428,   433,   401,
+     454,   459,   465,   449,   475,   476,   479,   478,   485,   489,
+     484,   495,   499,   494,   505,   504,   512,   511,   521,   520,
+     530,   529,   539,   538,   548,   547,   557,   561,   565,   569,
+     574,   580,   587,   592,   599,   604,   611,   616,   622,   628,
+     634,   640,   646,   652,   657,   663,   669,   675,   681,   686,
+     692,   698,   704,   710,   716,   722,   727,   733,   739,   745,
+     751,   757,   762,   766,   771,   775,   779,   783,   787,   793,
+     792
 };
 #endif
 
@@ -1705,114 +1712,114 @@ yyreduce:
   switch (yyn)
     {
   case 87:
-#line 365 "base.y"
+#line 372 "base.y"
 {
 	GenerarCodigo(SALIDA, yyvsp[-2], NEUTRO, NEUTRO);
 }
-#line 1713 "y.tab.c"
+#line 1720 "y.tab.c"
     break;
 
   case 88:
-#line 370 "base.y"
+#line 377 "base.y"
 {
 	GenerarCodigo(ENTRADA, yyvsp[-2], NEUTRO, NEUTRO);
 }
-#line 1721 "y.tab.c"
+#line 1728 "y.tab.c"
     break;
 
   case 89:
-#line 377 "base.y"
+#line 384 "base.y"
 {
 	yyval = posicion_ultimo_codigo + 1;
 }
-#line 1729 "y.tab.c"
+#line 1736 "y.tab.c"
     break;
 
   case 90:
-#line 382 "base.y"
+#line 389 "base.y"
 {
 	GenerarCodigo(SALTAR_FALSO, yyvsp[-1], NEUTRO, NEUTRO);
 	yyval = posicion_ultimo_codigo;
 }
-#line 1738 "y.tab.c"
+#line 1745 "y.tab.c"
     break;
 
   case 91:
-#line 387 "base.y"
+#line 394 "base.y"
 {
 	GenerarCodigo(SALTAR_VERDADERO, yyvsp[-4], NEUTRO, NEUTRO);
 }
-#line 1746 "y.tab.c"
+#line 1753 "y.tab.c"
     break;
 
   case 92:
-#line 390 "base.y"
+#line 397 "base.y"
 {
 	tabla_codigos[yyvsp[-2]].a2 = posicion_ultimo_codigo + 1;
 }
-#line 1754 "y.tab.c"
+#line 1761 "y.tab.c"
     break;
 
   case 93:
-#line 397 "base.y"
+#line 404 "base.y"
 {
   // Dejamos un primer punto de control para la condicion de detencion
   yyval = posicion_ultimo_codigo + 1;
 }
-#line 1763 "y.tab.c"
+#line 1770 "y.tab.c"
     break;
 
   case 94:
-#line 403 "base.y"
+#line 410 "base.y"
 {
   // Si la expresion en $6 es verdadera, nos dirigimos hacia el bloque interno.
   // En otro caso, nos dirigimos al exterior del bucle
   GenerarCodigo(SALTAR_CONDICIONADO, yyvsp[-1], NEUTRO, NEUTRO); 
   yyval = posicion_ultimo_codigo;
 }
-#line 1774 "y.tab.c"
+#line 1781 "y.tab.c"
     break;
 
   case 95:
-#line 409 "base.y"
+#line 416 "base.y"
 {
   // Dejamos un punto de control para la actualizacion
   yyval = posicion_ultimo_codigo + 1;
 }
-#line 1783 "y.tab.c"
+#line 1790 "y.tab.c"
     break;
 
   case 96:
-#line 415 "base.y"
+#line 422 "base.y"
 {
   // Tras la actualizacion, nos dirigimos de nuevo hacia la condicion
   // que controla si continuamos o no en el bucle
   GenerarCodigo(SALTAR_VERDADERO, yyvsp[-6], NEUTRO, NEUTRO);
   yyval = posicion_ultimo_codigo;
 }
-#line 1794 "y.tab.c"
+#line 1801 "y.tab.c"
     break;
 
   case 97:
-#line 421 "base.y"
+#line 428 "base.y"
 {
   // Dejamos un punto de control para el bloque interno
   yyval = posicion_ultimo_codigo + 1;
 }
-#line 1803 "y.tab.c"
+#line 1810 "y.tab.c"
     break;
 
   case 98:
-#line 426 "base.y"
+#line 433 "base.y"
 {
   // Al concluir el bloque, nos dirigimos a la expresion de actualizacion
   GenerarCodigo(SALTAR_VERDADERO, yyvsp[-5], NEUTRO, NEUTRO);
 }
-#line 1812 "y.tab.c"
+#line 1819 "y.tab.c"
     break;
 
   case 99:
-#line 430 "base.y"
+#line 437 "base.y"
 {
   // En este punto ya conocemos los codigos intermedios, por lo que podemos
   // especificar a donde se tiene que dirigir la condicion de detencion en
@@ -1823,595 +1830,595 @@ yyreduce:
   // Cuando la condicion es verdadera, nos dirigimos hacia el bloque interno
   tabla_codigos[yyvsp[-7]].a3 = yyvsp[-2];
 }
-#line 1827 "y.tab.c"
+#line 1834 "y.tab.c"
     break;
 
   case 100:
-#line 447 "base.y"
+#line 454 "base.y"
 {
   GenerarCodigo(SALTAR_FALSO, yyvsp[-2], NEUTRO, NEUTRO);
   yyval = posicion_ultimo_codigo;
 }
-#line 1836 "y.tab.c"
+#line 1843 "y.tab.c"
     break;
 
   case 101:
-#line 452 "base.y"
+#line 459 "base.y"
 {
   GenerarCodigo(SALTAR_VERDADERO, NEUTRO, NEUTRO, NEUTRO);
   yyval = posicion_ultimo_codigo;
 }
-#line 1845 "y.tab.c"
+#line 1852 "y.tab.c"
     break;
 
   case 102:
-#line 458 "base.y"
+#line 465 "base.y"
 {
   tabla_codigos[yyvsp[-4]].a2 = posicion_ultimo_codigo + 1;
 }
-#line 1853 "y.tab.c"
+#line 1860 "y.tab.c"
     break;
 
   case 103:
-#line 463 "base.y"
+#line 470 "base.y"
 {
   tabla_codigos[yyvsp[-5]].a1 = posicion_ultimo_codigo + 1;
 }
-#line 1861 "y.tab.c"
+#line 1868 "y.tab.c"
     break;
 
   case 106:
-#line 472 "base.y"
+#line 479 "base.y"
 {
 	yyval = LocalizarSimbolo(lexema, IDENTIFICADOR);
 }
-#line 1869 "y.tab.c"
+#line 1876 "y.tab.c"
     break;
 
   case 108:
-#line 478 "base.y"
+#line 485 "base.y"
 {
 	yyval = LocalizarSimbolo(lexema, IDENTIFICADOR);
 }
-#line 1877 "y.tab.c"
+#line 1884 "y.tab.c"
     break;
 
   case 109:
-#line 482 "base.y"
+#line 489 "base.y"
 {
 	GenerarCodigo(ASIGNACION, yyvsp[-2], yyvsp[0], NEUTRO);
 }
-#line 1885 "y.tab.c"
+#line 1892 "y.tab.c"
     break;
 
   case 111:
-#line 488 "base.y"
+#line 495 "base.y"
 {
 	yyval = LocalizarSimbolo(lexema, IDENTIFICADOR);
 }
-#line 1893 "y.tab.c"
+#line 1900 "y.tab.c"
     break;
 
   case 112:
-#line 492 "base.y"
+#line 499 "base.y"
 {
 	GenerarCodigo(ASIGNACION, yyvsp[-2], yyvsp[0], NEUTRO);
 }
-#line 1901 "y.tab.c"
+#line 1908 "y.tab.c"
     break;
 
   case 114:
-#line 498 "base.y"
-{
-	yyval = LocalizarSimbolo(lexema, IDENTIFICADOR);
-}
-#line 1909 "y.tab.c"
-    break;
-
-  case 115:
-#line 501 "base.y"
-{
-	GenerarCodigo(INCREMENTO_EN_UNIDAD, yyvsp[-1], NEUTRO, NEUTRO);
-}
-#line 1917 "y.tab.c"
-    break;
-
-  case 116:
 #line 505 "base.y"
 {
 	yyval = LocalizarSimbolo(lexema, IDENTIFICADOR);
 }
-#line 1925 "y.tab.c"
+#line 1916 "y.tab.c"
     break;
 
-  case 117:
+  case 115:
 #line 508 "base.y"
 {
-	GenerarCodigo(DECREMENTO_EN_UNIDAD, yyvsp[-1], NEUTRO, NEUTRO);
+	GenerarCodigo(INCREMENTO_EN_UNIDAD, yyvsp[-1], NEUTRO, NEUTRO);
 }
-#line 1933 "y.tab.c"
+#line 1924 "y.tab.c"
     break;
 
-  case 118:
-#line 514 "base.y"
+  case 116:
+#line 512 "base.y"
 {
 	yyval = LocalizarSimbolo(lexema, IDENTIFICADOR);
 }
-#line 1941 "y.tab.c"
+#line 1932 "y.tab.c"
+    break;
+
+  case 117:
+#line 515 "base.y"
+{
+	GenerarCodigo(DECREMENTO_EN_UNIDAD, yyvsp[-1], NEUTRO, NEUTRO);
+}
+#line 1940 "y.tab.c"
+    break;
+
+  case 118:
+#line 521 "base.y"
+{
+	yyval = LocalizarSimbolo(lexema, IDENTIFICADOR);
+}
+#line 1948 "y.tab.c"
     break;
 
   case 119:
-#line 518 "base.y"
+#line 525 "base.y"
 {
 	GenerarCodigo(INCREMENTO_DIRECTO, yyvsp[-2], yyvsp[0], NEUTRO);
 	yyval = yyvsp[-2];
 }
-#line 1950 "y.tab.c"
+#line 1957 "y.tab.c"
     break;
 
   case 120:
-#line 523 "base.y"
+#line 530 "base.y"
 {
 	yyval = LocalizarSimbolo(lexema, IDENTIFICADOR);
 }
-#line 1958 "y.tab.c"
+#line 1965 "y.tab.c"
     break;
 
   case 121:
-#line 527 "base.y"
+#line 534 "base.y"
 {
 	GenerarCodigo(DECREMENTO_DIRECTO, yyvsp[-2], yyvsp[0], NEUTRO);
 	yyval = yyvsp[-2];
 }
-#line 1967 "y.tab.c"
+#line 1974 "y.tab.c"
     break;
 
   case 122:
-#line 532 "base.y"
+#line 539 "base.y"
 {
 	yyval = LocalizarSimbolo(lexema, IDENTIFICADOR);
 }
-#line 1975 "y.tab.c"
+#line 1982 "y.tab.c"
     break;
 
   case 123:
-#line 536 "base.y"
+#line 543 "base.y"
 {
 	GenerarCodigo(MULTIPLICACION_DIRECTA, yyvsp[-2], yyvsp[0], NEUTRO);
 	yyval = yyvsp[-2];
 }
-#line 1984 "y.tab.c"
+#line 1991 "y.tab.c"
     break;
 
   case 124:
-#line 541 "base.y"
+#line 548 "base.y"
 {
 	yyval = LocalizarSimbolo(lexema, IDENTIFICADOR);
 }
-#line 1992 "y.tab.c"
+#line 1999 "y.tab.c"
     break;
 
   case 125:
-#line 545 "base.y"
+#line 552 "base.y"
 {
 	GenerarCodigo(DIVISION_DIRECTA, yyvsp[-2], yyvsp[0], NEUTRO);
 	yyval = yyvsp[-2];
 }
-#line 2001 "y.tab.c"
+#line 2008 "y.tab.c"
     break;
 
   case 126:
-#line 551 "base.y"
+#line 558 "base.y"
 {
 	yyval = yyvsp[0];
 }
-#line 2009 "y.tab.c"
+#line 2016 "y.tab.c"
     break;
 
   case 127:
-#line 555 "base.y"
+#line 562 "base.y"
 {
 	yyval = yyvsp[0];
 }
-#line 2017 "y.tab.c"
+#line 2024 "y.tab.c"
     break;
 
   case 128:
-#line 559 "base.y"
+#line 566 "base.y"
 {
 	yyval = yyvsp[0];
 }
-#line 2025 "y.tab.c"
+#line 2032 "y.tab.c"
     break;
 
   case 129:
-#line 563 "base.y"
+#line 570 "base.y"
 {
 	yyval = yyvsp[0];
 }
-#line 2033 "y.tab.c"
+#line 2040 "y.tab.c"
     break;
 
   case 130:
-#line 568 "base.y"
+#line 575 "base.y"
 {
 	GenerarCodigo(OPERACION_TERNARIA, yyvsp[-4], yyvsp[-2], yyvsp[0]);
 	yyval = yyvsp[-4];
 }
-#line 2042 "y.tab.c"
+#line 2049 "y.tab.c"
     break;
 
   case 131:
-#line 574 "base.y"
+#line 581 "base.y"
 {
 	int posicion_temporal = GenerarTemporal();
 	GenerarCodigo(O_LOGICO, posicion_temporal, yyvsp[-2], yyvsp[0]);
 	yyval = posicion_temporal;
 }
-#line 2052 "y.tab.c"
+#line 2059 "y.tab.c"
     break;
 
   case 132:
-#line 581 "base.y"
+#line 588 "base.y"
 {
 	yyval = yyvsp[0];
 }
-#line 2060 "y.tab.c"
+#line 2067 "y.tab.c"
     break;
 
   case 133:
-#line 586 "base.y"
+#line 593 "base.y"
 {
 	int posicion_temporal = GenerarTemporal();
 	GenerarCodigo(Y_LOGICO, posicion_temporal, yyvsp[-2], yyvsp[0]);
 	yyval = posicion_temporal;
 }
-#line 2070 "y.tab.c"
+#line 2077 "y.tab.c"
     break;
 
   case 134:
-#line 593 "base.y"
+#line 600 "base.y"
 {
 	yyval = yyvsp[0];
 }
-#line 2078 "y.tab.c"
+#line 2085 "y.tab.c"
     break;
 
   case 135:
-#line 598 "base.y"
+#line 605 "base.y"
 {
 	int posicion_temporal = GenerarTemporal();
 	GenerarCodigo(NEGACION_LOGICA, posicion_temporal, yyvsp[0], NEUTRO);
 	yyval = posicion_temporal;
 }
-#line 2088 "y.tab.c"
+#line 2095 "y.tab.c"
     break;
 
   case 136:
-#line 605 "base.y"
+#line 612 "base.y"
 {
 	yyval = yyvsp[0];
 }
-#line 2096 "y.tab.c"
+#line 2103 "y.tab.c"
     break;
 
   case 137:
-#line 610 "base.y"
+#line 617 "base.y"
 {
 	int posicion_temporal = GenerarTemporal();
 	GenerarCodigo(MAYOR_QUE, posicion_temporal, yyvsp[-2], yyvsp[0]);
 	yyval = posicion_temporal;
 }
-#line 2106 "y.tab.c"
+#line 2113 "y.tab.c"
     break;
 
   case 138:
-#line 616 "base.y"
+#line 623 "base.y"
 {
 	int posicion_temporal = GenerarTemporal();
 	GenerarCodigo(MENOR_QUE, posicion_temporal, yyvsp[-2], yyvsp[0]);
 	yyval = posicion_temporal;
 }
-#line 2116 "y.tab.c"
+#line 2123 "y.tab.c"
     break;
 
   case 139:
-#line 622 "base.y"
+#line 629 "base.y"
 {
 	int posicion_temporal = GenerarTemporal();
 	GenerarCodigo(MAYOR_O_IGUAL_QUE, posicion_temporal, yyvsp[-2], yyvsp[0]);
 	yyval = posicion_temporal;
 }
-#line 2126 "y.tab.c"
+#line 2133 "y.tab.c"
     break;
 
   case 140:
-#line 628 "base.y"
+#line 635 "base.y"
 {
 	int posicion_temporal = GenerarTemporal();
 	GenerarCodigo(MENOR_O_IGUAL_QUE, posicion_temporal, yyvsp[-2], yyvsp[0]);
 	yyval = posicion_temporal;
 }
-#line 2136 "y.tab.c"
+#line 2143 "y.tab.c"
     break;
 
   case 141:
-#line 634 "base.y"
+#line 641 "base.y"
 {
 	int posicion_temporal = GenerarTemporal();
 	GenerarCodigo(IGUALDAD, posicion_temporal, yyvsp[-2], yyvsp[0]);
 	yyval = posicion_temporal;
 }
-#line 2146 "y.tab.c"
+#line 2153 "y.tab.c"
     break;
 
   case 142:
-#line 640 "base.y"
+#line 647 "base.y"
 {
 	int posicion_temporal = GenerarTemporal();
 	GenerarCodigo(DESIGUALDAD, posicion_temporal, yyvsp[-2], yyvsp[0]);
 	yyval = posicion_temporal;
 }
-#line 2156 "y.tab.c"
+#line 2163 "y.tab.c"
     break;
 
   case 143:
-#line 646 "base.y"
+#line 653 "base.y"
 {
 	yyval = yyvsp[0];
 }
-#line 2164 "y.tab.c"
+#line 2171 "y.tab.c"
     break;
 
   case 144:
-#line 651 "base.y"
+#line 658 "base.y"
 {
 	int posicion_temporal = GenerarTemporal();
 	GenerarCodigo(OPERACION_SUMA, posicion_temporal, yyvsp[-2], yyvsp[0]);
 	yyval = posicion_temporal;
 }
-#line 2174 "y.tab.c"
+#line 2181 "y.tab.c"
     break;
 
   case 145:
-#line 657 "base.y"
+#line 664 "base.y"
 {
 	int posicion_temporal = GenerarTemporal();
 	GenerarCodigo(OPERACION_RESTA, posicion_temporal, yyvsp[-2], yyvsp[0]);
 	yyval = posicion_temporal;
 }
-#line 2184 "y.tab.c"
+#line 2191 "y.tab.c"
     break;
 
   case 146:
-#line 663 "base.y"
+#line 670 "base.y"
 {
 	int posicion_temporal = GenerarTemporal();
 	GenerarCodigo(DISYUNCION_BINARIA, posicion_temporal, yyvsp[-2], yyvsp[0]);
 	yyval = posicion_temporal;
 }
-#line 2194 "y.tab.c"
+#line 2201 "y.tab.c"
     break;
 
   case 147:
-#line 669 "base.y"
+#line 676 "base.y"
 {
 	int posicion_temporal = GenerarTemporal();
 	GenerarCodigo(DISYUNCION_EXCLUSIVA_BINARIA, posicion_temporal, yyvsp[-2], yyvsp[0]);
 	yyval = posicion_temporal;
 }
-#line 2204 "y.tab.c"
+#line 2211 "y.tab.c"
     break;
 
   case 148:
-#line 675 "base.y"
+#line 682 "base.y"
 {
 	yyval = yyvsp[0];
 }
-#line 2212 "y.tab.c"
+#line 2219 "y.tab.c"
     break;
 
   case 149:
-#line 680 "base.y"
+#line 687 "base.y"
 {
 	int posicion_temporal = GenerarTemporal();
  	GenerarCodigo(OPERACION_MULTIPLICACION, posicion_temporal, yyvsp[-2], yyvsp[0]);
  	yyval = posicion_temporal;
 }
-#line 2222 "y.tab.c"
+#line 2229 "y.tab.c"
     break;
 
   case 150:
-#line 686 "base.y"
+#line 693 "base.y"
 {
 	int posicion_temporal = GenerarTemporal();
 	GenerarCodigo(OPERACION_DIVISION, posicion_temporal, yyvsp[-2], yyvsp[0]);
 	yyval = posicion_temporal;
 }
-#line 2232 "y.tab.c"
+#line 2239 "y.tab.c"
     break;
 
   case 151:
-#line 692 "base.y"
+#line 699 "base.y"
 {
 	int posicion_temporal = GenerarTemporal();
 	GenerarCodigo(OPERACION_MODULAR, posicion_temporal, yyvsp[-2], yyvsp[0]);
 	yyval = posicion_temporal;
 }
-#line 2242 "y.tab.c"
+#line 2249 "y.tab.c"
     break;
 
   case 152:
-#line 698 "base.y"
+#line 705 "base.y"
 {
 	int posicion_temporal = GenerarTemporal();
 	GenerarCodigo(LEFT_SHIFT, posicion_temporal, yyvsp[-2], yyvsp[0]);
 	yyval = posicion_temporal;
 }
-#line 2252 "y.tab.c"
+#line 2259 "y.tab.c"
     break;
 
   case 153:
-#line 704 "base.y"
+#line 711 "base.y"
 {
 	int posicion_temporal = GenerarTemporal();
 	GenerarCodigo(RIGHT_SHIFT, posicion_temporal, yyvsp[-2], yyvsp[0]);
 	yyval = posicion_temporal;
 }
-#line 2262 "y.tab.c"
+#line 2269 "y.tab.c"
     break;
 
   case 154:
-#line 710 "base.y"
+#line 717 "base.y"
 {
 	int posicion_temporal = GenerarTemporal();
 	GenerarCodigo(CONJUNCION_BINARIA, posicion_temporal, yyvsp[-2], yyvsp[0]);
 	yyval = posicion_temporal;
 }
-#line 2272 "y.tab.c"
+#line 2279 "y.tab.c"
     break;
 
   case 155:
-#line 716 "base.y"
+#line 723 "base.y"
 {
 	yyval = yyvsp[0];
 }
-#line 2280 "y.tab.c"
+#line 2287 "y.tab.c"
     break;
 
   case 156:
-#line 721 "base.y"
+#line 728 "base.y"
 {
 	int posicion_temporal = GenerarTemporal();
 	GenerarCodigo(OPERACION_POTENCIA, posicion_temporal, yyvsp[-2], yyvsp[0]);
 	yyval = posicion_temporal;
 }
-#line 2290 "y.tab.c"
+#line 2297 "y.tab.c"
     break;
 
   case 157:
-#line 727 "base.y"
+#line 734 "base.y"
 {
   int posicion_temporal = GenerarTemporal();
   GenerarCodigo(SQRT, posicion_temporal, yyvsp[-1], NEUTRO);
   yyval = posicion_temporal;
 }
-#line 2300 "y.tab.c"
+#line 2307 "y.tab.c"
     break;
 
   case 158:
-#line 733 "base.y"
+#line 740 "base.y"
 {
   int posicion_temporal = GenerarTemporal();
   GenerarCodigo(PRIMO, posicion_temporal, yyvsp[-1], NEUTRO);
   yyval = posicion_temporal;
 }
-#line 2310 "y.tab.c"
+#line 2317 "y.tab.c"
     break;
 
   case 159:
-#line 739 "base.y"
+#line 746 "base.y"
 {
   int posicion_temporal = GenerarTemporal();
   GenerarCodigo(RANDOM, posicion_temporal, yyvsp[-3], yyvsp[-1]);
   yyval = posicion_temporal;
 }
-#line 2320 "y.tab.c"
+#line 2327 "y.tab.c"
     break;
 
   case 160:
-#line 745 "base.y"
+#line 752 "base.y"
 {
 	int posicion_temporal = GenerarTemporal();
   GenerarCodigo(NEGACION_BINARIA, posicion_temporal, yyvsp[0], NEUTRO);
   yyval = posicion_temporal;
 }
-#line 2330 "y.tab.c"
+#line 2337 "y.tab.c"
     break;
 
   case 161:
-#line 751 "base.y"
+#line 758 "base.y"
 {
 	yyval = yyvsp[0];
 }
-#line 2338 "y.tab.c"
+#line 2345 "y.tab.c"
     break;
 
   case 162:
-#line 756 "base.y"
+#line 763 "base.y"
 {
 	yyval = yyvsp[0];
 }
-#line 2346 "y.tab.c"
+#line 2353 "y.tab.c"
     break;
 
   case 163:
-#line 760 "base.y"
+#line 767 "base.y"
 {
 	yyval = yyvsp[-1];
 }
-#line 2354 "y.tab.c"
+#line 2361 "y.tab.c"
     break;
 
   case 164:
-#line 765 "base.y"
+#line 772 "base.y"
 {
 	yyval = LocalizarSimbolo(lexema, NUMERO_ENTERO);
 }
-#line 2362 "y.tab.c"
+#line 2369 "y.tab.c"
     break;
 
   case 165:
-#line 769 "base.y"
+#line 776 "base.y"
 {
 	yyval = LocalizarSimbolo(lexema, NUMERO_REAL);
 }
-#line 2370 "y.tab.c"
+#line 2377 "y.tab.c"
     break;
 
   case 166:
-#line 773 "base.y"
+#line 780 "base.y"
 {
 	yyval = LocalizarSimbolo(lexema, IDENTIFICADOR);
 }
-#line 2378 "y.tab.c"
+#line 2385 "y.tab.c"
     break;
 
   case 167:
-#line 777 "base.y"
+#line 784 "base.y"
 {
 	yyval = LocalizarSimbolo(lexema, VERDADERO);
 }
-#line 2386 "y.tab.c"
+#line 2393 "y.tab.c"
     break;
 
   case 168:
-#line 781 "base.y"
+#line 788 "base.y"
 {
 	yyval = LocalizarSimbolo(lexema, FALSO);
 }
-#line 2394 "y.tab.c"
+#line 2401 "y.tab.c"
     break;
 
   case 169:
-#line 786 "base.y"
+#line 793 "base.y"
 {
 	GenerarCodigo(SALTAR_FALSO, yyvsp[-2], NEUTRO, NEUTRO);
 	yyval = posicion_ultimo_codigo;
 }
-#line 2403 "y.tab.c"
+#line 2410 "y.tab.c"
     break;
 
   case 170:
-#line 790 "base.y"
+#line 797 "base.y"
 {
 	tabla_codigos[yyvsp[-1]].a2 = posicion_ultimo_codigo + 1;
 }
-#line 2411 "y.tab.c"
+#line 2418 "y.tab.c"
     break;
 
 
-#line 2415 "y.tab.c"
+#line 2422 "y.tab.c"
 
       default: break;
     }
@@ -2643,106 +2650,106 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 794 "base.y"
+#line 801 "base.y"
 
 
 void InterpretarCodigo(void) {
-	int op, a1, a2, a3;
-	for (int i = 0; i <= posicion_ultimo_codigo; i++) {
-		op = tabla_codigos[i].op;
-		a1 = tabla_codigos[i].a1;
-		a2 = tabla_codigos[i].a2;
-		a3 = tabla_codigos[i].a3;
+  int op, a1, a2, a3;
+  for (int i = 0; i <= posicion_ultimo_codigo; i++) {
+    op = tabla_codigos[i].op;
+    a1 = tabla_codigos[i].a1;
+    a2 = tabla_codigos[i].a2;
+    a3 = tabla_codigos[i].a3;
 
-		if (op == ASIGNACION) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor;
-		}
-		if (op == CONJUNCION_BINARIA) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor & tabla_simbolos[a3].valor;
-		}
-		if (op == DECREMENTO_DIRECTO) {
-			tabla_simbolos[a1].valor -= tabla_simbolos[a2].valor;
-		}
-		if (op == DECREMENTO_EN_UNIDAD) {
-			tabla_simbolos[a1].valor--;
-		}
-		if (op == DESIGUALDAD) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor != tabla_simbolos[a3].valor;
-		}
-		if (op == DISYUNCION_BINARIA) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor | tabla_simbolos[a3].valor;
-		}
-		if (op == DISYUNCION_EXCLUSIVA_BINARIA) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor ^ tabla_simbolos[a3].valor;
-		}
-		if (op == DIVISION_DIRECTA) {
-			tabla_simbolos[a1].valor /= tabla_simbolos[a2].valor;
-		}
-		if (op == ENTRADA) {
-			scanf("%d", &tabla_simbolos[a1].valor);
-		}
-		if (op == IGUALDAD) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor == tabla_simbolos[a3].valor;
-		}
-		if (op == INCREMENTO_DIRECTO) {
-			tabla_simbolos[a1].valor += tabla_simbolos[a2].valor;
-		}
-		if (op == INCREMENTO_EN_UNIDAD) {
-			tabla_simbolos[a1].valor++;
-		}
-		if (op == LEFT_SHIFT) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor << tabla_simbolos[a3].valor;
-		}
-		if (op == MAYOR_O_IGUAL_QUE) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor >= tabla_simbolos[a3].valor;
-		}
-		if (op == MAYOR_QUE) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor > tabla_simbolos[a3].valor;
-		}
-		if (op == MENOR_O_IGUAL_QUE) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor <= tabla_simbolos[a3].valor;
-		}
-		if (op == MENOR_QUE) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor < tabla_simbolos[a3].valor;
-		}
-		if (op == MULTIPLICACION_DIRECTA) {
-			tabla_simbolos[a1].valor *= tabla_simbolos[a2].valor;
-		}
-		if (op == NEGACION_BINARIA) {
-			tabla_simbolos[a1].valor = ~tabla_simbolos[a2].valor;
-		}
-		if (op == NEGACION_LOGICA) {
-			tabla_simbolos[a1].valor = !tabla_simbolos[a2].valor;
-		}
-		if (op == O_LOGICO) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor || tabla_simbolos[a3].valor;
-		}
-		if (op == OPERACION_DIVISION) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor / tabla_simbolos[a3].valor;
-		}
-		if (op == OPERACION_MODULAR) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor % tabla_simbolos[a3].valor;
-		}
-		if (op == OPERACION_MULTIPLICACION) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor * tabla_simbolos[a3].valor;
-		}
-		if (op == OPERACION_POTENCIA) {
-			int base = tabla_simbolos[a2].valor;
-			int exponente = tabla_simbolos[a3].valor;
-			int resultado = 1;
-			while (exponente > 0) {
-				if (exponente & 1) resultado *= base;
-				exponente >>= 1;
-				base *= base;
-			}
-			tabla_simbolos[a1].valor = resultado;
-		}
-		if (op == OPERACION_RESTA) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor - tabla_simbolos[a3].valor;
-		}
-		if (op == OPERACION_SUMA) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor + tabla_simbolos[a3].valor;
-		}
+    if (op == ASIGNACION) {
+      tabla_simbolos[a1].valor = tabla_simbolos[a2].valor;
+    }
+    if (op == CONJUNCION_BINARIA) {
+      tabla_simbolos[a1].valor = tabla_simbolos[a2].valor & tabla_simbolos[a3].valor;
+    }
+    if (op == DECREMENTO_DIRECTO) {
+      tabla_simbolos[a1].valor -= tabla_simbolos[a2].valor;
+    }
+    if (op == DECREMENTO_EN_UNIDAD) {
+      tabla_simbolos[a1].valor--;
+    }
+    if (op == DESIGUALDAD) {
+      tabla_simbolos[a1].valor = tabla_simbolos[a2].valor != tabla_simbolos[a3].valor;
+    }
+    if (op == DISYUNCION_BINARIA) {
+      tabla_simbolos[a1].valor = tabla_simbolos[a2].valor | tabla_simbolos[a3].valor;
+    }
+    if (op == DISYUNCION_EXCLUSIVA_BINARIA) {
+      tabla_simbolos[a1].valor = tabla_simbolos[a2].valor ^ tabla_simbolos[a3].valor;
+    }
+    if (op == DIVISION_DIRECTA) {
+      tabla_simbolos[a1].valor /= tabla_simbolos[a2].valor;
+    }
+    if (op == ENTRADA) {
+      scanf("%d", & tabla_simbolos[a1].valor);
+    }
+    if (op == IGUALDAD) {
+      tabla_simbolos[a1].valor = tabla_simbolos[a2].valor == tabla_simbolos[a3].valor;
+    }
+    if (op == INCREMENTO_DIRECTO) {
+      tabla_simbolos[a1].valor += tabla_simbolos[a2].valor;
+    }
+    if (op == INCREMENTO_EN_UNIDAD) {
+      tabla_simbolos[a1].valor++;
+    }
+    if (op == LEFT_SHIFT) {
+      tabla_simbolos[a1].valor = tabla_simbolos[a2].valor << tabla_simbolos[a3].valor;
+    }
+    if (op == MAYOR_O_IGUAL_QUE) {
+      tabla_simbolos[a1].valor = tabla_simbolos[a2].valor >= tabla_simbolos[a3].valor;
+    }
+    if (op == MAYOR_QUE) {
+      tabla_simbolos[a1].valor = tabla_simbolos[a2].valor > tabla_simbolos[a3].valor;
+    }
+    if (op == MENOR_O_IGUAL_QUE) {
+      tabla_simbolos[a1].valor = tabla_simbolos[a2].valor <= tabla_simbolos[a3].valor;
+    }
+    if (op == MENOR_QUE) {
+      tabla_simbolos[a1].valor = tabla_simbolos[a2].valor < tabla_simbolos[a3].valor;
+    }
+    if (op == MULTIPLICACION_DIRECTA) {
+      tabla_simbolos[a1].valor *= tabla_simbolos[a2].valor;
+    }
+    if (op == NEGACION_BINARIA) {
+      tabla_simbolos[a1].valor = ~tabla_simbolos[a2].valor;
+    }
+    if (op == NEGACION_LOGICA) {
+      tabla_simbolos[a1].valor = !tabla_simbolos[a2].valor;
+    }
+    if (op == O_LOGICO) {
+      tabla_simbolos[a1].valor = tabla_simbolos[a2].valor || tabla_simbolos[a3].valor;
+    }
+    if (op == OPERACION_DIVISION) {
+      tabla_simbolos[a1].valor = tabla_simbolos[a2].valor / tabla_simbolos[a3].valor;
+    }
+    if (op == OPERACION_MODULAR) {
+      tabla_simbolos[a1].valor = tabla_simbolos[a2].valor % tabla_simbolos[a3].valor;
+    }
+    if (op == OPERACION_MULTIPLICACION) {
+      tabla_simbolos[a1].valor = tabla_simbolos[a2].valor * tabla_simbolos[a3].valor;
+    }
+    if (op == OPERACION_POTENCIA) {
+      int base = tabla_simbolos[a2].valor;
+      int exponente = tabla_simbolos[a3].valor;
+      int resultado = 1;
+      while (exponente > 0) {
+        if (exponente & 1) resultado *= base;
+        exponente >>= 1;
+        base *= base;
+      }
+      tabla_simbolos[a1].valor = resultado;
+    }
+    if (op == OPERACION_RESTA) {
+      tabla_simbolos[a1].valor = tabla_simbolos[a2].valor - tabla_simbolos[a3].valor;
+    }
+    if (op == OPERACION_SUMA) {
+      tabla_simbolos[a1].valor = tabla_simbolos[a2].valor + tabla_simbolos[a3].valor;
+    }
     if (op == PRIMO) {
       int n = tabla_simbolos[a2].valor;
       if (n < 0) n *= (-1);
@@ -2769,12 +2776,12 @@ void InterpretarCodigo(void) {
       int delta = r - l + 1;
       tabla_simbolos[a1].valor = l + rand() % delta;
     }
-		if (op == RIGHT_SHIFT) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor >> tabla_simbolos[a3].valor;
-		}
-		if (op == SALIDA) {
-			printf("%d\n",tabla_simbolos[a1].valor);
-		}
+    if (op == RIGHT_SHIFT) {
+      tabla_simbolos[a1].valor = tabla_simbolos[a2].valor >> tabla_simbolos[a3].valor;
+    }
+    if (op == SALIDA) {
+      printf("%d\n", tabla_simbolos[a1].valor);
+    }
     if (op == SALTAR_CONDICIONADO) {
       if (tabla_simbolos[a1].valor == 0) {
         i = a2 - 1;
@@ -2782,14 +2789,14 @@ void InterpretarCodigo(void) {
         i = a3 - 1;
       }
     }
-		if (op == SALTAR_FALSO) {
-			if (tabla_simbolos[a1].valor == 0) {
+    if (op == SALTAR_FALSO) {
+      if (tabla_simbolos[a1].valor == 0) {
         i = a2 - 1;
       }
-		}
-		if (op == SALTAR_VERDADERO) {
-			i = a1 - 1;
-		}
+    }
+    if (op == SALTAR_VERDADERO) {
+      i = a1 - 1;
+    }
     if (op == SQRT) {
       int n = tabla_simbolos[a2].valor;
       assert(n >= 0);
@@ -2809,324 +2816,324 @@ void InterpretarCodigo(void) {
       }
       tabla_simbolos[a1].valor = l;
     }
-		if (op == Y_LOGICO) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor && tabla_simbolos[a3].valor;
-		}
-		if (op == OPERACION_TERNARIA) {
-			tabla_simbolos[a1].valor = tabla_simbolos[a1].valor ? tabla_simbolos[a2].valor : tabla_simbolos[a3].valor;
-		}
-	}
+    if (op == Y_LOGICO) {
+      tabla_simbolos[a1].valor = tabla_simbolos[a2].valor && tabla_simbolos[a3].valor;
+    }
+    if (op == OPERACION_TERNARIA) {
+      tabla_simbolos[a1].valor = tabla_simbolos[a1].valor ? tabla_simbolos[a2].valor : tabla_simbolos[a3].valor;
+    }
+  }
 }
 
 int GenerarTemporal(void) {
-	char t[10];
-	sprintf(t, "tmp_%d", cantidad_variables_temporales++);
-	return LocalizarSimbolo(t, IDENTIFICADOR);
+  char t[10];
+  sprintf(t, "tmp_%d", cantidad_variables_temporales++);
+  return LocalizarSimbolo(t, IDENTIFICADOR);
 }
 
 int GenerarCodigo(int op, int a1, int a2, int a3) {
-	posicion_ultimo_codigo++;
-	tabla_codigos[posicion_ultimo_codigo].op = op;
-	tabla_codigos[posicion_ultimo_codigo].a1 = a1;
-	tabla_codigos[posicion_ultimo_codigo].a2 = a2;
-	tabla_codigos[posicion_ultimo_codigo].a3 = a3;
+  posicion_ultimo_codigo++;
+  tabla_codigos[posicion_ultimo_codigo].op = op;
+  tabla_codigos[posicion_ultimo_codigo].a1 = a1;
+  tabla_codigos[posicion_ultimo_codigo].a2 = a2;
+  tabla_codigos[posicion_ultimo_codigo].a3 = a3;
 }
 
 void ImprimirTablaCodigos(void) {
-	printf("Tabla Codigo:\n");
-	printf("cod_op\tpos_sim\tpos_x\tpos_y\n");
-	for (int pos = 0; pos <= posicion_ultimo_codigo; pos++) {
-		printf("%d\t%d\t%d\t%d\n",
-		tabla_codigos[pos].op,
-		tabla_codigos[pos].a1,
-		tabla_codigos[pos].a2,
-		tabla_codigos[pos].a3);
-	}
+  printf("Tabla Codigo:\n");
+  printf("cod_op\tpos_sim\tpos_x\tpos_y\n");
+  for (int pos = 0; pos <= posicion_ultimo_codigo; pos++) {
+    printf("%d\t%d\t%d\t%d\n",
+      tabla_codigos[pos].op,
+      tabla_codigos[pos].a1,
+      tabla_codigos[pos].a2,
+      tabla_codigos[pos].a3);
+  }
 }
 
 void ImprimirTablaSimbolos(void) {
-	printf("Tabla Simbolos:\n");
-	printf("pos \tnombre \ttoken \tvalor\n");
-	for (int pos = 0; pos < cantidad_simbolos; pos++) {
-		printf("%d\t%s\t%d\t%d\n",
-		pos,
-		tabla_simbolos[pos].nombre,
-		tabla_simbolos[pos].token,
-		tabla_simbolos[pos].valor);
-	}
+  printf("Tabla Simbolos:\n");
+  printf("pos \tnombre \ttoken \tvalor\n");
+  for (int pos = 0; pos < cantidad_simbolos; pos++) {
+    printf("%d\t%s\t%d\t%d\n",
+      pos,
+      tabla_simbolos[pos].nombre,
+      tabla_simbolos[pos].token,
+      tabla_simbolos[pos].valor);
+  }
 }
 
 // Retorna la posicion del codigo buscado en caso exista, o del ultimo elemento en la tabla de simbolos pues este sera
 // anadido en dicha posicion.
 
-int LocalizarSimbolo(char* lexema, int token) {
+int LocalizarSimbolo(char * lexema, int token) {
 
-	// Si el simbolo ya existe, retornamos su posicion en la tabla
+  // Si el simbolo ya existe, retornamos su posicion en la tabla
 
-  	for (int i = 0; i < cantidad_simbolos; i++) {
-  		if (strcmp(tabla_simbolos[i].nombre, lexema) == 0) {
-  			return i;
-  		}
-  	}
+  for (int i = 0; i < cantidad_simbolos; i++) {
+    if (strcmp(tabla_simbolos[i].nombre, lexema) == 0) {
+      return i;
+    }
+  }
 
-	// Asignamos un espacio en la tabla de simbolos al nuevo simbolo
+  // Asignamos un espacio en la tabla de simbolos al nuevo simbolo
 
-	strcpy(tabla_simbolos[cantidad_simbolos].nombre, lexema);
-	tabla_simbolos[cantidad_simbolos].token = token;
-	if (token == NUMERO_ENTERO) {
-		tabla_simbolos[cantidad_simbolos].valor = atoi(lexema);
-	} else if (token == NUMERO_REAL) {
-		tabla_simbolos[cantidad_simbolos].valor = atof(lexema);
-	} else if (token == IDENTIFICADOR) {
-		tabla_simbolos[cantidad_simbolos].valor = 0;
-	} else if (token == VERDADERO) {
-		tabla_simbolos[cantidad_simbolos].valor = 1;
-	} else if (token == FALSO) {
-		tabla_simbolos[cantidad_simbolos].valor = 0;
-	}
-	return cantidad_simbolos++;
+  strcpy(tabla_simbolos[cantidad_simbolos].nombre, lexema);
+  tabla_simbolos[cantidad_simbolos].token = token;
+  if (token == NUMERO_ENTERO) {
+    tabla_simbolos[cantidad_simbolos].valor = atoi(lexema);
+  } else if (token == NUMERO_REAL) {
+    tabla_simbolos[cantidad_simbolos].valor = atof(lexema);
+  } else if (token == IDENTIFICADOR) {
+    tabla_simbolos[cantidad_simbolos].valor = 0;
+  } else if (token == VERDADERO) {
+    tabla_simbolos[cantidad_simbolos].valor = 1;
+  } else if (token == FALSO) {
+    tabla_simbolos[cantidad_simbolos].valor = 0;
+  }
+  return cantidad_simbolos++;
 }
 
-int main(int argc, char* argv[]) {
-	clock_t tiempo = clock();
-	char nombre_archivo[100];
-	if (argc == 1) {
-		printf("ERROR: Por favor ingrese el nombre de test\n");
-		exit(1);
-	}
-  // Mandamos un parametro para cambiar la semilla del generador aleatorio
+int main(int argc, char * argv[]) {
+  clock_t tiempo = clock();
+  char nombre_archivo[100];
+  if (argc == 1) {
+    printf("ERROR: Ingresar nombre de test. Ejemplo: ./a.out test05.raa\n");
+    exit(1);
+  }
+  // Mandar un parametro para cambiar la semilla del generador aleatorio
   srand(time(0));
 
   // Lectura de archivo
   sprintf(nombre_archivo, "../../tests/lab05/%s", argv[1]);
-	arch = fopen(nombre_archivo, "r");
+  arch = fopen(nombre_archivo, "r");
 
-    if (arch == NULL) {
-    	printf("ERROR: No se ha abierto el archivo %s correctamente.\n", nombre_archivo);
-        exit(1);
-    }
-    if (!yyparse()) {
-        printf("Programa correcto.\n");
-        //Si desea ver la impresión de las tablas de simbolos y codigos, por favor descomente las siguientes lineas:
-        //ImprimirTablaSimbolos();
-        //ImprimirTablaCodigos();
-        InterpretarCodigo();
-        //ImprimirTablaSimbolos();
-    } else {
-        printf("Error de sintaxis.\n");
-    }
-    tiempo = clock() - tiempo;
-    double tiempo_ejecucion = ((double) tiempo) / CLOCKS_PER_SEC * 1000000;
-    printf("Tiempo de ejecucion: %f ms\n", tiempo_ejecucion);
+  if (arch == NULL) {
+    printf("ERROR: No se ha abierto el archivo %s correctamente.\n", nombre_archivo);
+    exit(1);
+  }
+  if (!yyparse()) {
+    printf("Programa correcto.\n");
+    // Descomentar para mostrar las tablas
+    // ImprimirTablaSimbolos();
+    // ImprimirTablaCodigos();
+    InterpretarCodigo();
+    // ImprimirTablaSimbolos();
+  } else {
+    printf("Error de sintaxis.\n");
+  }
+  tiempo = clock() - tiempo;
+  double tiempo_ejecucion = ((double) tiempo) / CLOCKS_PER_SEC * 1000000;
+  printf("Tiempo de ejecucion: %f ms\n", tiempo_ejecucion);
 }
 
-void yyerror(char *s) {
-    fprintf(stderr, "%s\n", s);
+void yyerror(char * s) {
+  fprintf(stderr, "%s\n", s);
 }
 
 int yylex() {
-    char c;
-    int pos;
-    while (isspace((c = fgetc(arch))));
-    if (c == EOF) return 0;
+  char c;
+  int pos;
+  while (isspace((c = fgetc(arch))));
+  if (c == EOF) return 0;
 
-    /*
-     * Caso 1:
-     * Si el token comienza con una letra del alfabeto o guion bajo tenemos las siguientes posibilidades:
-     * Todas son letras del alfabeto. Verifico si es que es palabra reservada para retornarla.
-     * En otro caso, necesariamente es un identificador
-     */
+  /*
+   * Caso 1:
+   * Si el token comienza con una letra del alfabeto o guion bajo tenemos las siguientes posibilidades:
+   * Todas son letras del alfabeto. Verifico si es que es palabra reservada para retornarla.
+   * En otro caso, necesariamente es un identificador
+   */
 
-    if (isalpha(c) || c == '_') {
-        pos = 0;
-        do {
-            lexema[pos++] = c;
-            c = fgetc(arch);
-            //printf("%c\n", c);
-        } while ('a' <= c && c <= 'z' || 'A' <= c && c <= 'Z' || '0' <= c && c <= '9' || c == '_');
-        ungetc(c, arch);
-        lexema[pos++] = '\0';
-        //printf("%s\n", lexema);
-        int solo_alfabeto = 1;
-        for (int i = 0; i < pos - 1; i++) {
-            if (!isalpha(lexema[i])) {
-                solo_alfabeto = 0;
-                break;
-            }
-        }
-        if (solo_alfabeto) {
-            if (strcmp(lexema, "and") == 0) return Y_LOGICO;
-            if (strcmp(lexema, "bool") == 0) return TIPO_BOOLEAN;
-            if (strcmp(lexema, "char") == 0) return TIPO_CARACTER;
-            if (strcmp(lexema, "double") == 0) return TIPO_DOUBLE;
-            if (strcmp(lexema, "else") == 0) return CONDICION_SINO;
-            if (strcmp(lexema, "end") == 0) return FIN;
-            if (strcmp(lexema, "false") == 0) return FALSO;
-            if (strcmp(lexema, "for") == 0) return BUCLE_FOR;
-            if (strcmp(lexema, "function") == 0) return FUNCION_INICIO;
-            if (strcmp(lexema, "if") == 0) return CONDICION_INICIO;
-            if (strcmp(lexema, "input") == 0) return ENTRADA;
-            if (strcmp(lexema, "int") == 0) return TIPO_ENTERO;
-            if (strcmp(lexema, "mod") == 0) return OPERACION_MODULAR;
-            if (strcmp(lexema, "not") == 0) return NEGACION_LOGICA;
-            if (strcmp(lexema, "or") == 0) return O_LOGICO;
-            if (strcmp(lexema, "output") == 0) return SALIDA;
-            if (strcmp(lexema, "sqrt") == 0) return SQRT;
-            if (strcmp(lexema, "random") == 0) return RANDOM;
-            if (strcmp(lexema, "return") == 0) return FUNCION_RETORNO;
-            if (strcmp(lexema, "string") == 0) return TIPO_CADENA;
-            if (strcmp(lexema, "true") == 0) return VERDADERO;
-            if (strcmp(lexema, "var") == 0) return VARIABLE;
-            if (strcmp(lexema, "while") == 0) return BUCLE_WHILE;
-        }
-        if (strcmp(lexema, "is_prime") == 0) return PRIMO;
-        return IDENTIFICADOR;
-    }
-
-    /*
-     * Caso 2:
-     * Si el token comienza con un numero analizo lo siguiente:
-     * Obtengo todos los digitos consecutivos posibles.
-     * Si es que el caracter siguiente es un punto y lo que le sigue un numero, entonces obtengo el siguiente
-     * numero entero posible y a esto lo convierto en mi numero real.
-     * Sino retorno un numero entero.
-     */
-
-    if (isdigit(c)) {
-        // Obtengo la parte entera
-        pos = 0;
-        do {
-            lexema[pos++] = c;
-            c = fgetc(arch);
-        } while (isdigit(c));
-
-        // Si es que tenemos un punto flotante analizamos dos casos
-        if (c == '.') {
-            int longitud_parte_entera = pos;
-            do {
-                lexema[pos++] = c;
-                c = fgetc(arch);
-            } while (isdigit(c));
-            ungetc(c, arch);
-
-            // Si es que no hemos encontrado ningun digito valido luego del punto, solo retornamos la parte entera
-            if (pos == longitud_parte_entera + 1) {
-                ungetc('.', arch);
-                lexema[longitud_parte_entera] = '\0';
-                return NUMERO_ENTERO;
-            } else {
-                // En otro caso, retorno el numero real que ha sido escaneado
-                lexema[pos] = '\0';
-                return NUMERO_REAL;
-            }
-        } else {
-            // Si lo que sigue al punto no es lo suficiente como para formar la parte decimal
-            // devuelvo el punto al buffer y retorno el numero entero
-            ungetc(c, arch);
-            lexema[pos] = '\0';
-            return NUMERO_ENTERO;
-        }
-    }
-
-    //En esta ultima parte, solo nos falta analizar simbolos.
+  if (isalpha(c) || c == '_') {
     pos = 0;
+    do {
+      lexema[pos++] = c;
+      c = fgetc(arch);
+      //printf("%c\n", c);
+    } while ('a' <= c && c <= 'z' || 'A' <= c && c <= 'Z' || '0' <= c && c <= '9' || c == '_');
+    ungetc(c, arch);
+    lexema[pos++] = '\0';
+    //printf("%s\n", lexema);
+    int solo_alfabeto = 1;
+    for (int i = 0; i < pos - 1; i++) {
+      if (!isalpha(lexema[i])) {
+        solo_alfabeto = 0;
+        break;
+      }
+    }
+    if (solo_alfabeto) {
+      if (strcmp(lexema, "and") == 0) return Y_LOGICO;
+      if (strcmp(lexema, "bool") == 0) return TIPO_BOOLEAN;
+      if (strcmp(lexema, "char") == 0) return TIPO_CARACTER;
+      if (strcmp(lexema, "double") == 0) return TIPO_DOUBLE;
+      if (strcmp(lexema, "else") == 0) return CONDICION_SINO;
+      if (strcmp(lexema, "end") == 0) return FIN;
+      if (strcmp(lexema, "false") == 0) return FALSO;
+      if (strcmp(lexema, "for") == 0) return BUCLE_FOR;
+      if (strcmp(lexema, "function") == 0) return FUNCION_INICIO;
+      if (strcmp(lexema, "if") == 0) return CONDICION_INICIO;
+      if (strcmp(lexema, "input") == 0) return ENTRADA;
+      if (strcmp(lexema, "int") == 0) return TIPO_ENTERO;
+      if (strcmp(lexema, "mod") == 0) return OPERACION_MODULAR;
+      if (strcmp(lexema, "not") == 0) return NEGACION_LOGICA;
+      if (strcmp(lexema, "or") == 0) return O_LOGICO;
+      if (strcmp(lexema, "output") == 0) return SALIDA;
+      if (strcmp(lexema, "sqrt") == 0) return SQRT;
+      if (strcmp(lexema, "random") == 0) return RANDOM;
+      if (strcmp(lexema, "return") == 0) return FUNCION_RETORNO;
+      if (strcmp(lexema, "string") == 0) return TIPO_CADENA;
+      if (strcmp(lexema, "true") == 0) return VERDADERO;
+      if (strcmp(lexema, "var") == 0) return VARIABLE;
+      if (strcmp(lexema, "while") == 0) return BUCLE_WHILE;
+    }
+    if (strcmp(lexema, "is_prime") == 0) return PRIMO;
+    return IDENTIFICADOR;
+  }
 
-    // Multiplicacion, potencia e multiplicacion directa
-    if (c == '*') {
+  /*
+   * Caso 2:
+   * Si el token comienza con un numero analizo lo siguiente:
+   * Obtengo todos los digitos consecutivos posibles.
+   * Si es que el caracter siguiente es un punto y lo que le sigue un numero, entonces obtengo el siguiente
+   * numero entero posible y a esto lo convierto en mi numero real.
+   * Sino retorno un numero entero.
+   */
+
+  if (isdigit(c)) {
+    // Obtengo la parte entera
+    pos = 0;
+    do {
+      lexema[pos++] = c;
+      c = fgetc(arch);
+    } while (isdigit(c));
+
+    // Si es que tenemos un punto flotante analizamos dos casos
+    if (c == '.') {
+      int longitud_parte_entera = pos;
+      do {
+        lexema[pos++] = c;
         c = fgetc(arch);
-        if (c == '*') return OPERACION_POTENCIA;
-        if (c == '=') return MULTIPLICACION_DIRECTA;
-        /*
-         * En caso no coincida con ninguna de las anteriores, unicamente estamos multiplicando y devolvemos
-         * el ultimo caracter analizado al buffer del archivo.
-         */
-        ungetc(c, arch);
-        return OPERACION_MULTIPLICACION;
+      } while (isdigit(c));
+      ungetc(c, arch);
+
+      // Si es que no hemos encontrado ningun digito valido luego del punto, solo retornamos la parte entera
+      if (pos == longitud_parte_entera + 1) {
+        ungetc('.', arch);
+        lexema[longitud_parte_entera] = '\0';
+        return NUMERO_ENTERO;
+      } else {
+        // En otro caso, retorno el numero real que ha sido escaneado
+        lexema[pos] = '\0';
+        return NUMERO_REAL;
+      }
+    } else {
+      // Si lo que sigue al punto no es lo suficiente como para formar la parte decimal
+      // devuelvo el punto al buffer y retorno el numero entero
+      ungetc(c, arch);
+      lexema[pos] = '\0';
+      return NUMERO_ENTERO;
     }
+  }
 
-    // Menor que, menor o igual que y left shift
-    if (c == '<') {
-        c = fgetc(arch);
-        if (c == '<') return LEFT_SHIFT;
-        if (c == '=') return MENOR_O_IGUAL_QUE;
-        ungetc(c, arch);
-        return MENOR_QUE;
-    }
+  //En esta ultima parte, solo nos falta analizar simbolos.
+  pos = 0;
 
-    // Mayor que, mayor o igual que y right shift
-    if (c == '>') {
-        c = fgetc(arch);
-        if (c == '>') return RIGHT_SHIFT;
-        if (c == '=') return MAYOR_O_IGUAL_QUE;
-        ungetc(c, arch);
-        return MAYOR_QUE;
-    }
+  // Multiplicacion, potencia e multiplicacion directa
+  if (c == '*') {
+    c = fgetc(arch);
+    if (c == '*') return OPERACION_POTENCIA;
+    if (c == '=') return MULTIPLICACION_DIRECTA;
+    /*
+     * En caso no coincida con ninguna de las anteriores, unicamente estamos multiplicando y devolvemos
+     * el ultimo caracter analizado al buffer del archivo.
+     */
+    ungetc(c, arch);
+    return OPERACION_MULTIPLICACION;
+  }
 
-    // Asignación, comparación de igualdad
-    if (c == '=') {
-        c = fgetc(arch);
-        if (c == '=') return IGUALDAD;
-        ungetc(c, arch);
-        return ASIGNACION;
-    }
+  // Menor que, menor o igual que y left shift
+  if (c == '<') {
+    c = fgetc(arch);
+    if (c == '<') return LEFT_SHIFT;
+    if (c == '=') return MENOR_O_IGUAL_QUE;
+    ungetc(c, arch);
+    return MENOR_QUE;
+  }
 
-    if (c == '+') {
-        c = fgetc(arch);
-        if (c == '=') return INCREMENTO_DIRECTO;
-        if (c == '+') return INCREMENTO_EN_UNIDAD;
-        ungetc(c, arch);
-        return OPERACION_SUMA;
-    }
+  // Mayor que, mayor o igual que y right shift
+  if (c == '>') {
+    c = fgetc(arch);
+    if (c == '>') return RIGHT_SHIFT;
+    if (c == '=') return MAYOR_O_IGUAL_QUE;
+    ungetc(c, arch);
+    return MAYOR_QUE;
+  }
 
-    if (c == '-') {
-        c = fgetc(arch);
-        if (c == '=') return DECREMENTO_DIRECTO;
-        if (c == '-') return DECREMENTO_EN_UNIDAD;
-        if (c == '>') return TERNARIO_SI;
-        ungetc(c, arch);
-        return OPERACION_RESTA;
-    }
+  // Asignación, comparación de igualdad
+  if (c == '=') {
+    c = fgetc(arch);
+    if (c == '=') return IGUALDAD;
+    ungetc(c, arch);
+    return ASIGNACION;
+  }
 
-    if (c == '/') {
-        c = fgetc(arch);
-        if (c == '=') return DIVISION_DIRECTA;
-        ungetc(c, arch);
-        return OPERACION_DIVISION;
-    }
+  if (c == '+') {
+    c = fgetc(arch);
+    if (c == '=') return INCREMENTO_DIRECTO;
+    if (c == '+') return INCREMENTO_EN_UNIDAD;
+    ungetc(c, arch);
+    return OPERACION_SUMA;
+  }
 
-    if (c == '!') {
-        c = fgetc(arch);
-        if (c == '=') return DESIGUALDAD;
-        ungetc(c, arch);
-        return NEGACION_LOGICA;
-    }
+  if (c == '-') {
+    c = fgetc(arch);
+    if (c == '=') return DECREMENTO_DIRECTO;
+    if (c == '-') return DECREMENTO_EN_UNIDAD;
+    if (c == '>') return TERNARIO_SI;
+    ungetc(c, arch);
+    return OPERACION_RESTA;
+  }
 
-    if (c == '&') {
-			c = fgetc(arch);
-			if (c == '&') return CONDICION_UNICA;
-			ungetc(c, arch);
-			return CONJUNCION_BINARIA;
-    }
+  if (c == '/') {
+    c = fgetc(arch);
+    if (c == '=') return DIVISION_DIRECTA;
+    ungetc(c, arch);
+    return OPERACION_DIVISION;
+  }
 
-    if (c == '%') {
-    	c = fgetc(arch);
-    	if (c == '%') return COMENTARIO;
-    	ungetc(c, arch);
-    }
+  if (c == '!') {
+    c = fgetc(arch);
+    if (c == '=') return DESIGUALDAD;
+    ungetc(c, arch);
+    return NEGACION_LOGICA;
+  }
 
-    if (c == ';') return FIN_DE_INSTRUCCION;
-    if (c == ',') return SEPARACION_VARIABLES;
-    if (c == ':') return INICIO;
-    if (c == '"') return INICIO_FIN_CADENA;
-    if (c == '\'') return INICIO_FIN_CARACTER;
-    if (c == '(') return PARENTESIS_IZQUIERDA;
-    if (c == ')') return PARENTESIS_DERECHA;
-    if (c == '[') return CORCHETE_IZQUIERDA;
-    if (c == ']') return CORCHETE_DERECHA;
-    if (c == '~') return NEGACION_BINARIA;
-    if (c == '|') return DISYUNCION_BINARIA;
-    if (c == '^') return DISYUNCION_EXCLUSIVA_BINARIA;
-    if (c == '?') return TERNARIO_SINO;
+  if (c == '&') {
+    c = fgetc(arch);
+    if (c == '&') return CONDICION_UNICA;
+    ungetc(c, arch);
+    return CONJUNCION_BINARIA;
+  }
 
-    return CARACTER_RARO;
+  if (c == '%') {
+    c = fgetc(arch);
+    if (c == '%') return COMENTARIO;
+    ungetc(c, arch);
+  }
+
+  if (c == ';') return FIN_DE_INSTRUCCION;
+  if (c == ',') return SEPARACION_VARIABLES;
+  if (c == ':') return INICIO;
+  if (c == '"') return INICIO_FIN_CADENA;
+  if (c == '\'') return INICIO_FIN_CARACTER;
+  if (c == '(') return PARENTESIS_IZQUIERDA;
+  if (c == ')') return PARENTESIS_DERECHA;
+  if (c == '[') return CORCHETE_IZQUIERDA;
+  if (c == ']') return CORCHETE_DERECHA;
+  if (c == '~') return NEGACION_BINARIA;
+  if (c == '|') return DISYUNCION_BINARIA;
+  if (c == '^') return DISYUNCION_EXCLUSIVA_BINARIA;
+  if (c == '?') return TERNARIO_SINO;
+
+  return CARACTER_RARO;
 }
