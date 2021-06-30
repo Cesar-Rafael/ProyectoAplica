@@ -262,6 +262,8 @@ Simbolo tabla_simbolos[MAX_SIZE];
 // Token para la operacion ternaria
 %token OPERACION_TERNARIA
 
+%token SQRT
+
 %%
 
 programa: lista_sentencias;
@@ -301,6 +303,7 @@ Y_LOGICO
 | OPERACION_MULTIPLICACION
 | OPERACION_DIVISION
 | OPERACION_POTENCIA
+| OPERACION_TERNARIA
 | DISYUNCION_BINARIA
 | NEGACION_BINARIA
 | CONJUNCION_BINARIA
@@ -337,6 +340,10 @@ Y_LOGICO
 | SALTO_LINEA
 | TERNARIO_SI
 | TERNARIO_SINO
+| SALTAR_FALSO
+| SALTAR_VERDADERO
+| SALTAR_CONDICIONADO
+| SQRT
 | CARACTER_RARO;
 
 sentencia: declaracion
@@ -711,11 +718,17 @@ expresion_6: expresion_6 OPERACION_POTENCIA factor
 	GenerarCodigo(OPERACION_POTENCIA, posicion_temporal, $1, $3);
 	$$ = posicion_temporal;
 }
+| SQRT PARENTESIS_IZQUIERDA expresion PARENTESIS_DERECHA
+{
+  int posicion_temporal = GenerarTemporal();
+  GenerarCodigo(SQRT, posicion_temporal, $3, NEUTRO);
+  $$ = posicion_temporal;
+}
 | NEGACION_BINARIA factor
 {
 	int posicion_temporal = GenerarTemporal();
-  	GenerarCodigo(NEGACION_BINARIA, posicion_temporal, $2, NEUTRO);
-  	$$ = posicion_temporal;
+  GenerarCodigo(NEGACION_BINARIA, posicion_temporal, $2, NEUTRO);
+  $$ = posicion_temporal;
 }
 | factor
 {
@@ -882,8 +895,26 @@ void InterpretarCodigo(void) {
 		if (op == SALTAR_VERDADERO) {
 			i = a1 - 1;
 		}
+    if (op == SQRT) {
+      int n = tabla_simbolos[a2].valor;
+      assert(n >= 0);
+      int l = 0;
+      int r = n;
+      if (r * r <= n) {
+        l = r;
+      } else {
+        while (r - l > 1) {
+          int m = (l + r) / 2;
+          if (m * m <= n) {
+            l = m;
+          } else {
+            r = m;
+          }
+        }
+      }
+      tabla_simbolos[a1].valor = l;
+    }
 		if (op == Y_LOGICO) {
-			// TODO: Darle precedencia adecuada
 			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor && tabla_simbolos[a3].valor;
 		}
 		if (op == OPERACION_TERNARIA) {
