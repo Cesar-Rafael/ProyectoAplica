@@ -1,12 +1,10 @@
 %% SENTENCIA CONDICIONAL %%
 
-var cant = 50;
-output(cant);
+var n = 50;
+output(n);
 
-for (var x = 0; x < cant; x++;) :
+for (var x = 0; x < n; x++) :
   (x & 1) && x *= 2;
   output(x);
 end
-
-
 
