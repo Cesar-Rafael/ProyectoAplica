@@ -264,6 +264,8 @@ Simbolo tabla_simbolos[MAX_SIZE];
 
 %token SQRT
 
+%token PRIMO
+
 %%
 
 programa: lista_sentencias;
@@ -344,6 +346,7 @@ Y_LOGICO
 | SALTAR_VERDADERO
 | SALTAR_CONDICIONADO
 | SQRT
+| PRIMO
 | CARACTER_RARO;
 
 sentencia: declaracion
@@ -724,6 +727,12 @@ expresion_6: expresion_6 OPERACION_POTENCIA factor
   GenerarCodigo(SQRT, posicion_temporal, $3, NEUTRO);
   $$ = posicion_temporal;
 }
+| PRIMO PARENTESIS_IZQUIERDA expresion PARENTESIS_DERECHA
+{
+  int posicion_temporal = GenerarTemporal();
+  GenerarCodigo(PRIMO, posicion_temporal, $3, NEUTRO);
+  $$ = posicion_temporal;
+}
 | NEGACION_BINARIA factor
 {
 	int posicion_temporal = GenerarTemporal();
@@ -874,6 +883,21 @@ void InterpretarCodigo(void) {
 		if (op == OPERACION_SUMA) {
 			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor + tabla_simbolos[a3].valor;
 		}
+    if (op == PRIMO) {
+      int n = tabla_simbolos[a2].valor;
+      if (n < 0) n *= (-1);
+      int res = 0;
+      if (n >= 2) {
+        res = 1;
+        for (int i = 2; i * i <= n; i++) {
+          if (n % i == 0) {
+            res = 0;
+            break;
+          }
+        }
+      }
+      tabla_simbolos[a1].valor = res;
+    }
 		if (op == RIGHT_SHIFT) {
 			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor >> tabla_simbolos[a3].valor;
 		}
@@ -1079,6 +1103,7 @@ int yylex() {
             if (strcmp(lexema, "var") == 0) return VARIABLE;
             if (strcmp(lexema, "while") == 0) return BUCLE_WHILE;
         }
+        if (strcmp(lexema, "is_prime") == 0) return PRIMO;
         return IDENTIFICADOR;
     }
 
