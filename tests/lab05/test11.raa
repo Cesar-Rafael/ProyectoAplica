@@ -1,5 +1,6 @@
 %% OPERACIONES MATEMATICAS NO TRIVIALES %%
 
+%% Residuo %%
 var x = 10 mod 4;
 output(x);
 var y = 20 mod 21;
@@ -7,7 +8,42 @@ output(y);
 var z = y mod x;
 output(z);
 
+%% Potencia %%
 var a = 2 ** z;
 output(a);
 var b = 3 ** 4;
 output(b);
+
+%% Raiz cuadrada entera %%
+var n = sqrt(256);
+output(n);
+var m = sqrt(n);
+output(m);
+output(sqrt(169));
+var trece = sqrt(180);
+output(trece);
+
+%% Test de primalidad %%
+
+%% Algunos primos %%
+output(is_prime(2));
+output(is_prime(3));
+output(is_prime(11));
+output(is_prime(13));
+output(is_prime(7919));
+
+%% Algunos no primos %%
+output(is_prime(0));
+output(is_prime(1));
+output(is_prime(42));
+output(is_prime(360));
+
+%% Numero aleatorio en un rango %%
+output(random(1, 10));
+output(random(1, 10));
+output(random(1, 10));
+var l = (2 - 3) * sqrt(25);
+var r = 3 ** 2 - 1 << 2;
+output(random(l, r));
+output(random(l, r));
+output(random(l, r));
