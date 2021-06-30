@@ -1,0 +1,15 @@
+%% ESCRITURA DE DATOS %%
+
+%% Se imprime un número entero %%
+
+output(5);
+
+%% Se imprime un identificador %%
+
+var x = 5;
+
+output(x);
+
+%% Se imprime una expresión %%
+
+output(x + 5 >> 1 + 17 * 3 - 2 ** 2);

@@ -1,0 +1,32 @@
+%% OPERACIONES BINARIAS %%
+
+var x = 8;
+var y = 6;
+
+output(x);
+output(y);
+
+%% CONJUNCION_BINARIA %%
+var p;
+p = x & y;
+output(p);
+
+%% DISYUNCION_BINARIA %%
+var q;
+q = x | y;
+output(q);
+
+%% DISYUNCION_EXCLUSIVA_BINARIA %%
+var r;
+r = x ^ y;
+output(r);
+
+%% RIGHT_SHIFT %%
+var s;
+s = x >> y;
+output(s);
+
+%% LEFT_SHIFT %%
+var t;
+t = x << y;
+output(t);

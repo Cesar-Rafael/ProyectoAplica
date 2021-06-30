@@ -1,0 +1,23 @@
+%% OPERACIONES DIRECTAS %%
+
+var x = 20;
+var y = 5;
+
+output(x);
+output(y);
+
+%% INCREMENTO_DIRECTO %%
+y += 2;
+output(y);
+
+%% DECREMENTO_DIRECTO %%
+x -= 2;
+output(x);
+
+%% MULTIPLICACION_DIRECTA %%
+y *= 2;
+output(y);
+
+%% DIVISION_DIRECTA %%
+x /= 2;
+output(x);

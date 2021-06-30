@@ -1,0 +1,26 @@
+%% OPERACIONES ARITMETICAS %%
+
+var x = 20;
+var y = 5;
+output(x);
+output(y);
+
+%% OPERACION_SUMA %%
+var p;
+p = x + y;
+output(p);
+
+%% OPERACION_RESTA %%
+var q;
+q = x - y;
+output(q);
+
+%% OPERACION_MULTIPLICACION %%
+var r;
+r = x * y;
+output(r);
+
+%% OPERACION_DIVISION %%
+var s;
+s = x / y;
+output(s);

@@ -1,0 +1,5 @@
+%% BUCLE FOR %%
+
+for (var x = 0; x < 10; x++) : %% Colocamos la estructura del for %%
+  output(x ** 2);
+end

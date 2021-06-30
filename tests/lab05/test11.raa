@@ -1,0 +1,13 @@
+%% OPERACIONES MATEMATICAS NO TRIVIALES %%
+
+var x = 10 mod 4;
+output(x);
+var y = 20 mod 21;
+output(y);
+var z = y mod x;
+output(z);
+
+var a = 2 ** z;
+output(a);
+var b = 3 ** 4;
+output(b);

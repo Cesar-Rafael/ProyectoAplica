@@ -1,0 +1,12 @@
+%% SENTENCIA CONDICIONAL %%
+
+var cant = 50;
+output(cant);
+
+for (var x = 0; x < cant; x++;) :
+  (x & 1) && x *= 2;
+  output(x);
+end
+
+
+

@@ -1,0 +1,14 @@
+%% ASIGNACIONES ESPECIALES %%
+
+var x = 20;
+var y = 5;
+output(x);
+output(y);
+
+%% INCREMENTO_EN_UNIDAD %%
+var numero = x++;
+output(numero);
+
+%% DECREMENTO_EN_UNIDAD %%
+y--;
+output(y);

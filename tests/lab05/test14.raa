@@ -1,0 +1,4 @@
+%% OPERACION TERNARIA %%
+
+var x = (false) -> 5 ? 3;
+output(x);

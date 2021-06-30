@@ -1,0 +1,10 @@
+%% OPERACION CONDICIONAL %%
+
+var a = 10;
+
+if (true) :
+  var b = a < 3 + (4 * 13 >= 12);
+  output(b);
+else :
+  output(a);
+end

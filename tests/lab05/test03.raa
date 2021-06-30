@@ -1,0 +1,13 @@
+%% LECTURA DE DATOS %%
+
+%% el valor inicial de x es 0 %%
+
+var x = 0;
+
+%% se le asigna un nuevo valor tras la lectura %%
+
+%% Ingrese valor %%
+
+input(x);
+
+output(x);

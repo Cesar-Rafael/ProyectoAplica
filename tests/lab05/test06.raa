@@ -1,0 +1,9 @@
+%% BUCLE WHILE %%
+
+var x;
+input(x);
+
+while (x != 0) :
+  output(x);
+  x /= 2;
+end

@@ -1,0 +1,26 @@
+%% OPERACIONES DE COMPARACION DE VARIABLES %%
+
+var a = 5;
+output(a);
+var b = 5;
+output(b);
+
+%% IGUALDAD %%
+output(a == b);
+
+var x = 13;
+output(x);
+var y = 17;
+output(y);
+
+%% MENOR_O_IGUAL_QUE %%
+output(x <= y);
+
+%% MAYOR_O_IGUAL_QUE %%
+output(x >= y);
+
+%% MENOR_QUE %%
+output(x < y);
+
+%% MAYOR_QUE %%
+output(x > y);

@@ -1,0 +1,9 @@
+%% DECLARACION DE VARIABLES %%
+
+var numero = 42;
+var x;
+var operacion = 15 + 6;
+
+output(numero);
+output(x);
+output(operacion);
