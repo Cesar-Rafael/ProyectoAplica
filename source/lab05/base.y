@@ -43,12 +43,13 @@ Codigo tabla_codigos[MAX_SIZE];
 Simbolo tabla_simbolos[MAX_SIZE];
 
 // Se hizo la corrección de errores, ahora compila y corre
-// Comando: yacc grupo5_ER.y && gcc y.tab.c -lm -lfl && ./a.out
+// Comando: yacc grupo5_ER.y && gcc y.tab.c -lm -lfl && ./a.out testxy.raa
+// Donde xy es un numero de dos digitos, con 01 <= xy <= 15.
 
 %}
 
 /***********************/
-/* PALABRAS RESERVADAS  */
+/* PALABRAS RESERVADAS */
 /***********************/
 
 // Instruccion "and"
@@ -266,6 +267,7 @@ Simbolo tabla_simbolos[MAX_SIZE];
 
 %token PRIMO
 
+%token RANDOM
 %%
 
 programa: lista_sentencias;
@@ -278,8 +280,7 @@ comentario: COMENTARIO lista_generica COMENTARIO;
 lista_generica: elemento_generico lista_generica
 | ;
 
-elemento_generico:
-Y_LOGICO
+elemento_generico: Y_LOGICO
 | TIPO_BOOLEAN
 | TIPO_CARACTER
 | TIPO_DOUBLE
@@ -347,6 +348,7 @@ Y_LOGICO
 | SALTAR_CONDICIONADO
 | SQRT
 | PRIMO
+| RANDOM
 | CARACTER_RARO;
 
 sentencia: declaracion
@@ -733,6 +735,12 @@ expresion_6: expresion_6 OPERACION_POTENCIA factor
   GenerarCodigo(PRIMO, posicion_temporal, $3, NEUTRO);
   $$ = posicion_temporal;
 }
+| RANDOM PARENTESIS_IZQUIERDA expresion SEPARACION_VARIABLES expresion PARENTESIS_DERECHA
+{
+  int posicion_temporal = GenerarTemporal();
+  GenerarCodigo(RANDOM, posicion_temporal, $3, $5);
+  $$ = posicion_temporal;
+}
 | NEGACION_BINARIA factor
 {
 	int posicion_temporal = GenerarTemporal();
@@ -866,7 +874,6 @@ void InterpretarCodigo(void) {
 			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor * tabla_simbolos[a3].valor;
 		}
 		if (op == OPERACION_POTENCIA) {
-			// En caso utilizar double, cambiamos el siguiente algoritmo por la funcion pow de math.h
 			int base = tabla_simbolos[a2].valor;
 			int exponente = tabla_simbolos[a3].valor;
 			int resultado = 1;
@@ -897,6 +904,17 @@ void InterpretarCodigo(void) {
         }
       }
       tabla_simbolos[a1].valor = res;
+    }
+    if (op == RANDOM) {
+      int l = tabla_simbolos[a2].valor;
+      int r = tabla_simbolos[a3].valor;
+      if (l > r) {
+        int m = l;
+        l = r;
+        r = m;
+      }
+      int delta = r - l + 1;
+      tabla_simbolos[a1].valor = l + rand() % delta;
     }
 		if (op == RIGHT_SHIFT) {
 			tabla_simbolos[a1].valor = tabla_simbolos[a2].valor >> tabla_simbolos[a3].valor;
@@ -1023,7 +1041,11 @@ int main(int argc, char* argv[]) {
 		printf("ERROR: Por favor ingrese el nombre de test\n");
 		exit(1);
 	}
-	sprintf(nombre_archivo, "../../tests/lab05/%s", argv[1]);
+  // Mandamos un parametro para cambiar la semilla del generador aleatorio
+  srand(time(0));
+
+  // Lectura de archivo
+  sprintf(nombre_archivo, "../../tests/lab05/%s", argv[1]);
 	arch = fopen(nombre_archivo, "r");
 
     if (arch == NULL) {
@@ -1097,6 +1119,7 @@ int yylex() {
             if (strcmp(lexema, "or") == 0) return O_LOGICO;
             if (strcmp(lexema, "output") == 0) return SALIDA;
             if (strcmp(lexema, "sqrt") == 0) return SQRT;
+            if (strcmp(lexema, "random") == 0) return RANDOM;
             if (strcmp(lexema, "return") == 0) return FUNCION_RETORNO;
             if (strcmp(lexema, "string") == 0) return TIPO_CADENA;
             if (strcmp(lexema, "true") == 0) return VERDADERO;
@@ -1232,7 +1255,7 @@ int yylex() {
 			return CONJUNCION_BINARIA;
     }
 
-    if (c == '%'){
+    if (c == '%') {
     	c = fgetc(arch);
     	if (c == '%') return COMENTARIO;
     	ungetc(c, arch);
